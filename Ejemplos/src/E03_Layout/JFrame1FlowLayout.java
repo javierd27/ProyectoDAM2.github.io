@@ -2,22 +2,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
+package E03_Layout;
 
 /**
  *
  * @author DAM2Alu3
  */
-public class JFrameHolaMundo extends javax.swing.JFrame {
+public class JFrame1FlowLayout extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameHolaMundo.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrame1FlowLayout.class.getName());
 
     /**
-     * Creates new form JFrameHolaMundo
+     * Creates new form JFrame1FlowLayout
      */
-    public JFrameHolaMundo() {
+    public JFrame1FlowLayout() {
         initComponents();
-        jLabel1.setText("Menudas horas para estar programando");
-        jLabel1.setVisible(true);
     }
 
     /**
@@ -29,27 +28,46 @@ public class JFrameHolaMundo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 102, 0));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("HolaMundo");
+        jPanel1.setBackground(new java.awt.Color(255, 176, 132));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
+
+        jButton1.setText("jButton1");
+        jPanel1.add(jButton1);
+
+        jButton2.setText("jButton2");
+        jPanel1.add(jButton2);
+
+        jButton3.setText("jButton3");
+        jPanel1.add(jButton3);
+
+        jButton4.setText("jButton4");
+        jPanel1.add(jButton4);
+
+        jButton5.setText("jButton5");
+        jPanel1.add(jButton5);
+
+        jButton6.setText("jButton6");
+        jPanel1.add(jButton6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 734, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(108, 108, 108)
-                .addComponent(jLabel1)
-                .addContainerGap(332, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -77,10 +95,16 @@ public class JFrameHolaMundo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new JFrameHolaMundo().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new JFrame1FlowLayout().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
