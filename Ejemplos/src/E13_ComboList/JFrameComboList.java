@@ -5,6 +5,8 @@
 package E13_ComboList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 
 /**
  *
@@ -30,7 +32,7 @@ public class JFrameComboList extends javax.swing.JFrame {
         initComponents();
         dlm = new DefaultListModel();
         jListAmigos.setModel(dlm);
-        carga();
+      //  carga();
     }
 
     /**
@@ -98,9 +100,19 @@ public class JFrameComboList extends javax.swing.JFrame {
         jPanelDerecho.setLayout(new java.awt.GridLayout(3, 0, 10, 10));
 
         jButtonIndice.setText("Indices seleccion");
+        jButtonIndice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonIndiceActionPerformed(evt);
+            }
+        });
         jPanelDerecho.add(jButtonIndice);
 
         jButtonAmigos.setText("Amigos Seleccion");
+        jButtonAmigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAmigosActionPerformed(evt);
+            }
+        });
         jPanelDerecho.add(jButtonAmigos);
 
         jButtonBorrar.setText("Borrar");
@@ -161,6 +173,13 @@ public class JFrameComboList extends javax.swing.JFrame {
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
         // TODO add your handling code here:
+        if(!jListAmigos.isSelectionEmpty()){
+            for (String amigo : jListAmigos.getSelectedValuesList()) {
+                dlm.removeElement(amigo);
+                System.out.println("Amigo borrado = " + amigo);
+            }
+        }else
+            JOptionPane.showMessageDialog(rootPane, "No has seleccionado ningun amigo");
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jButtonAnyadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnyadirActionPerformed
@@ -171,6 +190,28 @@ public class JFrameComboList extends javax.swing.JFrame {
         
         dlm.addElement(persona);
     }//GEN-LAST:event_jButtonAnyadirActionPerformed
+
+    private void jButtonIndiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndiceActionPerformed
+        // TODO add your handling code here:
+       
+        if(!jListAmigos.isSelectionEmpty()){
+            for (int indice : jListAmigos.getSelectedIndices()) {
+                System.out.println("Amigo indice = " + indice);
+            }
+        }else
+            JOptionPane.showMessageDialog(rootPane, "No has seleccionado ningun amigo");
+    }//GEN-LAST:event_jButtonIndiceActionPerformed
+
+    private void jButtonAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAmigosActionPerformed
+        // TODO add your handling code here:
+        
+        if(!jListAmigos.isSelectionEmpty()){
+            for (Object indice : jListAmigos.getSelectedValues()) {
+                System.out.println("Amigo indice = " + indice);
+            }
+        }else
+            JOptionPane.showMessageDialog(rootPane, "No has seleccionado ningun amigo");
+    }//GEN-LAST:event_jButtonAmigosActionPerformed
 
     /**
      * @param args the command line arguments
