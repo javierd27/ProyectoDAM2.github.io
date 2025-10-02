@@ -15,8 +15,13 @@ public class Cliente {
     String nombre, apellidos, provincia, mail;
     int edad;
     Date fecha;
+    int id;
+    static int contadorID = 0;
 
+    
     public Cliente() {
+        id = contadorID;
+        contadorID++;
     }
 
     public Cliente(String nombre, String apellidos, String provincia, String mail, int edad, Date fecha) {
@@ -26,6 +31,7 @@ public class Cliente {
         this.mail = mail;
         this.edad = edad;
         this.fecha = fecha;
+        id=++contadorID;
     }
 
     
@@ -78,6 +84,24 @@ public class Cliente {
         this.fecha = fecha;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static int getContadorID() {
+        return contadorID;
+    }
+
+    public static void setContadorID(int contadorID) {
+        Cliente.contadorID = contadorID;
+    }
+    
+    
+
     
     
     @Override
@@ -88,7 +112,7 @@ public class Cliente {
     
     
     public static String[] getColumnas(){
-        String[] columnas = {"Nombre", "Apellido", "Provincia", "Edad", "Correo", "Alta"};
+        String[] columnas = {"ID", "Nombre", "Apellido", "Provincia", "Edad", "Correo", "Alta"};
         return columnas;
     }
     
@@ -98,6 +122,7 @@ public class Cliente {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mm");
         
         String[] fila = {
+                String.valueOf(id),
                 nombre,
                 apellidos,
                 provincia,

@@ -27,9 +27,7 @@ public class JFrameTable extends javax.swing.JFrame {
         jTable1.setModel(dtm);
         dtm.setColumnIdentifiers(Cliente.getColumnas());
         LogicaNegocio.cargaPrueba();
-        for (Cliente cliente : LogicaNegocio.getClientes()) {
-            dtm.addRow(cliente.devuelveFila());
-        }
+
     }
 
     /**
@@ -45,6 +43,7 @@ public class JFrameTable extends javax.swing.JFrame {
         jButtonCliente = new javax.swing.JButton();
         jButtonAlta = new javax.swing.JButton();
         jButtonBaja = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -53,7 +52,7 @@ public class JFrameTable extends javax.swing.JFrame {
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jButtonCliente.setText("Cargar Clientes");
+        jButtonCliente.setText("Cargar LN");
         jButtonCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonClienteActionPerformed(evt);
@@ -62,10 +61,28 @@ public class JFrameTable extends javax.swing.JFrame {
         jPanel3.add(jButtonCliente);
 
         jButtonAlta.setText("Alta");
+        jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAltaActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButtonAlta);
 
         jButtonBaja.setText("Baja");
+        jButtonBaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBajaActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButtonBaja);
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButtonEditar);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -120,8 +137,46 @@ public class JFrameTable extends javax.swing.JFrame {
 
     private void jButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClienteActionPerformed
         // TODO add your handling code here:
+        //DefaultTableModel dtm;
+        for (int i = dtm.getRowCount()-1; i >= 0; i-- ) {
+            dtm.removeRow(i);
+            
+        }
+        
+        for (Cliente cliente : LogicaNegocio.getClientes()) {
+            dtm.addRow(cliente.devuelveFila());
+        }
     }//GEN-LAST:event_jButtonClienteActionPerformed
 
+    private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
+        // TODO add your handling code here:
+        JDialogAltaCliente jdac = new JDialogAltaCliente(this, true);
+        jdac.setVisible(true);
+    }//GEN-LAST:event_jButtonAltaActionPerformed
+
+    private void jButtonBajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBajaActionPerformed
+        // TODO add your handling code here:
+        
+        if(jTable1.getSelectedRowCount()> 0){
+            int[] seleccionados = jTable1.getSelectedRows();
+            for(int i = jTable1.getSelectedRowCount()-1; i >= 0 ; i--){
+                dtm.removeRow(seleccionados[i]);
+            }
+        }
+        
+    }//GEN-LAST:event_jButtonBajaActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    public void addCliente(Cliente nuevo){
+        LogicaNegocio.addCliente(nuevo);
+        dtm.addRow(nuevo.devuelveFila());
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -151,6 +206,7 @@ public class JFrameTable extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAlta;
     private javax.swing.JButton jButtonBaja;
     private javax.swing.JButton jButtonCliente;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;

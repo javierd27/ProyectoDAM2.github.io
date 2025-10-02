@@ -38,6 +38,23 @@ public class LogicaNegocio {
         listaClientes.remove(cliente);
     }
     
+    public static void removeCliente(int id){
+        for (Cliente listaCli : listaClientes) {
+            if(listaCli.getId() == id){
+                listaClientes.remove(listaCli);
+            }
+        }   
+        
+    }
+    
+    public static void editCliente(Cliente editar){
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if(listaClientes.get(i).getId()== editar.getId()){
+                listaClientes.set(i, editar);
+            }
+        }
+    }
+    
     public static List<Cliente> getClientes(){
         return listaClientes;
     }
