@@ -31,7 +31,7 @@ public class Cliente {
         this.mail = mail;
         this.edad = edad;
         this.fecha = fecha;
-        id=++contadorID;
+        id=contadorID++;
     }
 
     

@@ -20,10 +20,18 @@ public class JDialogEditCliente extends javax.swing.JDialog {
     
     JFrameTable jframepadre;
     
+    public void cargaID(){
+        jComboBoxId.removeAllItems();
+        for(Cliente cliente : LogicaNegocio.getClientes()){
+            jComboBoxId.addItem(String.valueOf(cliente.getId()));
+        }
+    }
+    
     public JDialogEditCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         jframepadre = (JFrameTable)parent;
         initComponents();
+        cargaID();
     }
 
     /**
@@ -52,6 +60,7 @@ public class JDialogEditCliente extends javax.swing.JDialog {
         jLabelFechaAlta = new javax.swing.JLabel();
         jSpinnerFechaAlta = new javax.swing.JSpinner();
         jButtonAlta = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -64,6 +73,11 @@ public class JDialogEditCliente extends javax.swing.JDialog {
         jPanel1.add(JLabelId);
 
         jComboBoxId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxIdItemStateChanged(evt);
+            }
+        });
         jPanel1.add(jComboBoxId);
 
         jLabel2.setText("Nombre");
@@ -120,6 +134,13 @@ public class JDialogEditCliente extends javax.swing.JDialog {
             }
         });
 
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,7 +150,9 @@ public class JDialogEditCliente extends javax.swing.JDialog {
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
+                .addComponent(jButtonCancelar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAlta)
                 .addGap(40, 40, 40))
         );
@@ -141,7 +164,9 @@ public class JDialogEditCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonAlta)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAlta)
+                    .addComponent(jButtonCancelar))
                 .addGap(23, 23, 23))
         );
 
@@ -162,7 +187,7 @@ public class JDialogEditCliente extends javax.swing.JDialog {
 
     private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
         // TODO add your handling code here:
-        Cliente nuevo = new Cliente(
+       /* Cliente nuevo = new Cliente(
                         jTextFieldNombre.getText(),
                         jTextFieldApellido.getText(),
                         jComboBoxProvoncia.getSelectedItem().toString(),
@@ -170,9 +195,42 @@ public class JDialogEditCliente extends javax.swing.JDialog {
                         Integer.parseInt(jTextFieldEdad.getText()),
                         (Date)jSpinnerFechaAlta.getValue());
         
-        jframepadre.addCliente(nuevo);
-        dispose();
+        jframepadre.addCliente(nuevo);*/
+       int id = Integer.parseInt(jComboBoxId.getSelectedItem().toString());
+       Cliente cliente = LogicaNegocio.getCliente(id);
+       cliente.setNombre(jTextFieldNombre.getText());
+       cliente.setApellidos(jTextFieldApellido.getText());
+       cliente.setProvincia(jComboBoxProvoncia.getSelectedItem().toString());
+       cliente.setMail(jTextFieldMail.getText());
+       cliente.setEdad(Integer.parseInt(jTextFieldEdad.getText()));
+       cliente.setFecha((Date)jSpinnerFechaAlta.getValue());
+       LogicaNegocio.editCliente(cliente);
+       
+       jframepadre.CargaInicial();
+       dispose();
     }//GEN-LAST:event_jButtonAltaActionPerformed
+
+    private void jComboBoxIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxIdItemStateChanged
+        // TODO add your handling code here:
+        if(jComboBoxId.getSelectedItem()!= null){
+            int id = Integer.parseInt(jComboBoxId.getSelectedItem().toString());
+            Cliente cliente = LogicaNegocio.getCliente(id);
+            jTextFieldNombre.setText(cliente.getNombre());
+            jTextFieldApellido.setText(cliente.getApellidos());
+            jComboBoxProvoncia.setSelectedItem(cliente.getProvincia());
+            jTextFieldMail.setText(cliente.getMail());
+            jTextFieldEdad.setText(String.valueOf(cliente.getEdad()));
+            jSpinnerFechaAlta.setValue(cliente.getFecha());
+            
+            
+        }
+    }//GEN-LAST:event_jComboBoxIdItemStateChanged
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        // TODO add your handling code here:
+        
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,6 +272,7 @@ public class JDialogEditCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelId;
     private javax.swing.JButton jButtonAlta;
+    private javax.swing.JButton jButtonCancelar;
     private javax.swing.JComboBox<String> jComboBoxId;
     private javax.swing.JComboBox<String> jComboBoxProvoncia;
     private javax.swing.JLabel jLabel1;

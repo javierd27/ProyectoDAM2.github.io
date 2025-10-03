@@ -47,6 +47,14 @@ public class LogicaNegocio {
         
     }
     
+    public static Cliente getCliente(int id){
+        for(Cliente cliente: listaClientes){
+            if(cliente.getId() == id)
+                return cliente;
+        }
+        return null;
+    }
+    
     public static void editCliente(Cliente editar){
         for (int i = 0; i < listaClientes.size(); i++) {
             if(listaClientes.get(i).getId()== editar.getId()){

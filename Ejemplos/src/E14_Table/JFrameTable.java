@@ -20,6 +20,12 @@ public class JFrameTable extends javax.swing.JFrame {
      */
     
     DefaultTableModel dtm;
+    public void CargaInicial(){
+        dtm.setRowCount(0);
+        for(Cliente cliente : LogicaNegocio.getClientes()){
+            dtm.addRow(cliente.devuelveFila());
+        }
+    }
     
     public JFrameTable() {
         initComponents();
@@ -27,6 +33,7 @@ public class JFrameTable extends javax.swing.JFrame {
         jTable1.setModel(dtm);
         dtm.setColumnIdentifiers(Cliente.getColumnas());
         LogicaNegocio.cargaPrueba();
+        CargaInicial();
 
     }
 
@@ -168,7 +175,8 @@ public class JFrameTable extends javax.swing.JFrame {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
-        
+        JDialogEditCliente jdec = new JDialogEditCliente(this, true);
+        jdec.setVisible(true);
         
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
