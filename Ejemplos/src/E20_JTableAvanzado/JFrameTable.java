@@ -4,8 +4,11 @@
  */
 package E20_JTableAvanzado;
 
+import java.util.regex.PatternSyntaxException;
 import javax.swing.JTabbedPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -31,6 +34,17 @@ public class JFrameTable extends javax.swing.JFrame {
         }
     }
     
+    public void configuraColID(){
+        TableColumn columna = jTable1.getColumnModel().getColumn(0);
+        columna.setPreferredWidth(30);
+    }
+    
+    public void configuraColumna(int ncol, int ancho){
+        TableColumn columna = jTable1.getColumnModel().getColumn(ncol);
+        columna.setPreferredWidth(ancho);
+    }
+    
+    
     public JFrameTable() {
         initComponents();
         dtm = new DefaultTableModel();
@@ -40,6 +54,9 @@ public class JFrameTable extends javax.swing.JFrame {
         CargaInicial();
         order = new TableRowSorter<>(dtm);
         jTable1.setRowSorter(order);
+        configuraColID();
+        configuraColumna(0,20);
+        configuraColumna(4,30);
 
     }
 
@@ -103,14 +120,27 @@ public class JFrameTable extends javax.swing.JFrame {
 
         jLabelBuscar.setText("Buscar");
         jPanel3.add(jLabelBuscar);
+
+        jTextFieldBuscar.setPreferredSize(new java.awt.Dimension(80, 22));
+        jTextFieldBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldBuscarKeyReleased(evt);
+            }
+        });
         jPanel3.add(jTextFieldBuscar);
 
         jLabel1.setText("Apellido");
         jPanel3.add(jLabel1);
 
+        jTextFieldApellido.setPreferredSize(new java.awt.Dimension(80, 22));
         jTextFieldApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldApellidoActionPerformed(evt);
+            }
+        });
+        jTextFieldApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldApellidoKeyReleased(evt);
             }
         });
         jPanel3.add(jTextFieldApellido);
@@ -191,7 +221,7 @@ public class JFrameTable extends javax.swing.JFrame {
         if(jTable1.getSelectedRowCount()> 0){
             int[] seleccionados = jTable1.getSelectedRows();
             for(int i = jTable1.getSelectedRowCount()-1; i >= 0 ; i--){
-                dtm.removeRow(seleccionados[i]);
+                dtm.removeRow(jTable1.convertRowIndexToModel(seleccionados[i]));
             }
         }
         
@@ -207,6 +237,27 @@ public class JFrameTable extends javax.swing.JFrame {
     private void jTextFieldApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellidoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldApellidoActionPerformed
+
+    private void jTextFieldBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBuscarKeyReleased
+        // TODO add your handling code here:
+        try {
+            RowFilter<Object, Object> rf = RowFilter.regexFilter(jTextFieldBuscar.getText());
+            order.setRowFilter(rf);
+        } catch (PatternSyntaxException pse) {
+            System.out.println("Bad regex pattern");
+        } 
+    }//GEN-LAST:event_jTextFieldBuscarKeyReleased
+
+    private void jTextFieldApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldApellidoKeyReleased
+        // TODO add your handling code here:
+        try {
+            RowFilter<Object, Object> rf = RowFilter.regexFilter(jTextFieldApellido.getText(), 2);
+            order.setRowFilter(rf);
+        } catch (PatternSyntaxException pse) {
+            System.out.println("Bad regex pattern");
+        } 
+        
+    }//GEN-LAST:event_jTextFieldApellidoKeyReleased
 
     public void addCliente(Cliente nuevo){
         LogicaNegocio.addCliente(nuevo);
