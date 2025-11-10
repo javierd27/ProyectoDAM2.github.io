@@ -7,6 +7,7 @@ package hotelia;
 /**
  *
  * @author DAM2Alu3
+ * @author DAM2Alu4
  */
 public class Hotelia {
 
