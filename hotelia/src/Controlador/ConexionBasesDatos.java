@@ -9,5 +9,7 @@ package Controlador;
  * @author DAM2Alu4
  */
 public class ConexionBasesDatos {
-    
+    /**
+     * Ejemplo de estado de conexion
+     */
 }
