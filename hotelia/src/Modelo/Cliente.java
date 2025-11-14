@@ -1,5 +1,9 @@
 package Modelo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -12,54 +16,73 @@ package Modelo;
  * @author DAM2Alu3
  */
 public class Cliente {
-    String nombre, apellido1, apellido2, dni_nie, mail, telefono, nacionalidad, calle_numero, piso, poblacion, pais;
+    String dni_nie, nombre, apellido1, apellido2;
     Date fecha_nac;
-    
-    public Cliente(String nombre, String apellido1, String apellido2, String dni_nie, String mail, String telefono, String nacionalidad, String calle_numero, String piso, String poblacion, String pais, Date fecha_nac) {
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.dni_nie = dni_nie;
-        this.mail = mail;
-        this.telefono = telefono;
-        this.nacionalidad = nacionalidad;
-        this.calle_numero = calle_numero;
-        this.piso = piso;
-        this.poblacion = poblacion;
-        this.pais = pais;
-        this.fecha_nac = fecha_nac;
-    }
-    
-    
-    public Cliente(String nombre, String apellido1, String apellido2, String dni_nie, String mail, String telefono, String nacionalidad, String calle_numero, String poblacion, String pais, Date fecha_nac) {
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.dni_nie = dni_nie;
-        this.mail = mail;
-        this.telefono = telefono;
-        this.nacionalidad = nacionalidad;
-        this.calle_numero = calle_numero;
-        this.poblacion = poblacion;
-        this.pais = pais;
-        this.fecha_nac = fecha_nac;
-    }
-    
+    String mail, telefono, nacionalidad, pais, calle_numero, poblacion, piso;
 
-    public Cliente(String nombre, String apellido1, String dni_nie, String mail, String telefono, String nacionalidad, String calle_numero, String poblacion, String pais, Date fecha_nac) {
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.dni_nie = dni_nie;
-        this.mail = mail;
-        this.telefono = telefono;
-        this.nacionalidad = nacionalidad;
-        this.calle_numero = calle_numero;
-        this.poblacion = poblacion;
-        this.pais = pais;
-        this.fecha_nac = fecha_nac;
-    }
-    
-    
+        public Cliente(String dni_nie, String nombre, String apellido1, String apellido2, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion, String piso) {
+            this.dni_nie = dni_nie;
+            this.nombre = nombre;
+            this.apellido1 = apellido1;
+            this.apellido2 = apellido2;
+            this.fecha_nac = fecha_nac;
+            this.mail = mail;
+            this.telefono = telefono;
+            this.nacionalidad = nacionalidad;
+            this.pais = pais;
+            this.calle_numero = calle_numero;
+            this.poblacion = poblacion;
+            this.piso = piso;
+        }
+
+        public Cliente(String dni_nie, String nombre, String apellido1, String apellido2, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion) {
+            this.dni_nie = dni_nie;
+            this.nombre = nombre;
+            this.apellido1 = apellido1;
+            this.apellido2 = apellido2;
+            this.fecha_nac = fecha_nac;
+            this.mail = mail;
+            this.telefono = telefono;
+            this.nacionalidad = nacionalidad;
+            this.pais = pais;
+            this.calle_numero = calle_numero;
+            this.poblacion = poblacion;
+        }
+
+        public Cliente(String dni_nie, String nombre, String apellido1, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion, String piso) {
+            this.dni_nie = dni_nie;
+            this.nombre = nombre;
+            this.apellido1 = apellido1;
+            this.fecha_nac = fecha_nac;
+            this.mail = mail;
+            this.telefono = telefono;
+            this.nacionalidad = nacionalidad;
+            this.pais = pais;
+            this.calle_numero = calle_numero;
+            this.poblacion = poblacion;
+            this.piso = piso;
+        }
+
+        public Cliente(String dni_nie, String nombre, String apellido1, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion) {
+            this.dni_nie = dni_nie;
+            this.nombre = nombre;
+            this.apellido1 = apellido1;
+            this.fecha_nac = fecha_nac;
+            this.mail = mail;
+            this.telefono = telefono;
+            this.nacionalidad = nacionalidad;
+            this.pais = pais;
+            this.calle_numero = calle_numero;
+            this.poblacion = poblacion;
+        }
+
+        public String getDni_nie() {
+            return dni_nie;
+        }
+
+        public void setDni_nie(String dni_nie) {
+            this.dni_nie = dni_nie;
+        }
 
         public String getNombre() {
             return nombre;
@@ -85,12 +108,12 @@ public class Cliente {
             this.apellido2 = apellido2;
         }
 
-        public String getDni_nie() {
-            return dni_nie;
+        public Date getFecha_nac() {
+            return fecha_nac;
         }
 
-        public void setDni_nie(String dni_nie) {
-            this.dni_nie = dni_nie;
+        public void setFecha_nac(Date fecha_nac) {
+            this.fecha_nac = fecha_nac;
         }
 
         public String getMail() {
@@ -117,20 +140,20 @@ public class Cliente {
             this.nacionalidad = nacionalidad;
         }
 
+        public String getPais() {
+            return pais;
+        }
+
+        public void setPais(String pais) {
+            this.pais = pais;
+        }
+
         public String getCalle_numero() {
             return calle_numero;
         }
 
         public void setCalle_numero(String calle_numero) {
             this.calle_numero = calle_numero;
-        }
-
-        public String getPiso() {
-            return piso;
-        }
-
-        public void setPiso(String piso) {
-            this.piso = piso;
         }
 
         public String getPoblacion() {
@@ -141,30 +164,21 @@ public class Cliente {
             this.poblacion = poblacion;
         }
 
-        public String getPais() {
-            return pais;
+        public String getPiso() {
+            return piso;
         }
 
-        public void setPais(String pais) {
-            this.pais = pais;
-        }
-
-        public Date getFecha_nac() {
-            return fecha_nac;
-        }
-
-        public void setFecha_nac(Date fecha_nac) {
-            this.fecha_nac = fecha_nac;
-        }
-    
+        public void setPiso(String piso) {
+            this.piso = piso;
+        } 
   
     
-    }
+    
 
     
     
-    public s String[] getColumnas(){
-        String[] columnas = {"DNI/NIE", "Nombre", "Apellido1", "Apellido2", "Fecha de nacimiento", "Telefono", "Correo", "Nacionalidad", "Calle y número", "Piso", "Poblacion", "Pais"};
+    public  String[] getColumnas(){
+        String[] columnas = {"DNI/NIE", "Nombre", "Apellido1", "Apellido2", "Fecha de nacimiento", "Correo", "Teléfono", "Nacionalidad", "Pais", "Calle y número", "Poblacion", "Piso"};
         return columnas;
     }
     
@@ -174,17 +188,23 @@ public class Cliente {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mm");
         
         String[] fila = {
-                String.valueOf(id),
+                dni_nie,
                 nombre,
-                apellidos,
-                provincia,
-                String.valueOf(edad),
+                apellido1,
+                apellido2,
+                sdf.format(fecha_nac),
                 mail,
-                sdf.format(fecha)                
+                telefono,
+                nacionalidad,
+                pais,
+                calle_numero,
+                poblacion,
+                piso
                 };
         
         return fila;
     }
+}
     
     
     
