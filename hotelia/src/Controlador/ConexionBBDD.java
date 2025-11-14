@@ -7,6 +7,7 @@ package Controlador;
 /**
  *
  * @author DAM2Alu3
+ * @author DAM2Alu4
  */
 
     
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
+
 
 public class ConexionBBDD {
     
@@ -134,6 +136,24 @@ public class ConexionBBDD {
             return -1;
         }
     }
+    // CONSULTAS PARA LA APP 
+      public String BuscarContraseñaEmpleado(String us){
+          String resul="";
+        try {
+            PreparedStatement ps = conexion.prepareStatement("select contrasenya from empleado where usuario = ?");
+            ps.setString(0, us);
+            ResultSet reg = ps.executeQuery ();
+            while(reg.next()){
+                resul= reg.getString(1);
+            }
+            return resul;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return "";
+        }
+        
+    }
+    
     public void cerrar(){
         try {
             conexion.close();
