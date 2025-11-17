@@ -39,9 +39,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         jLabelUsuario = new javax.swing.JLabel();
         jTextFieldUsuario = new javax.swing.JTextField();
         jLabelContraseña = new javax.swing.JLabel();
-        jTextFieldContraseña = new javax.swing.JTextField();
         jButtonAceptar = new javax.swing.JButton();
         jLabelError = new javax.swing.JLabel();
+        jTextFieldContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,12 +70,12 @@ public class JFrameLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelContraseña)
-                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelUsuario)
                             .addComponent(jLabel1)
-                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(jTextFieldContraseña)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(275, 275, 275)
                         .addComponent(jButtonAceptar))
@@ -135,17 +135,25 @@ public class JFrameLogin extends javax.swing.JFrame {
         
         
         if (passBD == null || passBD.isEmpty()) {
-            jLabelError.setText("Usuario no encontrado");
+            
+            jLabelError.setText("Login correcto (usuario no encontrado BORRAR DESPUES)");
+            jTextFieldContraseña.setText("");
+            jTextFieldUsuario.setText("");
             return;
         }
        
         // Comprobar contraseña
        if (Seguridad.checkPassword(pass, passBD)) {
             jLabelError.setText("Login correcto");
-            //ahora da error por que no hay ninguna contraseña hash
             // Aquí abres tu siguiente ventana
+            
+            JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
+            jdg.setVisible(true);
+            
         } else {
-            jLabelError.setText("Contraseña incorrecta");
+            jLabelError.setText("Login correcto (Contraseña incorrecta BORRAR DESPUES)");
+            jTextFieldContraseña.setText("");
+            jTextFieldUsuario.setText("");
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -182,7 +190,7 @@ public class JFrameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelError;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldContraseña;
+    private javax.swing.JPasswordField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

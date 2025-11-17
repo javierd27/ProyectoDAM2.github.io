@@ -42,12 +42,12 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabelContraseña" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldContraseña" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                               <Component id="jLabelUsuario" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldUsuario" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
+                              <Component id="jTextFieldUsuario" alignment="0" pref="90" max="32767" attributes="0"/>
+                              <Component id="jTextFieldContraseña" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -106,8 +106,6 @@
             <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldContrase&#xf1;a">
-        </Component>
         <Component class="javax.swing.JButton" name="jButtonAceptar">
           <Properties>
             <Property name="text" type="java.lang.String" value="ACEPTAR"/>
@@ -125,6 +123,8 @@
               <Color blue="33" green="0" red="ff" type="rgb"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="jTextFieldContrase&#xf1;a">
         </Component>
       </SubComponents>
     </Container>
