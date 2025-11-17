@@ -10,6 +10,9 @@ package Controlador;
  * @author DAM2Alu4
  */
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -104,6 +107,24 @@ public class ConexionBBDD {
             return "";
         }
     }
+    //metodo que recoge las fechas del inicio de reserva
+    public List<LocalDate> buscarFechaInicio() {
+        try {
+            List<LocalDate> lista = new ArrayList<LocalDate>();
+            
+            PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT fecha FROM reservas ");
+            
+            return lista;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
+    }
+    
+    
+    
+    
 
     public void cerrar() {
         try {
