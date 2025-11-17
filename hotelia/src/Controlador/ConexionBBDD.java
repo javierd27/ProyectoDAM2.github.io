@@ -9,6 +9,7 @@ package Controlador;
  * @author DAM2Alu3
  * @author DAM2Alu4
  */
+import Modelo.Cliente;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -107,15 +108,72 @@ public class ConexionBBDD {
             return "";
         }
     }
-    //metodo que recoge las fechas del inicio de reserva
-    public List<LocalDate> buscarFechaInicio() {
+    
+    public void insertaCliente(Cliente cliente) throws SQLException{
+        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? , ?)";
+        
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, cliente.getDni_nie());
+        ps.setString(2, cliente.getNombre());
+        ps.setString(3, cliente.getApellido1());
+        ps.setString(4, cliente.getApellido2());
+        ps.setDate(5, (Date) cliente.getFecha_nac());
+        ps.setString(6, cliente.getMail());
+        ps.setString(7, cliente.getTelefono());
+        ps.setString(8, cliente.getNacionalidad());
+        ps.setString(9, cliente.getPais());
+        ps.setString(10, cliente.getCalle_numero());        
+        ps.setString(11, cliente.getPoblacion());
+        ps.setString(12, cliente.getPiso());
+        
+    //    ps.executeUpdate();**********************************************************
+    }
+    //metodo que recoge una lista de las habitaciones
+    public int[] buscarHabitaciones() {
+        int[] lista = null;
+        try {
+            PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT idHabitacion FROM habitacion");
+            ResultSet rs = ps.executeQuery();
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int tam = rsmd.getColumnCount();
+            for (int i = 1; i <= tam; i++) {
+                lista[i] = rs.getInt(i);
+            }
+            
+            
+            return lista;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return lista;
+    }
+    
+    
+    //metodo que recoge las fechas del inicio de reserva por habitacion
+    public List<LocalDate> buscarFechaInicio(int idHabitacion) {
         try {
             List<LocalDate> lista = new ArrayList<LocalDate>();
             
             PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT fecha FROM reservas ");
+                    "SELECT fecha_inicio FROM reserva where idHabitacion = ?");
             
             return lista;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
+    }
+        //metodo que recoge las fechas del inicio de reserva
+    public LocalDate buscarFechaFin(int idHabitacion) {
+        try {
+            
+            PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT fecha_inicio FROM reserva where idHabitacion = ?");
+                    ps.setInt(0,idHabitacion);
+                    ResultSet reg = ps.executeQuery();
+            
+            return null;
         } catch (SQLException ex) {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
