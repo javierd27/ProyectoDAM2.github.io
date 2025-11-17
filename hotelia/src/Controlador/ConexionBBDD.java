@@ -9,6 +9,7 @@ package Controlador;
  * @author DAM2Alu3
  * @author DAM2Alu4
  */
+import Modelo.Cliente;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,6 +104,26 @@ public class ConexionBBDD {
             Logger.getLogger(ConexionBBDD.class.getName()).log(Level.SEVERE, null, ex);
             return "";
         }
+    }
+    
+    public void insertaCliente(Cliente cliente) throws SQLException{
+        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? , ?)";
+        
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, cliente.getDni_nie());
+        ps.setString(2, cliente.getNombre());
+        ps.setString(3, cliente.getApellido1());
+        ps.setString(4, cliente.getApellido2());
+        ps.setDate(5, (Date) cliente.getFecha_nac());
+        ps.setString(6, cliente.getMail());
+        ps.setString(7, cliente.getTelefono());
+        ps.setString(8, cliente.getNacionalidad());
+        ps.setString(9, cliente.getPais());
+        ps.setString(10, cliente.getCalle_numero());        
+        ps.setString(11, cliente.getPoblacion());
+        ps.setString(12, cliente.getPiso());
+        
+        ps.executeUpdate();**********************************************************
     }
 
     public void cerrar() {
