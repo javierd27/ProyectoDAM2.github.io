@@ -106,15 +106,16 @@ public class ConexionBBDD {
         }
     }
     
-    public void insertaCliente(Cliente cliente) throws SQLException{
-        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? , ?)";
+    public int insertaCliente(Cliente cliente) throws SQLException{
+        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         PreparedStatement ps = conexion.prepareStatement(sql);
         ps.setString(1, cliente.getDni_nie());
         ps.setString(2, cliente.getNombre());
         ps.setString(3, cliente.getApellido1());
         ps.setString(4, cliente.getApellido2());
-        ps.setDate(5, (Date) cliente.getFecha_nac());
+       // ps.setDate(5, (java.sql.Date) cliente.getFecha_nac());
+        ps.setDate(5,new java.sql.Date(cliente.getFecha_nac().getTime()));
         ps.setString(6, cliente.getMail());
         ps.setString(7, cliente.getTelefono());
         ps.setString(8, cliente.getNacionalidad());
@@ -123,7 +124,18 @@ public class ConexionBBDD {
         ps.setString(11, cliente.getPoblacion());
         ps.setString(12, cliente.getPiso());
         
-        ps.executeUpdate();**********************************************************
+        return ps.executeUpdate();
+    }
+    
+    public ResultSet buscaCliente(String dni) throws SQLException{
+        String sql = "SELECT * FROM cliente WHERE dni_nie = ?";
+        
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, dni);
+        
+        ResultSet rs = ps.executeQuery();
+      
+        return rs;
     }
 
     public void cerrar() {

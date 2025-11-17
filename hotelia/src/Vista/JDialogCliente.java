@@ -5,7 +5,10 @@
 package Vista;
 
 
+import Controlador.ConexionBBDD;
 import Modelo.Cliente;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -24,9 +27,9 @@ public class JDialogCliente extends javax.swing.JDialog {
     
     public JDialogCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        jframepadre = (JFrameLogin)parent;
+        //jframepadre = (JFrameLogin)parent;
         initComponents();
-        jSpinnerFecha_nac.setValue(null);
+        //jSpinnerFecha_nac.setValue("");
     }
 
     /**
@@ -66,7 +69,9 @@ public class JDialogCliente extends javax.swing.JDialog {
         jTextFieldCalle_num = new javax.swing.JTextField();
         jLabelPiso = new javax.swing.JLabel();
         jTextFieldPiso = new javax.swing.JTextField();
-        jButtonAlta = new javax.swing.JButton();
+        jButtonCrear = new javax.swing.JButton();
+        jButtonBuscar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -138,7 +143,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelDireccion.setText("____________   Dirección de domicilio");
         jPanel1.add(jLabelDireccion);
 
-        jLabel2.setText("______________________________________");
+        jLabel2.setText("____________________________");
         jPanel1.add(jLabel2);
 
         jLabelPais.setText("País de residencia actual");
@@ -163,36 +168,55 @@ public class JDialogCliente extends javax.swing.JDialog {
         jPanel1.add(jLabelPiso);
         jPanel1.add(jTextFieldPiso);
 
-        jButtonAlta.setText("Alta");
-        jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCrear.setText("Crear");
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAltaActionPerformed(evt);
+                jButtonCrearActionPerformed(evt);
             }
         });
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonAlta)
-                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonBuscar)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButtonCrear)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelClientes)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelClientes)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAlta)
-                .addGap(23, 23, 23))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonCrear)
+                    .addComponent(jButtonBuscar))
+                .addGap(11, 11, 11))
         );
 
         pack();
@@ -210,26 +234,41 @@ public class JDialogCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldTelefonoActionPerformed
 
-    private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
-        // TODO add your handling code here:
-        Cliente nuevo = new Cliente(
-                        jTextFieldDNI.getText(),
-                        jTextFieldNombre.getText(),
-                        jTextFieldApellido1.getText(),
-                        jTextFieldApellido2.getText(),
-                        (Date)jSpinnerFecha_nac.getValue(),
-                        jTextFieldMail.getText(),
-                        jTextFieldTelefono.getText(),
-                        jTextFieldNacionalidad.getText(),
-                        jTextFieldPais.getText(),
-                        jTextFieldCalle_num.getText(),
-                        jTextFieldPoblacion.getText(),
-                        jTextFieldPiso.getText()
-                        );
-        
-        jframepadre.addCliente(nuevo);
-        dispose();
-    }//GEN-LAST:event_jButtonAltaActionPerformed
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        try {
+            // TODO add your handling code here:
+            ConexionBBDD c = new ConexionBBDD();
+            Connection conexion = c.getConnection();
+            
+            
+            Cliente nuevo = new Cliente(
+                    jTextFieldDNI.getText(),
+                    jTextFieldNombre.getText(),
+                    jTextFieldApellido1.getText(),
+                    jTextFieldApellido2.getText(),
+                    (Date)jSpinnerFecha_nac.getValue(),
+                    jTextFieldMail.getText(),
+                    jTextFieldTelefono.getText(),
+                    jTextFieldNacionalidad.getText(),
+                    jTextFieldPais.getText(),
+                    jTextFieldCalle_num.getText(),
+                    jTextFieldPoblacion.getText(),
+                    jTextFieldPiso.getText()
+            );
+            
+            if(c.insertaCliente(nuevo)>=1){
+                jLabel1.setText("Creado con exito");
+            }else{
+                jLabel1.setText("No se ha creado");
+
+            }
+            //dispose();  cierra el jdialog
+            
+            
+        } catch (SQLException ex) {
+            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jTextFieldApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido2ActionPerformed
         // TODO add your handling code here:
@@ -238,6 +277,29 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jTextFieldPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPaisActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPaisActionPerformed
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        try {
+            // TODO add your handling code here:
+            
+            ConexionBBDD c = new ConexionBBDD();
+            Connection conexion = c.getConnection();
+            
+            
+            String dni = jTextFieldDNI.getText();
+            
+            if(c.buscaCliente(dni).next()>=1){
+                jLabel1.setText("Encontrado");
+                jTextFieldNombre.setText("");
+            }else{
+                jLabel1.setText("No se ha encontrado");
+                
+            }
+        } catch (SQLException ex) {
+            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -277,7 +339,9 @@ public class JDialogCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAlta;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonCrear;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;

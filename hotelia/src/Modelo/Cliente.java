@@ -35,6 +35,7 @@ public class Cliente {
         this.piso = piso;
     }
 
+    
         
         public String getDni_nie() {
             return dni_nie;
