@@ -27,7 +27,7 @@
               <Component id="jLabelClientes" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
-          <Component id="jPanel1" alignment="0" pref="400" max="32767" attributes="0"/>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Component id="jButtonAlta" min="-2" max="-2" attributes="0"/>
@@ -63,10 +63,17 @@
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="2"/>
         <Property name="horizontalGap" type="int" value="10"/>
-        <Property name="rows" type="int" value="12"/>
+        <Property name="rows" type="int" value="13"/>
         <Property name="verticalGap" type="int" value="10"/>
       </Layout>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabelDNI">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="DNI"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldDNI">
+        </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
             <Property name="text" type="java.lang.String" value="Nombre"/>
@@ -128,6 +135,57 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTelefonoActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelNacionalidad">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nacionalidad"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldNacionalidad">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelDireccion">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="12" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="____________   Direcci&#xf3;n de domicilio"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="______________________________________"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPais">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pa&#xed;s de residencia actual"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPais">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldPaisActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPoblacion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Poblaci&#xf3;n"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPoblacion">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelCalle_num">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Calle y n&#xfa;mero"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldCalle_num">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPiso">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Piso"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPiso">
         </Component>
       </SubComponents>
     </Container>

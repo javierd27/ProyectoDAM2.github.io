@@ -40,6 +40,8 @@ public class JDialogCliente extends javax.swing.JDialog {
 
         jLabelClientes = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jLabelDNI = new javax.swing.JLabel();
+        jTextFieldDNI = new javax.swing.JTextField();
         jLabelNombre = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabelApelliod1 = new javax.swing.JLabel();
@@ -52,6 +54,18 @@ public class JDialogCliente extends javax.swing.JDialog {
         jTextFieldMail = new javax.swing.JTextField();
         jLabelTelefono = new javax.swing.JLabel();
         jTextFieldTelefono = new javax.swing.JTextField();
+        jLabelNacionalidad = new javax.swing.JLabel();
+        jTextFieldNacionalidad = new javax.swing.JTextField();
+        jLabelDireccion = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelPais = new javax.swing.JLabel();
+        jTextFieldPais = new javax.swing.JTextField();
+        jLabelPoblacion = new javax.swing.JLabel();
+        jTextFieldPoblacion = new javax.swing.JTextField();
+        jLabelCalle_num = new javax.swing.JLabel();
+        jTextFieldCalle_num = new javax.swing.JTextField();
+        jLabelPiso = new javax.swing.JLabel();
+        jTextFieldPiso = new javax.swing.JTextField();
         jButtonAlta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -59,7 +73,11 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelClientes.setText("CLIENTES");
 
-        jPanel1.setLayout(new java.awt.GridLayout(12, 2, 10, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(13, 2, 10, 10));
+
+        jLabelDNI.setText("DNI");
+        jPanel1.add(jLabelDNI);
+        jPanel1.add(jTextFieldDNI);
 
         jLabelNombre.setText("Nombre");
         jPanel1.add(jLabelNombre);
@@ -112,6 +130,39 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldTelefono);
 
+        jLabelNacionalidad.setText("Nacionalidad");
+        jPanel1.add(jLabelNacionalidad);
+        jPanel1.add(jTextFieldNacionalidad);
+
+        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabelDireccion.setText("____________   Dirección de domicilio");
+        jPanel1.add(jLabelDireccion);
+
+        jLabel2.setText("______________________________________");
+        jPanel1.add(jLabel2);
+
+        jLabelPais.setText("País de residencia actual");
+        jPanel1.add(jLabelPais);
+
+        jTextFieldPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPaisActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFieldPais);
+
+        jLabelPoblacion.setText("Población");
+        jPanel1.add(jLabelPoblacion);
+        jPanel1.add(jTextFieldPoblacion);
+
+        jLabelCalle_num.setText("Calle y número");
+        jPanel1.add(jLabelCalle_num);
+        jPanel1.add(jTextFieldCalle_num);
+
+        jLabelPiso.setText("Piso");
+        jPanel1.add(jLabelPiso);
+        jPanel1.add(jTextFieldPiso);
+
         jButtonAlta.setText("Alta");
         jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +177,7 @@ public class JDialogCliente extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButtonAlta)
@@ -162,12 +213,19 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
         // TODO add your handling code here:
         Cliente nuevo = new Cliente(
+                        jTextFieldDNI.getText(),
                         jTextFieldNombre.getText(),
                         jTextFieldApellido1.getText(),
-                        jComboBoxProvincia.getSelectedItem().toString(),
+                        jTextFieldApellido2.getText(),
+                        (Date)jSpinnerFecha_nac.getValue(),
                         jTextFieldMail.getText(),
-                        Integer.parseInt(jTextFieldTelefono.getText()),
-                        (Date)jSpinnerFechaAlta.getValue());
+                        jTextFieldTelefono.getText(),
+                        jTextFieldNacionalidad.getText(),
+                        jTextFieldPais.getText(),
+                        jTextFieldCalle_num.getText(),
+                        jTextFieldPoblacion.getText(),
+                        jTextFieldPiso.getText()
+                        );
         
         jframepadre.addCliente(nuevo);
         dispose();
@@ -176,6 +234,10 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jTextFieldApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldApellido2ActionPerformed
+
+    private void jTextFieldPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPaisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPaisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,19 +278,33 @@ public class JDialogCliente extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlta;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;
+    private javax.swing.JLabel jLabelCalle_num;
     private javax.swing.JLabel jLabelClientes;
+    private javax.swing.JLabel jLabelDNI;
+    private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelFecha_nac;
     private javax.swing.JLabel jLabelMail;
+    private javax.swing.JLabel jLabelNacionalidad;
     private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabelPais;
+    private javax.swing.JLabel jLabelPiso;
+    private javax.swing.JLabel jLabelPoblacion;
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerFecha_nac;
     private javax.swing.JTextField jTextFieldApellido1;
     private javax.swing.JTextField jTextFieldApellido2;
+    private javax.swing.JTextField jTextFieldCalle_num;
+    private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldMail;
+    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldPais;
+    private javax.swing.JTextField jTextFieldPiso;
+    private javax.swing.JTextField jTextFieldPoblacion;
     private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 }
