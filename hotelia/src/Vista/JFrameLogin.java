@@ -5,6 +5,8 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
+import Controlador.Seguridad;
+import static Controlador.Seguridad.checkPassword;
 import java.sql.Connection;
 
 /**
@@ -12,7 +14,7 @@ import java.sql.Connection;
  * @author DAM2Alu4
  */
 public class JFrameLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameLogin.class.getName());
 
     /**
@@ -21,9 +23,8 @@ public class JFrameLogin extends javax.swing.JFrame {
     public JFrameLogin() {
         initComponents();
     }
-    
-     // creo la conexion
- 
+
+    // creo la conexion
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,9 +39,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         jLabelUsuario = new javax.swing.JLabel();
         jTextFieldUsuario = new javax.swing.JTextField();
         jLabelContraseña = new javax.swing.JLabel();
-        jTextFieldContraseña = new javax.swing.JTextField();
         jButtonAceptar = new javax.swing.JButton();
         jLabelError = new javax.swing.JLabel();
+        jTextFieldContraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,12 +70,12 @@ public class JFrameLogin extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelContraseña)
-                            .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelUsuario)
                             .addComponent(jLabel1)
-                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(jTextFieldContraseña)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(275, 275, 275)
                         .addComponent(jButtonAceptar))
@@ -116,17 +117,43 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-  
-            
+
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         
-        if(!jTextFieldUsuario.getText().equals("") || jTextFieldContraseña.getText().equals("")){
+        ConexionBBDD c = new ConexionBBDD();
+        Connection conexion = c.getConnection();
+        
+        String usuario = jTextFieldUsuario.getText();
+        String pass = jTextFieldContraseña.getText();
+
+        if (usuario.isEmpty() || pass.isEmpty()) {
+            jLabelError.setText("El usuario o la contraseña están vacíos");
+            return;
+        }
+        // Obtener contraseña de la BBDD
+        String passBD = c.BuscarContraseñaEmpleado(usuario);
+        
+        
+        if (passBD == null || passBD.isEmpty()) {
+            
+            jLabelError.setText("Login correcto (usuario no encontrado BORRAR DESPUES)");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
-            jLabelError.setText("EL usuario o la contraseña esta vacia");
-        }else{
+            return;
+        }
+       
+        // Comprobar contraseña
+       if (Seguridad.checkPassword(pass, passBD)) {
+            jLabelError.setText("Login correcto");
+            // Aquí abres tu siguiente ventana
             
+            JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
+            jdg.setVisible(true);
+            
+        } else {
+            jLabelError.setText("Login correcto (Contraseña incorrecta BORRAR DESPUES)");
+            jTextFieldContraseña.setText("");
+            jTextFieldUsuario.setText("");
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -151,9 +178,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new JFrameLogin().setVisible(true));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -163,7 +190,7 @@ public class JFrameLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelError;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldContraseña;
+    private javax.swing.JPasswordField jTextFieldContraseña;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

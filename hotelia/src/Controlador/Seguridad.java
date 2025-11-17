@@ -19,4 +19,8 @@ public class Seguridad {
     public static boolean checkPassword(String password, String hashed) {
         return BCrypt.checkpw(password, hashed);
     }
+     public static void hashPrueba(String password) {
+        String c= BCrypt.hashpw(password, BCrypt.gensalt());
+         System.out.println(c);
+    }
 }
