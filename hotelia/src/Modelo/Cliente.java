@@ -20,62 +20,22 @@ public class Cliente {
     Date fecha_nac;
     String mail, telefono, nacionalidad, pais, calle_numero, poblacion, piso;
 
-        public Cliente(String dni_nie, String nombre, String apellido1, String apellido2, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion, String piso) {
-            this.dni_nie = dni_nie;
-            this.nombre = nombre;
-            this.apellido1 = apellido1;
-            this.apellido2 = apellido2;
-            this.fecha_nac = fecha_nac;
-            this.mail = mail;
-            this.telefono = telefono;
-            this.nacionalidad = nacionalidad;
-            this.pais = pais;
-            this.calle_numero = calle_numero;
-            this.poblacion = poblacion;
-            this.piso = piso;
-        }
+    public Cliente(String dni_nie, String nombre, String apellido1, String apellido2, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion, String piso) {
+        this.dni_nie = dni_nie;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.fecha_nac = fecha_nac;
+        this.mail = mail;
+        this.telefono = telefono;
+        this.nacionalidad = nacionalidad;
+        this.pais = pais;
+        this.calle_numero = calle_numero;
+        this.poblacion = poblacion;
+        this.piso = piso;
+    }
 
-        public Cliente(String dni_nie, String nombre, String apellido1, String apellido2, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion) {
-            this.dni_nie = dni_nie;
-            this.nombre = nombre;
-            this.apellido1 = apellido1;
-            this.apellido2 = apellido2;
-            this.fecha_nac = fecha_nac;
-            this.mail = mail;
-            this.telefono = telefono;
-            this.nacionalidad = nacionalidad;
-            this.pais = pais;
-            this.calle_numero = calle_numero;
-            this.poblacion = poblacion;
-        }
-
-        public Cliente(String dni_nie, String nombre, String apellido1, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion, String piso) {
-            this.dni_nie = dni_nie;
-            this.nombre = nombre;
-            this.apellido1 = apellido1;
-            this.fecha_nac = fecha_nac;
-            this.mail = mail;
-            this.telefono = telefono;
-            this.nacionalidad = nacionalidad;
-            this.pais = pais;
-            this.calle_numero = calle_numero;
-            this.poblacion = poblacion;
-            this.piso = piso;
-        }
-
-        public Cliente(String dni_nie, String nombre, String apellido1, Date fecha_nac, String mail, String telefono, String nacionalidad, String pais, String calle_numero, String poblacion) {
-            this.dni_nie = dni_nie;
-            this.nombre = nombre;
-            this.apellido1 = apellido1;
-            this.fecha_nac = fecha_nac;
-            this.mail = mail;
-            this.telefono = telefono;
-            this.nacionalidad = nacionalidad;
-            this.pais = pais;
-            this.calle_numero = calle_numero;
-            this.poblacion = poblacion;
-        }
-
+        
         public String getDni_nie() {
             return dni_nie;
         }
