@@ -5,6 +5,8 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
+import Controlador.Seguridad;
+import static Controlador.Seguridad.checkPassword;
 import java.sql.Connection;
 
 /**
@@ -12,7 +14,7 @@ import java.sql.Connection;
  * @author DAM2Alu4
  */
 public class JFrameLogin extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameLogin.class.getName());
 
     /**
@@ -21,9 +23,8 @@ public class JFrameLogin extends javax.swing.JFrame {
     public JFrameLogin() {
         initComponents();
     }
-    
-     // creo la conexion
- 
+
+    // creo la conexion
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -116,17 +117,35 @@ public class JFrameLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-  
-            
+
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         
-        if(!jTextFieldUsuario.getText().equals("") || jTextFieldContraseña.getText().equals("")){
-            jTextFieldContraseña.setText("");
-            jTextFieldUsuario.setText("");
-            jLabelError.setText("EL usuario o la contraseña esta vacia");
-        }else{
-            
+        ConexionBBDD c = new ConexionBBDD();
+        Connection conexion = c.getConnection();
+        
+        String usuario = jTextFieldUsuario.getText();
+        String pass = jTextFieldContraseña.getText();
+
+        if (usuario.isEmpty() || pass.isEmpty()) {
+            jLabelError.setText("El usuario o la contraseña están vacíos");
+            return;
+        }
+        // Obtener contraseña de la BBDD
+        String passBD = c.BuscarContraseñaEmpleado(usuario);
+        
+        
+        if (passBD == null || passBD.isEmpty()) {
+            jLabelError.setText("Usuario no encontrado");
+            return;
+        }
+       
+        // Comprobar contraseña
+       if (Seguridad.checkPassword(pass, passBD)) {
+            jLabelError.setText("Login correcto");
+            //ahora da error por que no hay ninguna contraseña hash
+            // Aquí abres tu siguiente ventana
+        } else {
+            jLabelError.setText("Contraseña incorrecta");
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -151,9 +170,9 @@ public class JFrameLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         
-        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new JFrameLogin().setVisible(true));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
