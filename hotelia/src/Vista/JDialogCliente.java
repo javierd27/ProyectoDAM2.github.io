@@ -71,6 +71,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -182,7 +183,12 @@ public class JDialogCliente extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("jLabel1");
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -193,8 +199,10 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonEditar)
+                        .addGap(83, 83, 83)
                         .addComponent(jButtonBuscar)
-                        .addGap(42, 42, 42)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonCrear)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -215,7 +223,8 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCrear)
-                    .addComponent(jButtonBuscar))
+                    .addComponent(jButtonBuscar)
+                    .addComponent(jButtonEditar))
                 .addGap(11, 11, 11))
         );
 
@@ -278,6 +287,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPaisActionPerformed
 
+    @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         try {
             // TODO add your handling code here:
@@ -285,14 +295,27 @@ public class JDialogCliente extends javax.swing.JDialog {
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
-            
             String dni = jTextFieldDNI.getText();
+            Cliente cliente = c.buscaCliente(dni);
             
-            if(c.buscaCliente(dni).next()>=1){
-                jLabel1.setText("Encontrado");
-                jTextFieldNombre.setText("");
-            }else{
+            if(cliente == null){
                 jLabel1.setText("No se ha encontrado");
+
+            }else{
+                jLabel1.setText("Encontrado");
+                
+                jTextFieldDNI.setText(cliente.getDni_nie());
+                jTextFieldNombre.setText(cliente.getNombre());
+                jTextFieldApellido1.setText(cliente.getApellido1());
+                jTextFieldApellido2.setText(cliente.getApellido2());
+                jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
+                jTextFieldMail.setText(cliente.getMail());
+                jTextFieldTelefono.setText(cliente.getTelefono());
+                jTextFieldNacionalidad.setText(cliente.getNacionalidad());
+                jTextFieldPais.setText(cliente.getPais());
+                jTextFieldPoblacion.setText(cliente.getPoblacion());
+                jTextFieldCalle_num.setText(cliente.getCalle_numero());
+                jTextFieldPiso.setText(cliente.getPiso());
                 
             }
         } catch (SQLException ex) {
@@ -300,6 +323,42 @@ public class JDialogCliente extends javax.swing.JDialog {
         }
         
     }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        try {
+            // TODO add your handling code here:
+            ConexionBBDD c = new ConexionBBDD();
+            Connection conexion = c.getConnection();
+            
+            Cliente nuevo = new Cliente(
+                    jTextFieldDNI.getText(),
+                    jTextFieldNombre.getText(),
+                    jTextFieldApellido1.getText(),
+                    jTextFieldApellido2.getText(),
+                    (Date)jSpinnerFecha_nac.getValue(),
+                    jTextFieldMail.getText(),
+                    jTextFieldTelefono.getText(),
+                    jTextFieldNacionalidad.getText(),
+                    jTextFieldPais.getText(),
+                    jTextFieldCalle_num.getText(),
+                    jTextFieldPoblacion.getText(),
+                    jTextFieldPiso.getText()
+            );
+            
+            if(c.editarCliente(nuevo, jTextFieldDNI.getText()) >= 1){
+                jLabel1.setText("Actualizado con exito");
+            }else{
+                jLabel1.setText("No se ha actualizado");
+
+            }
+            
+        } catch (SQLException ex) {
+            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            jLabel1.setText("Error");
+        }
+        
+        
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,6 +400,7 @@ public class JDialogCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
