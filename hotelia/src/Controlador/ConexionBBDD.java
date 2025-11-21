@@ -109,15 +109,16 @@ public class ConexionBBDD {
         }
     }
     
-    public void insertaCliente(Cliente cliente) throws SQLException{
-        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,? , ?)";
+    public int insertaCliente(Cliente cliente) throws SQLException{
+        String sql = "INSERT INTO cliente VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
         PreparedStatement ps = conexion.prepareStatement(sql);
         ps.setString(1, cliente.getDni_nie());
         ps.setString(2, cliente.getNombre());
         ps.setString(3, cliente.getApellido1());
         ps.setString(4, cliente.getApellido2());
-        ps.setDate(5, (Date) cliente.getFecha_nac());
+       // ps.setDate(5, (java.sql.Date) cliente.getFecha_nac());
+        ps.setDate(5,new java.sql.Date(cliente.getFecha_nac().getTime()));
         ps.setString(6, cliente.getMail());
         ps.setString(7, cliente.getTelefono());
         ps.setString(8, cliente.getNacionalidad());
@@ -126,19 +127,28 @@ public class ConexionBBDD {
         ps.setString(11, cliente.getPoblacion());
         ps.setString(12, cliente.getPiso());
         
-    //    ps.executeUpdate();**********************************************************
+        return ps.executeUpdate();
+    }
+    
+    public ResultSet buscaCliente(String dni) throws SQLException{
+        String sql = "SELECT * FROM cliente WHERE dni_nie = ?";
+        
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, dni);
+        
+        ResultSet rs = ps.executeQuery();
+      
+        return rs;
     }
     //metodo que recoge una lista de las habitaciones
-    public int[] buscarHabitaciones() {
-        int[] lista = null;
+    public List<String> buscarHabitaciones() {
+        List<String> lista = new ArrayList<>();
         try {
             PreparedStatement ps = conexion.prepareStatement(
                     "SELECT idHabitacion FROM habitacion");
             ResultSet rs = ps.executeQuery();
-            ResultSetMetaData rsmd = rs.getMetaData();
-            int tam = rsmd.getColumnCount();
-            for (int i = 1; i <= tam; i++) {
-                lista[i] = rs.getInt(i);
+            while (rs.next()) {
+                lista.add(String.valueOf(rs.getInt(1)));
             }
             
             
@@ -151,14 +161,19 @@ public class ConexionBBDD {
     
     
     //metodo que recoge las fechas del inicio de reserva por habitacion
-    public List<LocalDate> buscarFechaInicio(int idHabitacion) {
+    public LocalDate buscarFechaInicio(int idHabitacion) {
         try {
-            List<LocalDate> lista = new ArrayList<LocalDate>();
+            LocalDate fecha_inicio = null;
             
             PreparedStatement ps = conexion.prepareStatement(
                     "SELECT fecha_inicio FROM reserva where idHabitacion = ?");
-            
-            return lista;
+            ps.setInt(1, idHabitacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                fecha_inicio = rs.getDate(1).toLocalDate();
+            }
+          
+            return fecha_inicio;
         } catch (SQLException ex) {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
@@ -167,21 +182,77 @@ public class ConexionBBDD {
         //metodo que recoge las fechas del inicio de reserva
     public LocalDate buscarFechaFin(int idHabitacion) {
         try {
+             LocalDate fecha_fin = null;
             
             PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT fecha_inicio FROM reserva where idHabitacion = ?");
-                    ps.setInt(0,idHabitacion);
-                    ResultSet reg = ps.executeQuery();
-            
-            return null;
+                    "SELECT fecha_fin FROM reserva where idHabitacion = ?");
+            ps.setInt(1, idHabitacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                fecha_fin = rs.getDate(1).toLocalDate();
+            }
+          
+            return fecha_fin;
         } catch (SQLException ex) {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         return null;
     }
     
+    //metodo que busca el estado de la habitacion
+     public String buscarEstadoHabitacion(int idHabitacion) {
+        try {
+            String estado = null;
+            
+            PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT estado FROM habitacion where idHabitacion = ?");
+            ps.setInt(1, idHabitacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                estado = rs.getString(1);
+            }
+          
+            return estado;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
+    }
+     
+    //metodo que actualiza estado de la habitacion
+     public void ActualizarEstadoHabitacion(int idHabitacion, String estado) {
+        try {
+            PreparedStatement ps = conexion.prepareStatement(
+                    "UPDATE habitacion SET estado = ? where idHabitacion = ?");
+            ps.setString(1, estado);
+            ps.setInt(2, idHabitacion);
+            ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    } 
+     
     
-    
+    //metodo que busca el estado de la reserva por id habitacion
+     public String buscarEstadoDeReservaPorHabitacion(int idHabitacion) {
+        try {
+            String estado = null;
+            
+            PreparedStatement ps = conexion.prepareStatement(
+                    "SELECT estado FROM reserva where idHabitacion = ?");
+            ps.setInt(1, idHabitacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                estado = rs.getString(1);
+            }
+          
+            return estado;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+        return null;
+    }
     
 
     public void cerrar() {
