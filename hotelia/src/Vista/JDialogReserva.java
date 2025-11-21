@@ -15,9 +15,9 @@ import java.util.Date;
  *
  * @author DAM2Alu3
  */
-public class JDialogCliente extends javax.swing.JDialog {
+public class JDialogReserva extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogCliente.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogReserva.class.getName());
 
     /**
      * Creates new form JDialogAltaCliente
@@ -25,7 +25,7 @@ public class JDialogCliente extends javax.swing.JDialog {
     
     JFrameLogin jframepadre;
     
-    public JDialogCliente(java.awt.Frame parent, boolean modal) {
+    public JDialogReserva(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         //jframepadre = (JFrameLogin)parent;
         initComponents();
@@ -45,61 +45,48 @@ public class JDialogCliente extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabelDNI = new javax.swing.JLabel();
         jTextFieldDNI = new javax.swing.JTextField();
+        jLabelFecha_nac = new javax.swing.JLabel();
+        jSpinnerFecha_nac = new javax.swing.JSpinner();
+        jLabelFecha_nac1 = new javax.swing.JLabel();
+        jSpinnerFecha_nac1 = new javax.swing.JSpinner();
+        jLabelApellido2 = new javax.swing.JLabel();
+        jTextFieldApellido2 = new javax.swing.JTextField();
         jLabelNombre = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabelApelliod1 = new javax.swing.JLabel();
         jTextFieldApellido1 = new javax.swing.JTextField();
-        jLabelApellido2 = new javax.swing.JLabel();
-        jTextFieldApellido2 = new javax.swing.JTextField();
-        jLabelFecha_nac = new javax.swing.JLabel();
-        jSpinnerFecha_nac = new javax.swing.JSpinner();
-        jLabelMail = new javax.swing.JLabel();
-        jTextFieldMail = new javax.swing.JTextField();
-        jLabelTelefono = new javax.swing.JLabel();
-        jTextFieldTelefono = new javax.swing.JTextField();
-        jLabelNacionalidad = new javax.swing.JLabel();
-        jTextFieldNacionalidad = new javax.swing.JTextField();
-        jLabelDireccion = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabelPais = new javax.swing.JLabel();
-        jTextFieldPais = new javax.swing.JTextField();
-        jLabelPoblacion = new javax.swing.JLabel();
-        jTextFieldPoblacion = new javax.swing.JTextField();
-        jLabelCalle_num = new javax.swing.JLabel();
-        jTextFieldCalle_num = new javax.swing.JTextField();
-        jLabelPiso = new javax.swing.JLabel();
-        jTextFieldPiso = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelClientes.setText("CLIENTES");
+        jLabelClientes.setText("RESERVA");
 
-        jPanel1.setLayout(new java.awt.GridLayout(13, 2, 10, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelDNI.setText("DNI");
+        jLabelDNI.setText("DNI cliente");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabelNombre.setText("Nombre");
-        jPanel1.add(jLabelNombre);
+        jLabelFecha_nac.setText("Fecha de inicio");
+        jPanel1.add(jLabelFecha_nac);
 
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldNombre);
+        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
+        jPanel1.add(jSpinnerFecha_nac);
 
-        jLabelApelliod1.setText("Apellido1");
-        jPanel1.add(jLabelApelliod1);
-        jPanel1.add(jTextFieldApellido1);
+        jLabelFecha_nac1.setText("Fecha de fin");
+        jPanel1.add(jLabelFecha_nac1);
 
-        jLabelApellido2.setText("Apellido2");
+        jSpinnerFecha_nac1.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_nac1.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac1, "dd/MM/yyyy"));
+        jPanel1.add(jSpinnerFecha_nac1);
+
+        jLabelApellido2.setText("Cantidad de personas");
         jPanel1.add(jLabelApellido2);
 
         jTextFieldApellido2.addActionListener(new java.awt.event.ActionListener() {
@@ -109,65 +96,26 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFecha_nac.setText("Fecha de nacimiento");
-        jPanel1.add(jLabelFecha_nac);
+        jLabelNombre.setText("Fecha hora reserva");
+        jPanel1.add(jLabelNombre);
 
-        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac);
-
-        jLabelMail.setText("Correo");
-        jPanel1.add(jLabelMail);
-
-        jTextFieldMail.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldMailActionPerformed(evt);
+                jTextFieldNombreActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldMail);
+        jPanel1.add(jTextFieldNombre);
 
-        jLabelTelefono.setText("Teléfono");
-        jPanel1.add(jLabelTelefono);
+        jLabelApelliod1.setText("Estado");
+        jPanel1.add(jLabelApelliod1);
 
-        jTextFieldTelefono.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldApellido1.setEditable(false);
+        jTextFieldApellido1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTelefonoActionPerformed(evt);
+                jTextFieldApellido1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldTelefono);
-
-        jLabelNacionalidad.setText("Nacionalidad");
-        jPanel1.add(jLabelNacionalidad);
-        jPanel1.add(jTextFieldNacionalidad);
-
-        jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabelDireccion.setText("____________   Dirección de domicilio");
-        jPanel1.add(jLabelDireccion);
-
-        jLabel2.setText("____________________________");
-        jPanel1.add(jLabel2);
-
-        jLabelPais.setText("País de residencia actual");
-        jPanel1.add(jLabelPais);
-
-        jTextFieldPais.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPaisActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldPais);
-
-        jLabelPoblacion.setText("Población");
-        jPanel1.add(jLabelPoblacion);
-        jPanel1.add(jTextFieldPoblacion);
-
-        jLabelCalle_num.setText("Calle y número");
-        jPanel1.add(jLabelCalle_num);
-        jPanel1.add(jTextFieldCalle_num);
-
-        jLabelPiso.setText("Piso");
-        jPanel1.add(jLabelPiso);
-        jPanel1.add(jTextFieldPiso);
+        jPanel1.add(jTextFieldApellido1);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +138,13 @@ public class JDialogCliente extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,9 +155,11 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonEditar)
-                        .addGap(83, 83, 83)
+                        .addGap(28, 28, 28)
                         .addComponent(jButtonBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(29, 29, 29)
                         .addComponent(jButtonCrear)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -224,7 +181,8 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCrear)
                     .addComponent(jButtonBuscar)
-                    .addComponent(jButtonEditar))
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButton1))
                 .addGap(11, 11, 11))
         );
 
@@ -234,14 +192,6 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombreActionPerformed
-
-    private void jTextFieldMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldMailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldMailActionPerformed
-
-    private void jTextFieldTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTelefonoActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         try {
@@ -275,17 +225,13 @@ public class JDialogCliente extends javax.swing.JDialog {
             
             
         } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jTextFieldApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldApellido2ActionPerformed
-
-    private void jTextFieldPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPaisActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPaisActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
@@ -319,7 +265,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 
             }
         } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         
     }//GEN-LAST:event_jButtonBuscarActionPerformed
@@ -353,12 +299,20 @@ public class JDialogCliente extends javax.swing.JDialog {
             }
             
         } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             jLabel1.setText("Error");
         }
         
         
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldApellido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldApellido1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,7 +339,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogCliente dialog = new JDialogCliente(new javax.swing.JFrame(), true);
+                JDialogReserva dialog = new JDialogReserva(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -398,37 +352,24 @@ public class JDialogCliente extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;
-    private javax.swing.JLabel jLabelCalle_num;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelDNI;
-    private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelFecha_nac;
-    private javax.swing.JLabel jLabelMail;
-    private javax.swing.JLabel jLabelNacionalidad;
+    private javax.swing.JLabel jLabelFecha_nac1;
     private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JLabel jLabelPais;
-    private javax.swing.JLabel jLabelPiso;
-    private javax.swing.JLabel jLabelPoblacion;
-    private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerFecha_nac;
+    private javax.swing.JSpinner jSpinnerFecha_nac1;
     private javax.swing.JTextField jTextFieldApellido1;
     private javax.swing.JTextField jTextFieldApellido2;
-    private javax.swing.JTextField jTextFieldCalle_num;
     private javax.swing.JTextField jTextFieldDNI;
-    private javax.swing.JTextField jTextFieldMail;
-    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPais;
-    private javax.swing.JTextField jTextFieldPiso;
-    private javax.swing.JTextField jTextFieldPoblacion;
-    private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
 }
