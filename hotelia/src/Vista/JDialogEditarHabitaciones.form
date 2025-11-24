@@ -63,7 +63,7 @@
             <Property name="text" type="java.lang.String" value="N&#xfa;mero de habitaci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="etNumHab">
+        <Component class="javax.swing.JTextField" name="jetNumHab">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -71,7 +71,7 @@
             <Property name="text" type="java.lang.String" value="Tipo de habitaci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbTipo">
+        <Component class="javax.swing.JComboBox" name="jcbTipo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -92,7 +92,7 @@
             <Property name="text" type="java.lang.String" value="Capacidad de la habitaci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="sCapacidad">
+        <Component class="javax.swing.JSpinner" name="jsCapacidad">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -100,11 +100,11 @@
             <Property name="text" type="java.lang.String" value="Precio base"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="sPrecioB">
+        <Component class="javax.swing.JSpinner" name="jsPrecioB">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+        <Component class="javax.swing.JCheckBox" name="jcbFormulas">
           <Properties>
             <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="&#xbf;Usar formulas de precio?"/>
@@ -116,7 +116,7 @@
             <Property name="text" type="java.lang.String" value="Estado de la habitaci&#xf3;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="cbEstado">
+        <Component class="javax.swing.JComboBox" name="jcbEstado">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">
@@ -146,6 +146,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Aceptar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAceptarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

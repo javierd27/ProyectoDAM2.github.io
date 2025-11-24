@@ -4,6 +4,9 @@
  */
 package Vista;
 
+import Controlador.ConexionBBDD;
+import Modelo.Habitacion;
+
 /**
  *
  * @author DAM2Alu16
@@ -21,13 +24,32 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
      * para el estado, solo se podra poner de reparacion a libre, si esta ocupado no se podra
      */
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogEditarHabitaciones.class.getName());
-
+    //VARIABLES
+    ConexionBBDD database = new ConexionBBDD();
+    
+    //esta variable cambiarla y traerla por calendario
+    int idHabitacion = 1;
+    
+    public void MostrarEditable(int idHabitacion) {
+        Habitacion habitacion = database.buscarHabitacionPorId(idHabitacion);
+        jLabelNombre.setText("Habitaicion "+idHabitacion);
+        jetNumHab.setText(String.valueOf(habitacion.getNumero()));
+        jcbTipo.setSelectedItem(habitacion.getTipo());
+        jsCapacidad.setValue(habitacion.getCapacidad());
+        jsPrecioB.setValue(habitacion.getPrecio_base());
+        jcbEstado.setSelectedItem(habitacion.getEstado());
+         
+    }
+    
+    
+    
     /**
      * Creates new form JDialogEditarHabitaciones
      */
     public JDialogEditarHabitaciones(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        MostrarEditable(idHabitacion);
     }
 
     /**
@@ -43,17 +65,17 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jLabelNombre = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        etNumHab = new javax.swing.JTextField();
+        jetNumHab = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        cbTipo = new javax.swing.JComboBox<>();
+        jcbTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        sCapacidad = new javax.swing.JSpinner();
+        jsCapacidad = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        sPrecioB = new javax.swing.JSpinner();
+        jsPrecioB = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jcbFormulas = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        cbEstado = new javax.swing.JComboBox<>();
+        jcbEstado = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
@@ -70,36 +92,36 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Número de habitación");
         jPanel2.add(jLabel1);
-        jPanel2.add(etNumHab);
+        jPanel2.add(jetNumHab);
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tipo de habitación");
         jPanel2.add(jLabel2);
 
-        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Duplex", "Junior", "Presidencial" }));
-        jPanel2.add(cbTipo);
+        jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Duplex", "Junior", "Presidencial" }));
+        jPanel2.add(jcbTipo);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Capacidad de la habitación");
         jPanel2.add(jLabel3);
-        jPanel2.add(sCapacidad);
+        jPanel2.add(jsCapacidad);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
-        jPanel2.add(sPrecioB);
+        jPanel2.add(jsPrecioB);
         jPanel2.add(jLabel7);
 
-        jCheckBox1.setSelected(true);
-        jCheckBox1.setText("¿Usar formulas de precio?");
-        jPanel2.add(jCheckBox1);
+        jcbFormulas.setSelected(true);
+        jcbFormulas.setText("¿Usar formulas de precio?");
+        jPanel2.add(jcbFormulas);
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Estado de la habitación");
         jPanel2.add(jLabel5);
 
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion" }));
-        jPanel2.add(cbEstado);
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion" }));
+        jPanel2.add(jcbEstado);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -107,6 +129,11 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jPanel1.add(jButtonCancelar);
 
         jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButtonAceptar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,6 +154,20 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        //boton que actualiza los datos puestos en la habitacion
+        //hay que hacer ifs para que no sea null
+        
+        //int idHabitacion
+        int numero 
+        String tipo
+        int capacidad
+        double precio_base
+        String estado 
+        
+        
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,12 +207,8 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cbEstado;
-    private javax.swing.JComboBox<String> cbTipo;
-    private javax.swing.JTextField etNumHab;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -182,7 +219,11 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSpinner sCapacidad;
-    private javax.swing.JSpinner sPrecioB;
+    private javax.swing.JComboBox<String> jcbEstado;
+    private javax.swing.JCheckBox jcbFormulas;
+    private javax.swing.JComboBox<String> jcbTipo;
+    private javax.swing.JTextField jetNumHab;
+    private javax.swing.JSpinner jsCapacidad;
+    private javax.swing.JSpinner jsPrecioB;
     // End of variables declaration//GEN-END:variables
 }

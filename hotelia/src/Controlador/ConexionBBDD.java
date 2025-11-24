@@ -10,6 +10,7 @@ package Controlador;
  * @author DAM2Alu4
  */
 import Modelo.Cliente;
+import Modelo.Habitacion;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -165,8 +166,8 @@ public class ConexionBBDD {
         
         return ps.executeUpdate();
     }
-    //metodo que recoge una lista de las habitaciones
-    public List<String> buscarHabitaciones() {
+    //metodo que recoge una lista del id de las habitaciones
+    public List<String> buscarIdHabitaciones() {
         List<String> lista = new ArrayList<>();
         try {
             PreparedStatement ps = conexion.prepareStatement(
@@ -278,6 +279,50 @@ public class ConexionBBDD {
         }
         return null;
     }
+     
+     //metodo que busca los datos de las habitaciones por id
+     public Habitacion buscarHabitacionPorId(int idHabitacion) {
+         
+         Habitacion habitacion = null;
+                 
+         PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(
+                    "SELECT idHabitacion, numero, tipo, capacidad, precio_base, estado FROM habitacion WHERE idHabitacion = ?");
+             ps.setInt(1, idHabitacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                                         //idHabitacion,   numero,          tipo,     capacidad,    precio_base,      estado
+                habitacion = new Habitacion(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getDouble(5),rs.getString(6));
+                
+            }
+            return habitacion;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return habitacion;
+        }
+        
+     }
+     
+          //metodo que actualiza los datos de las habitaciones por id
+     public void actualizarHabitacionPorId(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, String estado) {
+          
+         PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(
+                    "Update habitacion set numero = ?, tipo = ?, capacidad = ?, precio_base = ?, estado = ? FROM habitacion WHERE idHabitacion = ?");
+             ps.setInt(1, numero);
+             ps.setString(2, tipo);
+             ps.setInt(3, capacidad);
+             ps.setDouble(4, precio_base);
+             ps.setString(5, estado);
+             ps.setInt(6, idHabitacion);
+             ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+     }
     
 
     public void cerrar() {
