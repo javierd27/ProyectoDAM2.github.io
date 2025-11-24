@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.ConexionBBDD;
 import Modelo.Cliente;
+import Modelo.Reserva;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -50,11 +51,11 @@ public class JDialogReserva extends javax.swing.JDialog {
         jLabelFecha_nac1 = new javax.swing.JLabel();
         jSpinnerFecha_nac1 = new javax.swing.JSpinner();
         jLabelApellido2 = new javax.swing.JLabel();
-        jTextFieldApellido2 = new javax.swing.JTextField();
+        jSpinner1 = new javax.swing.JSpinner();
         jLabelNombre = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
+        jSpinnerFecha_nac2 = new javax.swing.JSpinner();
         jLabelApelliod1 = new javax.swing.JLabel();
-        jTextFieldApellido1 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -88,34 +89,25 @@ public class JDialogReserva extends javax.swing.JDialog {
 
         jLabelApellido2.setText("Cantidad de personas");
         jPanel1.add(jLabelApellido2);
-
-        jTextFieldApellido2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldApellido2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldApellido2);
+        jPanel1.add(jSpinner1);
 
         jLabelNombre.setText("Fecha hora reserva");
         jPanel1.add(jLabelNombre);
 
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldNombre);
+        jSpinnerFecha_nac2.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_nac2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac2, "dd/MM/yyyy"));
+        jPanel1.add(jSpinnerFecha_nac2);
 
         jLabelApelliod1.setText("Estado");
         jPanel1.add(jLabelApelliod1);
 
-        jTextFieldApellido1.setEditable(false);
-        jTextFieldApellido1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptada", "Cancelada" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldApellido1ActionPerformed(evt);
+                jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldApellido1);
+        jPanel1.add(jComboBox1);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -155,18 +147,17 @@ public class JDialogReserva extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonEditar)
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addComponent(jButton1)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButtonCrear)
-                        .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonCrear))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51))))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,10 +180,6 @@ public class JDialogReserva extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
-
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         try {
             // TODO add your handling code here:
@@ -200,22 +187,13 @@ public class JDialogReserva extends javax.swing.JDialog {
             Connection conexion = c.getConnection();
             
             
-            Cliente nuevo = new Cliente(
-                    jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
-                    (Date)jSpinnerFecha_nac.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
+            Reserva nuevo = new Reserva(
+                    
+                    
+                    
             );
             
-            if(c.insertaCliente(nuevo)>=1){
+            if(c.insertaReserva(nuevo)>=1){
                 jLabel1.setText("Creado con exito");
             }else{
                 jLabel1.setText("No se ha creado");
@@ -228,10 +206,6 @@ public class JDialogReserva extends javax.swing.JDialog {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
-
-    private void jTextFieldApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldApellido2ActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
@@ -310,9 +284,9 @@ public class JDialogReserva extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jTextFieldApellido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido1ActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldApellido1ActionPerformed
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -356,6 +330,7 @@ public class JDialogReserva extends javax.swing.JDialog {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;
@@ -365,11 +340,10 @@ public class JDialogReserva extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFecha_nac1;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinnerFecha_nac;
     private javax.swing.JSpinner jSpinnerFecha_nac1;
-    private javax.swing.JTextField jTextFieldApellido1;
-    private javax.swing.JTextField jTextFieldApellido2;
+    private javax.swing.JSpinner jSpinnerFecha_nac2;
     private javax.swing.JTextField jTextFieldDNI;
-    private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }
