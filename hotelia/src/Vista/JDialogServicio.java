@@ -8,6 +8,7 @@ package Vista;
 import Controlador.ConexionBBDD;
 import Modelo.Cliente;
 import Modelo.Reserva;
+import Modelo.Servicio;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
@@ -47,8 +48,9 @@ public class JDialogServicio extends javax.swing.JDialog {
         jLabelDNI = new javax.swing.JLabel();
         jTextFieldDNI = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabelApelliod1 = new javax.swing.JLabel();
+        jTextFieldDescripcion = new javax.swing.JTextField();
+        jLabelPrecio = new javax.swing.JLabel();
+        jTextFieldPrecio = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -60,20 +62,19 @@ public class JDialogServicio extends javax.swing.JDialog {
         jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelClientes.setText("SERVICIO");
 
-        jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
 
         jLabelDNI.setText("Nombre del servicio");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabel2.setText("Reserva");
+        jLabel2.setText("Descripción");
         jPanel1.add(jLabel2);
+        jPanel1.add(jTextFieldDescripcion);
 
-        jTextField1.setText("jTextField1");
-        jPanel1.add(jTextField1);
-
-        jLabelApelliod1.setText("Estado");
-        jPanel1.add(jLabelApelliod1);
+        jLabelPrecio.setText("Precio");
+        jPanel1.add(jLabelPrecio);
+        jPanel1.add(jTextFieldPrecio);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -130,10 +131,10 @@ public class JDialogServicio extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                     .addComponent(jLabelClientes))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCrear)
@@ -217,22 +218,11 @@ public class JDialogServicio extends javax.swing.JDialog {
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
-            Cliente nuevo = new Cliente(
-                    jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
-                    (Date)jSpinnerFecha_nac.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
+            Servicio nuevo = new Servicio(
+                    
             );
             
-            if(c.editarCliente(nuevo, jTextFieldDNI.getText()) >= 1){
+            if(c.editarServicio(nuevo, jTextFieldDNI.getText()) >= 1){
                 jLabel1.setText("Actualizado con exito");
             }else{
                 jLabel1.setText("No se ha actualizado");
@@ -295,11 +285,12 @@ public class JDialogServicio extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelApelliod1;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelDNI;
+    private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldDNI;
+    private javax.swing.JTextField jTextFieldDescripcion;
+    private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables
 }
