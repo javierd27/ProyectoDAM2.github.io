@@ -109,8 +109,7 @@ public class Reserva {
         return "Reserva{" + "idServicio=" + idServicio + ", idHabitacion=" + idHabitacion + ", idFactura=" + idFactura + ", cantidad_personas=" + cantidad_personas + ", idCliente=" + idCliente + ", estado=" + estado + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + ", fecha_hora_reserva=" + fecha_hora_reserva + '}';
     }
 
-   
-    
+       
     public  String[] getColumnas(){
         String[] columnas = {"idReserva", "idServicio", "idHabitacion", "idCliente", "idFactura", "Fecha inicio", "Fecha fin", "Cantidad personas", "Fecha y hora de la reserva", "Estado"};
         return columnas;

@@ -16,9 +16,9 @@ import java.util.Date;
  *
  * @author DAM2Alu3
  */
-public class JDialogReserva extends javax.swing.JDialog {
+public class JDialogServicio extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogReserva.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogServicio.class.getName());
 
     /**
      * Creates new form JDialogAltaCliente
@@ -26,7 +26,7 @@ public class JDialogReserva extends javax.swing.JDialog {
     
     JFrameLogin jframepadre;
     
-    public JDialogReserva(java.awt.Frame parent, boolean modal) {
+    public JDialogServicio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         //jframepadre = (JFrameLogin)parent;
         initComponents();
@@ -47,17 +47,8 @@ public class JDialogReserva extends javax.swing.JDialog {
         jLabelDNI = new javax.swing.JLabel();
         jTextFieldDNI = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabelFecha_nac = new javax.swing.JLabel();
-        jSpinnerFecha_nac = new javax.swing.JSpinner();
-        jLabelFecha_nac1 = new javax.swing.JLabel();
-        jSpinnerFecha_nac1 = new javax.swing.JSpinner();
-        jLabelApellido2 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        jLabelNombre = new javax.swing.JLabel();
-        jSpinnerFecha_nac2 = new javax.swing.JSpinner();
+        jTextField1 = new javax.swing.JTextField();
         jLabelApelliod1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -67,55 +58,22 @@ public class JDialogReserva extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelClientes.setText("RESERVA");
+        jLabelClientes.setText("SERVICIO");
 
         jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelDNI.setText("DNI cliente");
+        jLabelDNI.setText("Nombre del servicio");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
         jLabel2.setText("Reserva");
         jPanel1.add(jLabel2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2);
-
-        jLabelFecha_nac.setText("Fecha de inicio");
-        jPanel1.add(jLabelFecha_nac);
-
-        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac);
-
-        jLabelFecha_nac1.setText("Fecha de fin");
-        jPanel1.add(jLabelFecha_nac1);
-
-        jSpinnerFecha_nac1.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac1.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac1, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac1);
-
-        jLabelApellido2.setText("Cantidad de personas");
-        jPanel1.add(jLabelApellido2);
-        jPanel1.add(jSpinner1);
-
-        jLabelNombre.setText("Fecha hora reserva");
-        jPanel1.add(jLabelNombre);
-
-        jSpinnerFecha_nac2.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac2, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac2);
+        jTextField1.setText("jTextField1");
+        jPanel1.add(jTextField1);
 
         jLabelApelliod1.setText("Estado");
         jPanel1.add(jLabelApelliod1);
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptada", "Cancelada" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jComboBox1);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +170,7 @@ public class JDialogReserva extends javax.swing.JDialog {
             
             
         } catch (SQLException ex) {
-            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
@@ -248,7 +206,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                 
             }
         } catch (SQLException ex) {
-            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
         
     }//GEN-LAST:event_jButtonBuscarActionPerformed
@@ -282,7 +240,7 @@ public class JDialogReserva extends javax.swing.JDialog {
             }
             
         } catch (SQLException ex) {
-            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             jLabel1.setText("Error");
         }
         
@@ -292,10 +250,6 @@ public class JDialogReserva extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,7 +276,7 @@ public class JDialogReserva extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogReserva dialog = new JDialogReserva(new javax.swing.JFrame(), true);
+                JDialogServicio dialog = new JDialogServicio(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -339,22 +293,13 @@ public class JDialogReserva extends javax.swing.JDialog {
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelDNI;
-    private javax.swing.JLabel jLabelFecha_nac;
-    private javax.swing.JLabel jLabelFecha_nac1;
-    private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinnerFecha_nac;
-    private javax.swing.JSpinner jSpinnerFecha_nac1;
-    private javax.swing.JSpinner jSpinnerFecha_nac2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldDNI;
     // End of variables declaration//GEN-END:variables
 }
