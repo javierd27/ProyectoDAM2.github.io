@@ -132,11 +132,12 @@ public class Cliente {
         public void setPiso(String piso) {
             this.piso = piso;
         } 
-  
-    
-    
 
-    
+    @Override
+    public String toString() {
+        return "Cliente{" + "dni_nie=" + dni_nie + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", fecha_nac=" + fecha_nac + ", mail=" + mail + ", telefono=" + telefono + ", nacionalidad=" + nacionalidad + ", pais=" + pais + ", calle_numero=" + calle_numero + ", poblacion=" + poblacion + ", piso=" + piso + '}';
+    }
+  
     
     public  String[] getColumnas(){
         String[] columnas = {"DNI/NIE", "Nombre", "Apellido1", "Apellido2", "Fecha de nacimiento", "Correo", "Teléfono", "Nacionalidad", "Pais", "Calle y número", "Poblacion", "Piso"};
