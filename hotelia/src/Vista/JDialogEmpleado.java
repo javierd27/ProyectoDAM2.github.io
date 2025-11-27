@@ -30,8 +30,8 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     Connection conexion = c.getConnection();
 
     public void cargaInicial() throws SQLException {
-        PreparedStatement ps = conexion.prepareStatement("Select dni_nie, nombre, apellido1, apellido2, fecha_nac,usuario,rol,correo,telefono,nacionalidad,pais,calle_numero,poblacion,piso from empleado;");
-        c.selectSQL(dtm);
+        
+        c.selectTodosEmpleados(dtm);
         jTableEmpleados.setModel(dtm);
 
     }
@@ -50,7 +50,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         dtm = new DefaultTableModel();
         jTableEmpleados.setModel(dtm);
         dtm.setColumnIdentifiers(Empleado.devuelveColumna());
-        c.selectSQL(dtm);
+        c.selectTodosEmpleados(dtm);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
@@ -235,7 +235,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
 
             // Compruebo si se ha borrado 
-            if (c.deleteUsuario(dtm, id) < 1) {
+           if (c.deleteUsuario(dtm, id) < 1) {
                 jLabelError.setText("No se ha podido borrar ningún usuario");
             } else {
                 // Quitar del modelo de tabla
