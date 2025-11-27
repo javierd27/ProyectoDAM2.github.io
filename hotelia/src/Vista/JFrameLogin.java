@@ -22,6 +22,7 @@ public class JFrameLogin extends javax.swing.JFrame {
      */
     public JFrameLogin() {
         initComponents();
+        
     }
 
     // creo la conexion
@@ -116,6 +117,7 @@ public class JFrameLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
@@ -148,6 +150,8 @@ public class JFrameLogin extends javax.swing.JFrame {
             // Aquí abres tu siguiente ventana
             
             JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
+            jdg.setUsuario(usuario);
+            dispose();
             jdg.setVisible(true);
             
         } else {
