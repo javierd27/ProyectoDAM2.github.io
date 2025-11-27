@@ -288,12 +288,12 @@ public class ConexionBBDD {
          PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(
-                    "SELECT idHabitacion, numero, tipo, capacidad, precio_base, estado FROM habitacion WHERE idHabitacion = ?");
+                    "SELECT idHabitacion, numero, tipo, capacidad, precio_base, precio_publico, estado FROM habitacion WHERE idHabitacion = ?");
              ps.setInt(1, idHabitacion);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                                         //idHabitacion,   numero,          tipo,     capacidad,    precio_base,      estado
-                habitacion = new Habitacion(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getDouble(5),rs.getString(6));
+                                         //idHabitacion,   numero,          tipo,     capacidad,    precio_base,   precio_publico      estado
+                habitacion = new Habitacion(rs.getInt(1),rs.getInt(2),rs.getString(3),rs.getInt(4),rs.getDouble(5),rs.getDouble(6),rs.getString(7));
                 
             }
             return habitacion;

@@ -6,6 +6,7 @@ package Vista;
 
 import Controlador.ConexionBBDD;
 import Modelo.Habitacion;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -104,11 +105,15 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Capacidad de la habitación");
         jPanel2.add(jLabel3);
+
+        jsCapacidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jPanel2.add(jsCapacidad);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
+
+        jsPrecioB.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 10.0d));
         jPanel2.add(jsPrecioB);
         jPanel2.add(jLabel7);
 
@@ -120,7 +125,8 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jLabel5.setText("Estado de la habitación");
         jPanel2.add(jLabel5);
 
-        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion" }));
+        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion", "Ocupado" }));
+        jcbEstado.setToolTipText("");
         jPanel2.add(jcbEstado);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -160,11 +166,39 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         //hay que hacer ifs para que no sea null
         
         //int idHabitacion
-        int numero 
-        String tipo
-        int capacidad
-        double precio_base
-        String estado 
+        int numero;
+        String tipo;
+        int capacidad;
+        double precio_base;
+        double precio_publico;
+        String estado;
+        
+        
+        if (jetNumHab.getText().equals(null) ||jetNumHab.getText().equals("")) {
+             JOptionPane.showMessageDialog(rootPane, 
+                                          "El numero de la habitacion no puede ser nulo",
+                                          "Numero incorrecto",
+                                          JOptionPane.ERROR_MESSAGE);
+        } else if (jcbFormulas.) {
+            numero = Integer.parseInt(jetNumHab.getText());
+            tipo = jcbTipo.getSelectedItem().toString();
+            capacidad = (int) jsCapacidad.getValue();
+            precio_base = (double) jsPrecioB.getValue();
+            precio_publico = precio_base;
+            estado = (String) jcbEstado.getSelectedItem();
+            JOptionPane.showMessageDialog(rootPane, 
+                                          "vamos bien",
+                                          "vamos bien",
+                                          JOptionPane.ERROR_MESSAGE);
+            
+        } else {
+            numero = Integer.parseInt(jetNumHab.getText());
+            tipo = jcbTipo.getSelectedItem().toString();
+            capacidad = (int) jsCapacidad.getValue();
+            precio_base = (double) jsPrecioB.getValue();
+            precio_publico = precio_base; //aqui cambiar con la formula
+            estado = (String) jcbEstado.getSelectedItem();
+        }
         
         
     }//GEN-LAST:event_jButtonAceptarActionPerformed

@@ -16,14 +16,16 @@ public class Habitacion {
     String tipo;
     int capacidad;
     double precio_base;
+    double precio_publico;
     String estado;
 
-    public Habitacion(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, String estado) {
+    public Habitacion(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, double precio_publico, String estado) {
         this.idHabitacion = idHabitacion;
         this.numero = numero;
         this.tipo = tipo;
         this.capacidad = capacidad;
         this.precio_base = precio_base;
+        this.precio_publico = precio_publico;
         this.estado = estado;
     }
     
@@ -67,6 +69,14 @@ public class Habitacion {
 
     public void setPrecio_base(double precio_base) {
         this.precio_base = precio_base;
+    }
+
+    public double getPrecio_publico() {
+        return precio_publico;
+    }
+
+    public void setPrecio_publico(double precio_publico) {
+        this.precio_publico = precio_publico;
     }
 
     public String getEstado() {
