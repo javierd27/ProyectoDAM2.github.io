@@ -4,20 +4,39 @@
  */
 package Vista;
 
+import Controlador.ConexionBBDD;
+import java.sql.Connection;
+import java.sql.SQLException;
+
 /**
  *
  * @author DAM2Alu4
  */
-public class JDialogGestionAdmin extends javax.swing.JDialog {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogGestionAdmin.class.getName());
 
+public class JDialogGestionAdmin extends javax.swing.JDialog {
+    // Variable para recoger el valor del usuario
+     String usuario;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+   public void setUsuario(String usuario) {
+    this.usuario = usuario;
+    jLabelUsuario.setText(usuario);  // actualiza el texto del label
+}
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogGestionAdmin.class.getName());
+    ConexionBBDD c = new ConexionBBDD();
+    Connection conexion = c.getConnection();
+    
     /**
      * Creates new form JDialogGestion
      */
     public JDialogGestionAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        
     }
 
     /**
@@ -30,28 +49,96 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jButtonClientes = new javax.swing.JButton();
+        jButtonEmpleados = new javax.swing.JButton();
+        jButtonCalendario = new javax.swing.JButton();
+        jButtonServicios = new javax.swing.JButton();
+        jButtonEstadisticas = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelBienvenido = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("asdasdfdasf");
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(206, 206, 206)
-                .addComponent(jLabel1)
-                .addContainerGap(337, Short.MAX_VALUE))
+        jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("GESTIÓN ADMINISTRADOR");
+        jPanel1.add(jLabelTitulo, java.awt.BorderLayout.PAGE_START);
+
+        jButtonClientes.setText("Clientes");
+        jButtonClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClientesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonClientes);
+
+        jButtonEmpleados.setText("Empleados");
+        jButtonEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEmpleadosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonEmpleados);
+
+        jButtonCalendario.setText("Calendario");
+        jButtonCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCalendarioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCalendario);
+
+        jButtonServicios.setText("Servicios");
+        jButtonServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonServiciosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonServicios);
+
+        jButtonEstadisticas.setText("Estadisticas");
+        jButtonEstadisticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEstadisticasActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonEstadisticas);
+
+        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
+
+        jLabelBienvenido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelBienvenido.setText("Bienvenido ");
+
+        jLabelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelUsuario.setText(getUsuario());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelBienvenido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(328, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(jLabel1)
-                .addContainerGap(299, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,6 +154,44 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*
+        ======================================================
+        BOTONES PARA 
+        EMPLEADO
+        CLIENTES    
+        CALENDARIO
+        SERVICIOS
+        ESTADISTICAS
+        HABITACION
+        
+    */
+    private void jButtonEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpleadosActionPerformed
+         try {
+             // TODO add your handling code here:
+             
+             JDialogEmpleado jde = new JDialogEmpleado(null, true);
+             jde.setVisible(true);
+         } catch (SQLException ex) {
+             System.getLogger(JDialogGestionAdmin.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+         }
+    }//GEN-LAST:event_jButtonEmpleadosActionPerformed
+
+    private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonClientesActionPerformed
+
+    private void jButtonCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalendarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCalendarioActionPerformed
+
+    private void jButtonServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonServiciosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonServiciosActionPerformed
+
+    private void jButtonEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEstadisticasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -76,6 +201,8 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -96,6 +223,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
+                        
                         System.exit(0);
                     }
                 });
@@ -105,7 +233,16 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButtonCalendario;
+    private javax.swing.JButton jButtonClientes;
+    private javax.swing.JButton jButtonEmpleados;
+    private javax.swing.JButton jButtonEstadisticas;
+    private javax.swing.JButton jButtonServicios;
+    private javax.swing.JLabel jLabelBienvenido;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

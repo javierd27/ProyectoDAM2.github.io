@@ -94,7 +94,7 @@ public class ConexionBBDD {
         String resul = "";
         try {
             PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT contrasenya FROM empleados WHERE usuario = ?"
+                    "SELECT contrasenya FROM empleado WHERE usuario = ?"
             );
             ps.setString(1, us); // CORREGIDO
 
@@ -323,7 +323,59 @@ public class ConexionBBDD {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
      }
-    
+     /**
+      * Consulta para recoger la toda la informacion de los empleados excepto la contraseña
+      * Para llevarlo a un Jtable
+      * @param dtm 
+      */
+      public void selectTodosEmpleados(DefaultTableModel dtm) {
+        try {
+            PreparedStatement ps;
+            ps = conexion.prepareStatement("Select dni_nie, nombre, apellido1, apellido2, fecha_nac,usuario,rol,correo,telefono,nacionalidad,pais,calle_numero,poblacion,piso from empleado;");
+            ResultSet rs = ps.executeQuery();
+            // recorremos todos los empleados
+            while(rs.next()){
+                Object[] fila = new Object[]{
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4),
+                    rs.getString(5),
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getString(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getString(14)
+                };
+                dtm.addRow(fila);
+            }// end while
+        } // selectSQL
+        catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    /**
+     * Metodo que elimina de la base de datos los empleados seleccionados (se eliminara de 1 en 1)
+     * @param dtm
+     * @param id
+     * @return 
+     */
+    public int deleteUsuario(DefaultTableModel dtm, String id) {
+        try {
+            PreparedStatement ps = conexion.prepareStatement("delete from empleado where dni_nie = ?");
+            ps.setString(1, id);
+           return ps.executeUpdate();
+            
+        } catch (SQLException ex) {
+            
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return 0;
+        }
+    }
 
     public void cerrar() {
         try {
@@ -332,5 +384,9 @@ public class ConexionBBDD {
             System.out.println("No se ha podido cerrar la conexión");
         }
     }
+
+ 
+
+ 
 
 }
