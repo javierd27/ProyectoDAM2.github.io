@@ -34,6 +34,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButtonClientes = new javax.swing.JButton();
         jButtonCalendario = new javax.swing.JButton();
+        jButtonCalendario1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -50,6 +51,9 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
 
         jButtonCalendario.setText("Calendario");
         jPanel2.add(jButtonCalendario);
+
+        jButtonCalendario1.setText("Calendario");
+        jPanel2.add(jButtonCalendario1);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
@@ -70,11 +74,11 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -119,6 +123,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCalendario;
+    private javax.swing.JButton jButtonCalendario1;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;

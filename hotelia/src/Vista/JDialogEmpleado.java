@@ -79,10 +79,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jButtonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldApellido = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
-        jButtonBuscar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabelError = new javax.swing.JLabel();
@@ -122,27 +119,22 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonEliminar);
 
-        jLabel1.setText("NOMBRE");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("BUSQUEDA");
         jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
         jPanel2.add(jLabel1);
 
-        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(90, 40));
+        jTextFieldNombre.setPreferredSize(new java.awt.Dimension(255, 40));
         jPanel2.add(jTextFieldNombre);
-
-        jLabel2.setText("APELLIDO");
-        jLabel2.setPreferredSize(new java.awt.Dimension(90, 40));
-        jPanel2.add(jLabel2);
-
-        jTextFieldApellido.setPreferredSize(new java.awt.Dimension(90, 40));
-        jPanel2.add(jTextFieldApellido);
 
         jButtonCrear.setText("CREAR");
         jButtonCrear.setPreferredSize(new java.awt.Dimension(90, 40));
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButtonCrear);
-
-        jButtonBuscar.setText("BUSCAR");
-        jButtonBuscar.setPreferredSize(new java.awt.Dimension(90, 40));
-        jPanel2.add(jButtonBuscar);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel3.setText("EMPLEADOS");
@@ -156,14 +148,14 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addGap(109, 109, 109)
-                .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(15, 15, 15))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -175,7 +167,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1049, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -186,7 +178,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -196,7 +188,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1049, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,7 +223,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             // recojo el indice real de la tabla
             int filaModelo = jTableEmpleados.convertRowIndexToModel(jTableEmpleados.getSelectedRow());
 
-            // ID (columna 0)
+            // dni_nie (columna 0)
             String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
 
             // Compruebo si se ha borrado 
@@ -245,6 +237,12 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             jLabelError.setText("Selecciona exactamente una fila");
         }// end if
     }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,12 +287,10 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JPanel jPanel1;
@@ -302,7 +298,6 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEmpleados;
-    private javax.swing.JTextField jTextFieldApellido;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }

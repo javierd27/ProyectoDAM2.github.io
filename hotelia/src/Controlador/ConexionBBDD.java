@@ -94,7 +94,7 @@ public class ConexionBBDD {
         String resul = "";
         try {
             PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT contrasenya FROM empleados WHERE usuario = ?"
+                    "SELECT contrasenya FROM empleado WHERE usuario = ?"
             );
             ps.setString(1, us); // CORREGIDO
 
@@ -366,7 +366,7 @@ public class ConexionBBDD {
      */
     public int deleteUsuario(DefaultTableModel dtm, String id) {
         try {
-            PreparedStatement ps = conexion.prepareStatement("delete from empleado where id = ?");
+            PreparedStatement ps = conexion.prepareStatement("delete from empleado where dni_nie = ?");
             ps.setString(1, id);
            return ps.executeUpdate();
             

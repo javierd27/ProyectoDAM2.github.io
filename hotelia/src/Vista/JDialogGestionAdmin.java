@@ -56,7 +56,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         jButtonCalendario = new javax.swing.JButton();
         jButtonServicios = new javax.swing.JButton();
         jButtonEstadisticas = new javax.swing.JButton();
-        jButtonHabitacion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -67,7 +66,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitulo.setText("GESTIÓN");
+        jLabelTitulo.setText("GESTIÓN ADMINISTRADOR");
         jPanel1.add(jLabelTitulo, java.awt.BorderLayout.PAGE_START);
 
         jButtonClientes.setText("Clientes");
@@ -109,14 +108,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
             }
         });
         jPanel2.add(jButtonEstadisticas);
-
-        jButtonHabitacion.setText("Habitacion");
-        jButtonHabitacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonHabitacionActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButtonHabitacion);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
@@ -201,10 +192,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEstadisticasActionPerformed
 
-    private void jButtonHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHabitacionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonHabitacionActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -250,7 +237,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonEstadisticas;
-    private javax.swing.JButton jButtonHabitacion;
     private javax.swing.JButton jButtonServicios;
     private javax.swing.JLabel jLabelBienvenido;
     private javax.swing.JLabel jLabelTitulo;
