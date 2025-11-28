@@ -97,7 +97,6 @@ public class JDialogFactura extends javax.swing.JDialog {
         jLabel4.setText("Observaciones");
         jPanel1.add(jLabel4);
 
-        jTextFieldObservaciones.setText("jTextField1");
         jTextFieldObservaciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldObservacionesActionPerformed(evt);
@@ -107,8 +106,6 @@ public class JDialogFactura extends javax.swing.JDialog {
 
         jLabel5.setText("Descuento");
         jPanel1.add(jLabel5);
-
-        jTextFieldDescuento.setText("jTextField1");
         jPanel1.add(jTextFieldDescuento);
 
         jLabel6.setText("Metodo de pago");
@@ -117,7 +114,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         jComboBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBoxMetodoPago);
 
-        jLabelEstado.setText("jLabel7");
+        jLabelEstado.setText("Estado");
         jPanel1.add(jLabelEstado);
 
         jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -126,7 +123,12 @@ public class JDialogFactura extends javax.swing.JDialog {
         jLabel3.setText("Total");
         jPanel1.add(jLabel3);
 
-        jTextFieldTotal.setText("jTextField1");
+        jTextFieldTotal.setEditable(false);
+        jTextFieldTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldTotalActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldTotal);
 
         jButtonCrear.setText("Crear");
@@ -308,6 +310,10 @@ public class JDialogFactura extends javax.swing.JDialog {
     private void jTextFieldObservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldObservacionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldObservacionesActionPerformed
+
+    private void jTextFieldTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldTotalActionPerformed
 
     /**
      * @param args the command line arguments
