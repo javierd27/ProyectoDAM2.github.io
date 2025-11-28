@@ -14,7 +14,7 @@ import java.sql.Connection;
  * @author DAM2Alu4
  */
 public class JFrameLogin extends javax.swing.JFrame {
-
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JFrameLogin.class.getName());
 
     /**
@@ -137,18 +137,16 @@ public class JFrameLogin extends javax.swing.JFrame {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         
         ConexionBBDD c = new ConexionBBDD();
-        Connection conexion = c.getConnection();
         
         String usuario = jTextFieldUsuario.getText();
         String pass = jTextFieldContraseña.getText();
-
+        
         if (usuario.isEmpty() || pass.isEmpty()) {
             jLabelError.setText("El usuario o la contraseña están vacíos");
             return;
         }
         // Obtener contraseña de la BBDD
         String passBD = c.BuscarContraseñaEmpleado(usuario);
-        
         
         if (passBD == null || passBD.isEmpty()) {
             
@@ -157,16 +155,26 @@ public class JFrameLogin extends javax.swing.JFrame {
             jTextFieldUsuario.setText("");
             return;
         }
-       
+
         // Comprobar contraseña
-       if (Seguridad.checkPassword(pass, passBD)) {
+        if (Seguridad.checkPassword(pass, passBD)) {
             jLabelError.setText("Login correcto");
-            // Aquí abres tu siguiente ventana
-            
-            JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
-            jdg.setUsuario(usuario);
-            dispose();
-            jdg.setVisible(true);
+            // comprueba si es administrador o no para saber donde entrar
+            if (c.comprobarRol(usuario).equals("administrador")) {
+                JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
+                jdg.setUsuario(usuario);
+                this.dispose();
+             
+                jdg.setVisible(true);
+                System.exit(0);
+            }else{
+                
+                JDialogGestionEmpleado jdge = new JDialogGestionEmpleado(this, true);
+                jdge.setUsuario(usuario);
+                this.dispose();
+                jdge.setVisible(true);
+                System.exit(0);
+            }
             
         } else {
             jLabelError.setText("Login correcto");
@@ -175,9 +183,10 @@ public class JFrameLogin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonAceptarActionPerformed
     /**
-     * Cerramos el proyecto totalmente si le damos a cerrar 
-     * Hay que mirar para que se cierre totalmente tambien al darle a la x
-     * @param evt 
+     * Cerramos el proyecto totalmente si le damos a cerrar Hay que mirar para
+     * que se cierre totalmente tambien al darle a la x
+     *
+     * @param evt
      */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -204,10 +213,10 @@ public class JFrameLogin extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new JFrameLogin().setVisible(true));
-
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

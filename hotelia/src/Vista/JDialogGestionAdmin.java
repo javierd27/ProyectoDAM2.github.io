@@ -56,6 +56,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         jButtonCalendario = new javax.swing.JButton();
         jButtonServicios = new javax.swing.JButton();
         jButtonEstadisticas = new javax.swing.JButton();
+        jButtonCerrarSesion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -109,6 +110,14 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonEstadisticas);
 
+        jButtonCerrarSesion.setText("Cerrar Sesión");
+        jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarSesionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCerrarSesion);
+
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         jLabelBienvenido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -126,7 +135,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
                 .addComponent(jLabelBienvenido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(328, Short.MAX_VALUE))
+                .addContainerGap(385, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,6 +201,13 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEstadisticasActionPerformed
 
+    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
+        JFrameLogin jfl = new JFrameLogin();
+        this.dispose();
+        
+        jfl.setVisible(true);
+    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,6 +250,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCalendario;
+    private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonEstadisticas;

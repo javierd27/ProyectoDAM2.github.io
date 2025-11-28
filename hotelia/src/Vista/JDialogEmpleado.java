@@ -27,7 +27,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
     ConexionBBDD c = new ConexionBBDD();
-    Connection conexion = c.getConnection();
+    
 
     public void cargaInicial() throws SQLException {
         

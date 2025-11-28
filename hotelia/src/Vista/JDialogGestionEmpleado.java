@@ -9,7 +9,18 @@ package Vista;
  * @author DAM2Alu4
  */
 public class JDialogGestionEmpleado extends javax.swing.JDialog {
-    
+
+    // Variable para recoger el valor del usuario
+    String usuario;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+        jLabelUsuario.setText(usuario);  // actualiza el texto del label
+    }
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogGestionEmpleado.class.getName());
 
     /**
@@ -36,6 +47,8 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jButtonCalendario = new javax.swing.JButton();
         jButtonCalendario1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabelBienvenido = new javax.swing.JLabel();
+        jLabelUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,7 +56,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitulo.setText("GESTIÓN");
+        jLabelTitulo.setText("GESTIÓN EMPLEADO");
         jPanel1.add(jLabelTitulo, java.awt.BorderLayout.PAGE_START);
 
         jButtonClientes.setText("Clientes");
@@ -57,15 +70,31 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
+        jLabelBienvenido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelBienvenido.setText("Bienvenido ");
+
+        jLabelUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelUsuario.setText(getUsuario());
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelBienvenido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(302, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                    .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, java.awt.BorderLayout.CENTER);
@@ -125,7 +154,9 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCalendario;
     private javax.swing.JButton jButtonCalendario1;
     private javax.swing.JButton jButtonClientes;
+    private javax.swing.JLabel jLabelBienvenido;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
