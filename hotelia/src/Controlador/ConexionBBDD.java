@@ -8,6 +8,7 @@ package Controlador;
  *
  * @author DAM2Alu3
  * @author DAM2Alu4
+ * @author DAM2Alu16
  */
 import Modelo.Cliente;
 import Modelo.Habitacion;
