@@ -16,11 +16,12 @@ import java.util.Date;
  * @author DAM2Alu3
  */
 public class Reserva {
-    int idServicio, idHabitacion, idFactura, cantidad_personas;
+    int idReserva, idServicio, idHabitacion, idFactura, cantidad_personas;
     String idCliente, estado;
     Date fecha_inicio, fecha_fin, fecha_hora_reserva;
 
-    public Reserva(int idServicio, int idHabitacion, int idFactura, int cantidad_personas, String idCliente, String estado, Date fecha_inicio, Date fecha_fin, Date fecha_hora_reserva) {
+    public Reserva(int idReserva, int idServicio, int idHabitacion, int idFactura, int cantidad_personas, String idCliente, String estado, Date fecha_inicio, Date fecha_fin, Date fecha_hora_reserva) {
+        this.idReserva = idReserva;
         this.idServicio = idServicio;
         this.idHabitacion = idHabitacion;
         this.idFactura = idFactura;
@@ -121,6 +122,7 @@ public class Reserva {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy, hh:mm");
         
         String[] fila = {
+                String.valueOf(idReserva),
                 String.valueOf(idServicio),
                 String.valueOf(idHabitacion),
                 idCliente,
