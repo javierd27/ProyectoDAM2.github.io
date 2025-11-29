@@ -103,7 +103,8 @@ public class JDialogReserva extends javax.swing.JDialog {
         jPanel1.add(jLabelNombre);
 
         jSpinnerFecha_nac2.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac2, "dd/MM/yyyy"));
+        jSpinnerFecha_nac2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac2, "dd/MM/yyyy HH:mm:ss"));
+        jSpinnerFecha_nac2.setEnabled(false);
         jPanel1.add(jSpinnerFecha_nac2);
 
         jLabelApelliod1.setText("Estado");

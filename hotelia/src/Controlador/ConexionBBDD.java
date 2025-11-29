@@ -12,6 +12,7 @@ package Controlador;
  */
 import Modelo.Cliente;
 import Modelo.Habitacion;
+import Modelo.Servicio;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -164,7 +165,57 @@ public class ConexionBBDD {
 
         return ps.executeUpdate();
     }
+    
+    
+     public int insertaServicio(Servicio nuevo) throws SQLException {
+        String sql = "INSERT INTO servicio (nombre, precio, descripcion) VALUES (?, ?, ?)";
 
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, nuevo.getNombre());
+        ps.setDouble(2, nuevo.getPrecio());
+        ps.setString(3, nuevo.getDescripción());
+
+        return ps.executeUpdate();
+    }
+     
+     
+    public Servicio buscaServicio(String nombre) throws SQLException {
+        String sql = "SELECT * FROM servicio WHERE nombre = ?";
+
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setString(1, nombre);
+
+        ResultSet rs = ps.executeQuery();
+        if (!rs.next()) {
+            return null;
+        } else {
+            return new Servicio(rs.getString("nombre"),  rs.getString("descripcion"), rs.getDouble("precio"));
+        }
+    }
+     
+    
+    public int editarServicio(Servicio servicio, String nombre) throws SQLException {
+        String sql = "UPDATE servicio SET precio = ?, descripcion = ? WHERE nombre = ?";
+        PreparedStatement ps = conexion.prepareStatement(sql);
+
+        ps.setDouble(1, servicio.getPrecio());
+        ps.setString(2, servicio.getDescripción());
+        ps.setString(3, nombre);
+       
+        return ps.executeUpdate();
+    }
+    
+    
+    public int eliminaServicio(String nombre) throws SQLException {
+        String sql = "DELETE FROM servicio WHERE idServicio = ?";
+        PreparedStatement ps = conexion.prepareStatement(sql);
+
+        ps.setString(1, nombre);
+        
+        return ps.executeUpdate();
+    }
+            
+    
     //metodo que recoge una lista del id de las habitaciones
     public List<String> buscarIdHabitaciones() {
         List<String> lista = new ArrayList<>();
