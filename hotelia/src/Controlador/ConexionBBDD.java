@@ -183,44 +183,32 @@ public class ConexionBBDD {
         return lista;
     }
 
-    //metodo que recoge las fechas del inicio de reserva por habitacion
-    public LocalDate buscarFechaInicio(int idHabitacion) {
+        //metodo que recoge las fechas de inicio y fin de reserva y el estado de reserva por habitacion
+    public List<Object[]> buscarFechayEstadoPorHabitacion(int idHab) {
+        List<Object[]> lista = new ArrayList<>();
         try {
-            LocalDate fecha_inicio = null;
-
             PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT fecha_inicio FROM reserva where idHabitacion = ?");
-            ps.setInt(1, idHabitacion);
+                "SELECT fecha_inicio, fecha_fin, estado FROM reserva WHERE idHabitacion = ?"
+            );
+            ps.setInt(1, idHab);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                fecha_inicio = rs.getDate(1).toLocalDate();
-            }
 
-            return fecha_inicio;
-        } catch (SQLException ex) {
-            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                while (rs.next()) {
+                    LocalDate inicio = rs.getDate("fecha_inicio").toLocalDate();
+                    LocalDate fin = rs.getDate("fecha_fin").toLocalDate();
+                    String estado = rs.getString("estado");
+
+                    lista.add(new Object[]{inicio, fin, estado});
+                }
+
+            rs.close();
+            ps.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return null;
-    }
-    //metodo que recoge las fechas del inicio de reserva
 
-    public LocalDate buscarFechaFin(int idHabitacion) {
-        try {
-            LocalDate fecha_fin = null;
-
-            PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT fecha_fin FROM reserva where idHabitacion = ?");
-            ps.setInt(1, idHabitacion);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                fecha_fin = rs.getDate(1).toLocalDate();
-            }
-
-            return fecha_fin;
-        } catch (SQLException ex) {
-            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-        return null;
+        return lista;
     }
 
     //metodo que busca el estado de la habitacion
@@ -257,25 +245,8 @@ public class ConexionBBDD {
         }
     }
 
-    //metodo que busca el estado de la reserva por id habitacion
-    public String buscarEstadoDeReservaPorHabitacion(int idHabitacion) {
-        try {
-            String estado = null;
 
-            PreparedStatement ps = conexion.prepareStatement(
-                    "SELECT estado FROM reserva where idHabitacion = ?");
-            ps.setInt(1, idHabitacion);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                estado = rs.getString(1);
-            }
 
-            return estado;
-        } catch (SQLException ex) {
-            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-        return null;
-    }
 
     //metodo que busca los datos de las habitaciones por id
     public Habitacion buscarHabitacionPorId(int idHabitacion) {
