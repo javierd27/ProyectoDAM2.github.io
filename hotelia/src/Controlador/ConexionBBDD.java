@@ -207,7 +207,7 @@ public class ConexionBBDD {
     
     
     public int eliminaServicio(String nombre) throws SQLException {
-        String sql = "DELETE FROM servicio WHERE idServicio = ?";
+        String sql = "DELETE FROM servicio WHERE nombre = ?";
         PreparedStatement ps = conexion.prepareStatement(sql);
 
         ps.setString(1, nombre);
