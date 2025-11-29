@@ -22,56 +22,6 @@ import javax.swing.table.DefaultTableModel;
  * En este JDialog, se crea un JTable, el cual te muestra las habitaciones que tienes a la izquierda y a la derecha la fecha,
  * marcando cuando esta disponible, ocupada o en reparacion
  */
-
-import java.time.temporal.ChronoUnit;
-import java.awt.Component;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.Color;
-
-//Esta es una clase para que la tabla pueda tener colores, el verde, el rojo y el azul
-class EstadoCellRenderer extends DefaultTableCellRenderer {
-    @Override
-    public Component getTableCellRendererComponent(javax.swing.JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-
-        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-        // columna 0 es "Habitaciones" -> fondo normal
-        if (column == 0) {
-            c.setBackground(Color.WHITE);
-            return c;
-        }
-
-        String s = value == null ? "" : value.toString();
-
-        // normaliza a minúsculas para comparar
-        String low = s.toLowerCase();
-
-        if (low.contains("ocup")) { // "Ocupado"
-            c.setBackground(new Color(0xFFCCCC)); // rojo claro
-        } else if (low.contains("repar")) { // "Reparación"
-            c.setBackground(new Color(0x0B3D91)); // azul oscuro (puedes ajustar)
-            c.setForeground(Color.WHITE);
-        } else if (s.isEmpty()) {
-            c.setBackground(new Color(0xCCFFCC)); // verde claro para libre
-            c.setForeground(Color.BLACK);
-            setText(""); // opcional, muestra vacío
-        } else {
-            // si hay otros estados (ej: "Reservado", "Check-in") ajusta aquí
-            c.setBackground(Color.LIGHT_GRAY);
-            c.setForeground(Color.BLACK);
-        }
-
-        if (isSelected) {
-            // respeta selección (opcional)
-            c.setBackground(table.getSelectionBackground());
-            c.setForeground(table.getSelectionForeground());
-        }
-
-        return c;
-    }
-}
-
 public class JDialogCalendarioHab extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogCalendarioHab.class.getName());
@@ -83,85 +33,35 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     LocalDate dateActual;
     
-    public void cargarCalendario() {
-    // modelo sin filas prefijadas
-    dtm = new DefaultTableModel();
-    jTableCalenHab.setModel(dtm);
-
-    // columna de habitaciones
-    dtm.addColumn("Habitaciones");
-
-    dateActual = LocalDate.now();
-
-    // añade columnas de fechas (ej. 730 días = 2 años)
-    for (int i = 0; i < 730; i++) {
-        LocalDate date = dateActual.plusDays(i);
-        dtm.addColumn(date.format(dtf));
-    }
-
-    // aplica renderer (pinta las celdas según su texto)
-    jTableCalenHab.setDefaultRenderer(Object.class, new EstadoCellRenderer());
-    jTableCalenHab.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-
-    // recoge lista de habitaciones
-    List<String> habitaciones = database.buscarIdHabitaciones();
-
-    for (int rowIndex = 0; rowIndex < habitaciones.size(); rowIndex++) {
-        String idHabStr = habitaciones.get(rowIndex);
-        int idHab = Integer.parseInt(idHabStr);
-
-        // crea fila con el número correcto de columnas
-        Object[] fila = new Object[dtm.getColumnCount()];
-        fila[0] = idHabStr; // primera columna: id habitacion (o número)
-        dtm.addRow(fila);
-
-        // usa tu método que devuelve todas las reservas (inicio, fin, estado)
-        List<Object[]> reservas = database.buscarFechayEstadoPorHabitacion(idHab);
-
-        for (Object[] reg : reservas) {
-            // reg[0] = inicio (LocalDate), reg[1] = fin (LocalDate), reg[2] = estado (String)
-            LocalDate inicio = (LocalDate) reg[0];
-            LocalDate fin = (LocalDate) reg[1];
-            String estado = (String) reg[2];
-
-            // ignora reservas canceladas (ajusta según cómo guardes el estado)
-            if (estado != null && estado.equalsIgnoreCase("Cancelado")) {
-                continue;
-            }
-
-            // calcula indices relativos desde dateActual
-            long startOffset = ChronoUnit.DAYS.between(dateActual, inicio);
-            long endOffset = ChronoUnit.DAYS.between(dateActual, fin);
-
-            // si la reserva está fuera del rango [0,729] la ignoramos o recortamos
-            int startCol = (int) Math.max(0, startOffset) + 1; // +1 porque col 0 = Habitaciones
-            int endCol = (int) Math.min(729, endOffset) + 1;
-
-            // si fin < dateActual o inicio > último día => nada que pintar
-            if (endCol < 1 || startCol > 730) continue;
-
-            // establece el texto (puedes mapear estados a etiquetas: Ocupado, Reparacion...)
-            String etiqueta = "Ocupado";
-            if (estado.equalsIgnoreCase("Reparacion") || estado.equalsIgnoreCase("En reparacion")) {
-                etiqueta = "Reparacion";
-            }
-
-            for (int col = startCol; col <= endCol; col++) {
-                dtm.setValueAt(etiqueta, rowIndex, col);
-            }
+    public void cargarCalendario(){
+        //Metodo que establece el nombre de las columnas, siendo estas "Habitaciones" y las fechas a partir de hoy a dos años
+        dtm = new DefaultTableModel(200, 0);
+        jTableCalenHab.setModel(dtm);
+        List<String> habitaciones = database.buscarIdHabitaciones();
+        dtm.addColumn("Habitaciones");
+        dateActual = LocalDate.now();
+        for (int i = 0; i < 730; i++) {
+            LocalDate date = dateActual.plusDays(i);
+            String dateFormateada = date.format(dtf);
+            dtm.addColumn(dateFormateada);
         }
-
-        // además, si la habitación actualmente está en reparación globalmente (consulta tabla habitacion)
-        String estadoHab = database.buscarEstadoHabitacion(idHab);
-        if (estadoHab != null && estadoHab.toLowerCase().contains("repar")) {
-            // marca toda la fila (o un rango) como reparación; aquí marco todas las fechas visibles:
-            for (int col = 1; col < dtm.getColumnCount(); col++) {
-                dtm.setValueAt("Reparacion", rowIndex, col);
+        LocalDate FechaInicio = null;
+        LocalDate FechaFin = null;
+        List<LocalDate> FechasInter = new ArrayList<LocalDate>();
+        for (int i = 0; i < habitaciones.size(); i++) {
+            dtm.setValueAt(habitaciones.get(i), i, 0);
+            FechaInicio = database.buscarFechaInicio(Integer.parseInt(habitaciones.get(i)));
+            FechaFin = database.buscarFechaFin(Integer.parseInt(habitaciones.get(i)));
+            if(FechaInicio != null && FechaFin != null) {
+                FechasInter = (List<LocalDate>) FechaInicio.datesUntil(FechaFin).toList();
+            for (LocalDate fecha : FechasInter) {
+                String fechaFormateada = fecha.format(dtf);
+                for (int j = 0; j < 730; j++) {
+                if (fechaFormateada.equals(dtm.getColumnName(j+1))) {
+                    dtm.setValueAt("Ocupado", j+1, i);
+                }
             }
-        }
-    }
-
-
+            }
             //da error las fechas(fecha_inicio), las devuelve vacias, mirarlo
             
             //queda actualizar el estado de la habitacion si coincide fecha de reserva con la fecha de la tabla
@@ -174,8 +74,19 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
             
             //mirar si estan en reparacion, si lo estan marcarlo 
             
+            
+            
+        }
+            
+        }
         
-   
+        
+        
+        
+        
+        
+        
+        
         
 //        database.getConnection();
 //        PreparedStatement ps;
