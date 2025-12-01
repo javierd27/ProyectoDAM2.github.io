@@ -312,11 +312,11 @@ private void busqueda() {
         // Hago un array de objetos (de la fila)
         List<RowFilter<Object,Object>> filtros = new ArrayList<>();
 
-        // Si el campo nombre no está vacío, creamos el filtro para la columna 1 (suponiendo que sea nombre)
+        // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
         if (!jTextFieldNombre.getText().trim().isEmpty()) {
             filtros.add(RowFilter.regexFilter(jTextFieldNombre.getText().trim(), 1));
         }
-        // Si el campo apellido no está vacío, creamos el filtro para la columna 2 (apellido)
+        // Si el campo apellido no está vacío, creamos el filtro para la columna 2 
         if (!jTextFieldApellido.getText().trim().isEmpty()) {
             filtros.add(RowFilter.regexFilter(jTextFieldApellido.getText().trim(), 2));
         }        
