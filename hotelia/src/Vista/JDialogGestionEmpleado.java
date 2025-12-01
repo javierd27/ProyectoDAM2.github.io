@@ -29,6 +29,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     public JDialogGestionEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Gestionar empleados");
     }
 
     /**

@@ -35,7 +35,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     public JDialogGestionAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        setTitle("Gestionar administradores");
         
     }
 

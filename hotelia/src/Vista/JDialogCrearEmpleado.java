@@ -22,6 +22,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     public JDialogCrearEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Crear empleados");
     }
 
     /**
@@ -78,7 +79,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(16, 2, 10, 10));
 
-        jLabelid.setText("ID");
+        jLabelid.setText("DNI");
         jPanel1.add(jLabelid);
         jPanel1.add(jTextDNI_NIE);
 

@@ -46,6 +46,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     public JDialogEmpleado(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
+        setTitle("Empleados");
         dtm = new DefaultTableModel();
         jTableEmpleados.setModel(dtm);
         dtm.setColumnIdentifiers(Empleado.devuelveColumna());

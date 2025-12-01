@@ -25,6 +25,7 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
     public JDialogEstadisticas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Estadisticas");
     }
 
     /**

@@ -49,6 +49,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     public JDialogEditarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Editar empleados");
 
         cargaID();
 
@@ -122,7 +123,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(14, 2, 10, 10));
 
-        jLabelid.setText("ID");
+        jLabelid.setText("DNI");
         jPanel1.add(jLabelid);
 
         jComboBoxID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
