@@ -70,6 +70,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonAlta = new javax.swing.JButton();
         jLabelPosibleError = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -79,15 +80,15 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(16, 2, 10, 10));
 
-        jLabelid.setText("DNI");
+        jLabelid.setText("DNI*");
         jPanel1.add(jLabelid);
         jPanel1.add(jTextDNI_NIE);
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nombre*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldNombre);
 
-        jLabel3.setText("Apellido1 ");
+        jLabel3.setText("Apellido1 *");
         jPanel1.add(jLabel3);
         jPanel1.add(jTextFieldApellido1);
 
@@ -95,26 +96,26 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jPanel1.add(jLabelApellido2);
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFechaAlta.setText("Fecha Nacimiento");
+        jLabelFechaAlta.setText("Fecha Nacimiento*");
         jPanel1.add(jLabelFechaAlta);
 
         jSpinnerFechaAlt.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy"));
         jPanel1.add(jSpinnerFechaAlt);
 
-        jLabelUsuario.setText("Usuario");
+        jLabelUsuario.setText("Usuario*");
         jPanel1.add(jLabelUsuario);
         jPanel1.add(jTextFieldUsuario);
 
-        jLabelContraseña1.setText("Contraseña");
+        jLabelContraseña1.setText("Contraseña*");
         jPanel1.add(jLabelContraseña1);
         jPanel1.add(jTContraseña1);
 
-        jLabelContraseña2.setText("Contraseña");
+        jLabelContraseña2.setText("Contraseña*");
         jPanel1.add(jLabelContraseña2);
         jPanel1.add(jTContraseña2);
 
-        jLabelRol.setText("Rol");
+        jLabelRol.setText("Rol*");
         jPanel1.add(jLabelRol);
 
         jComboBoxROL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "recepcionista", "servicio" }));
@@ -125,27 +126,27 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxROL);
 
-        jLabelCorreo.setText("Correo");
+        jLabelCorreo.setText("Correo*");
         jPanel1.add(jLabelCorreo);
         jPanel1.add(jTextFieldCorreo);
 
-        jLabelTelefono.setText("Telefono");
+        jLabelTelefono.setText("Telefono*");
         jPanel1.add(jLabelTelefono);
         jPanel1.add(jTextFieldTelefono);
 
-        jLabelNacionalidad.setText("Nacionalidad");
+        jLabelNacionalidad.setText("Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
         jPanel1.add(jTextFieldNacionalidad);
 
-        jLabelPais.setText("País");
+        jLabelPais.setText("País*");
         jPanel1.add(jLabelPais);
         jPanel1.add(jTextFieldPoblacion);
 
-        jLabelCalle_numero.setText("Calle_numero");
+        jLabelCalle_numero.setText("Calle_numero*");
         jPanel1.add(jLabelCalle_numero);
         jPanel1.add(jTextFieldCalle_Numero);
 
-        jLabelPoblacion.setText("Población");
+        jLabelPoblacion.setText("Población*");
         jPanel1.add(jLabelPoblacion);
         jPanel1.add(jTextFieldPais);
 
@@ -164,6 +165,9 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelPosibleError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel4.setText("Todos los datos con * son OBLIGATORIOS");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,6 +183,9 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
                         .addComponent(jButtonAlta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +193,9 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAlta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPosibleError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -298,6 +307,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelCalle_numero;
     private javax.swing.JLabel jLabelContraseña1;

@@ -14,6 +14,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.*;
+import java.util.regex.PatternSyntaxException;
+import javax.swing.RowFilter;
 
 /**
  *
@@ -125,6 +127,11 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jPanel2.add(jLabel1);
 
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(255, 40));
+        jTextFieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldNombreKeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextFieldNombre);
 
         jButtonCrear.setText("CREAR");
@@ -278,6 +285,17 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         c.selectTodosEmpleados(dtm);
 
     }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jTextFieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyReleased
+        try {
+           //Recuperamos mediante el get text lo escrito 
+            RowFilter<Object, Object> rf = RowFilter.regexFilter(jTextFieldNombre.getText());
+            // y lo filtramos
+            order.setRowFilter(rf);
+        } catch (PatternSyntaxException pse) {
+            System.out.println("Bad regex pattern");
+        } 
+    }//GEN-LAST:event_jTextFieldNombreKeyReleased
 
     /**
      * @param args the command line arguments

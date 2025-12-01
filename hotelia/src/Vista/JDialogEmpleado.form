@@ -127,6 +127,9 @@
                   <Dimension value="[255, 40]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldNombreKeyReleased"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonCrear">
               <Properties>

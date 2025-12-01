@@ -76,7 +76,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelid">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI"/>
+            <Property name="text" type="java.lang.String" value="DNI*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxID">
@@ -100,14 +100,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nombre"/>
+            <Property name="text" type="java.lang.String" value="Nombre*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido1 "/>
+            <Property name="text" type="java.lang.String" value="Apellido1 *"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellido1">
@@ -121,7 +121,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFechaAlta">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha Nacimiento"/>
+            <Property name="text" type="java.lang.String" value="Fecha Nacimiento*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFechaAlt">
@@ -136,14 +136,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelUsuario">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Usuario"/>
+            <Property name="text" type="java.lang.String" value="Usuario*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldUsuario">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelRol">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Rol"/>
+            <Property name="text" type="java.lang.String" value="Rol*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxROL">
@@ -165,7 +165,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCorreo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Correo"/>
+            <Property name="text" type="java.lang.String" value="Correo*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCorreo">

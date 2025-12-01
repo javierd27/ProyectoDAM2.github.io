@@ -123,7 +123,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(14, 2, 10, 10));
 
-        jLabelid.setText("DNI");
+        jLabelid.setText("DNI*");
         jPanel1.add(jLabelid);
 
         jComboBoxID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -139,11 +139,11 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxID);
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nombre*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldNombre);
 
-        jLabel3.setText("Apellido1 ");
+        jLabel3.setText("Apellido1 *");
         jPanel1.add(jLabel3);
         jPanel1.add(jTextFieldApellido1);
 
@@ -151,18 +151,18 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jPanel1.add(jLabelApellido2);
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFechaAlta.setText("Fecha Nacimiento");
+        jLabelFechaAlta.setText("Fecha Nacimiento*");
         jPanel1.add(jLabelFechaAlta);
 
         jSpinnerFechaAlt.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy"));
         jPanel1.add(jSpinnerFechaAlt);
 
-        jLabelUsuario.setText("Usuario");
+        jLabelUsuario.setText("Usuario*");
         jPanel1.add(jLabelUsuario);
         jPanel1.add(jTextFieldUsuario);
 
-        jLabelRol.setText("Rol");
+        jLabelRol.setText("Rol*");
         jPanel1.add(jLabelRol);
 
         jComboBoxROL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "recepcionista", "servicio" }));
@@ -173,7 +173,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxROL);
 
-        jLabelCorreo.setText("Correo");
+        jLabelCorreo.setText("Correo*");
         jPanel1.add(jLabelCorreo);
         jPanel1.add(jTextFieldCorreo);
 
