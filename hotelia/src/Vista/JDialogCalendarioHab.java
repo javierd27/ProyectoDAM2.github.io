@@ -5,14 +5,14 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
+import java.awt.Color;
+import java.awt.Component;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.AbstractList;
-import java.util.ArrayList;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,78 +28,84 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
 
     
     ConexionBBDD database = new ConexionBBDD();
-    Connection conexion;
     DefaultTableModel dtm;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     LocalDate dateActual;
     
-    public void cargarCalendario(){
-        //Metodo que establece el nombre de las columnas, siendo estas "Habitaciones" y las fechas a partir de hoy a dos años
-        dtm = new DefaultTableModel(200, 0);
-        jTableCalenHab.setModel(dtm);
-        List<String> habitaciones = database.buscarIdHabitaciones();
-        dtm.addColumn("Habitaciones");
-        dateActual = LocalDate.now();
-        for (int i = 0; i < 730; i++) {
-            LocalDate date = dateActual.plusDays(i);
-            String dateFormateada = date.format(dtf);
-            dtm.addColumn(dateFormateada);
-        }
-        LocalDate FechaInicio = null;
-        LocalDate FechaFin = null;
-        List<LocalDate> FechasInter = new ArrayList<LocalDate>();
-        for (int i = 0; i < habitaciones.size(); i++) {
-            dtm.setValueAt(habitaciones.get(i), i, 0);
-            FechaInicio = database.buscarFechaInicio(Integer.parseInt(habitaciones.get(i)));
-            FechaFin = database.buscarFechaFin(Integer.parseInt(habitaciones.get(i)));
-            if(FechaInicio != null && FechaFin != null) {
-                FechasInter = (List<LocalDate>) FechaInicio.datesUntil(FechaFin).toList();
-            for (LocalDate fecha : FechasInter) {
-                String fechaFormateada = fecha.format(dtf);
-                for (int j = 0; j < 730; j++) {
-                if (fechaFormateada.equals(dtm.getColumnName(j+1))) {
-                    dtm.setValueAt("Ocupado", j+1, i);
-                }
-            }
-            }
-            //da error las fechas(fecha_inicio), las devuelve vacias, mirarlo
-            
-            //queda actualizar el estado de la habitacion si coincide fecha de reserva con la fecha de la tabla
-            
-            //comprobar que la reserva no esta cancelada al inicio
-            
-            //editar el campo seleccionado u otra forma, pero poder editar, añadir y borrar, 
-            //para eso se tendra que actualizar la pantalla (poner este metodo en los otros)
-            //con jdialogs
-            
-            //mirar si estan en reparacion, si lo estan marcarlo 
-            
-            
-            
-        }
-            
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-//        database.getConnection();
-//        PreparedStatement ps;
-//        try {
-//            ps = conexion.prepareStatement("select idHabitacion from habitacion");
-//            database.selectSQL(ps, dtm);
-//            
-//        } catch (SQLException ex) {
-//            System.getLogger(JDialogCalendarioHab.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-//        }
-        
-        
+   public void cargarCalendario() {
+    // modelo sin filas prefijadas
+    dtm = new DefaultTableModel();
+    jTableCalenHab.setModel(dtm);
+
+    // columna de habitaciones
+    dtm.addColumn("Habitaciones");
+
+    dateActual = LocalDate.now();
+
+    // añade columnas de fechas de hoy a dos años 365 + 365 = 730 (igual se ve un poco incomodo, igual se cambia 😙)
+    for (int i = 0; i < 730; i++) {
+        LocalDate date = dateActual.plusDays(i);
+        dtm.addColumn(date.format(dtf));
     }
+
+    // aplica lo colores a traves de la clase de abajo
+    jTableCalenHab.setDefaultRenderer(Object.class, new EstadoCellRenderer());
+    jTableCalenHab.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+
+    List<String> habitaciones = database.buscarIdHabitaciones();
+
+    for (int rowIndex = 0; rowIndex < habitaciones.size(); rowIndex++) {
+        String idHabStr = habitaciones.get(rowIndex);
+        int idHab = Integer.parseInt(idHabStr);
+
+        Object[] fila = new Object[dtm.getColumnCount()];
+        fila[0] = idHabStr;
+        dtm.addRow(fila);
+
+        List<Object[]> reservas = database.buscarFechayEstadoPorHabitacion(idHab);
+
+        for (Object[] reg : reservas) {
+            // reg[0] =  fecha inicio, reg[1] = fecga fin, reg[2] = estado
+            LocalDate inicio = (LocalDate) reg[0];
+            LocalDate fin = (LocalDate) reg[1];
+            String estado = (String) reg[2];
+
+            // si la reserva esta cancelada, no lo cuenta
+            if (estado != null && estado.equalsIgnoreCase("Cancelado")) {
+                continue;
+            }
+
+            // calcula indices relativos desde dateActual
+            long ChronoInicio = ChronoUnit.DAYS.between(dateActual, inicio);
+            long ChronoFinal = ChronoUnit.DAYS.between(dateActual, fin);
+
+            // si no hay fecha entre esos campos lo ignoramos para que este un poquito mas optimizado 
+            int inicioCol = (int) Math.max(0, ChronoInicio) + 1;
+            int finCol = (int) Math.min(729, ChronoFinal) + 1;
+
+            if (finCol < 1 || inicioCol > 730) continue;
+
+            // una etiqueta pa los colores
+            String etiqueta = "Ocupado";
+            if (estado.equalsIgnoreCase("Reparacion") || estado.equalsIgnoreCase("En reparacion")) {
+                etiqueta = "Reparacion";
+            }
+
+            for (int col = inicioCol; col <= finCol; col++) {
+                dtm.setValueAt(etiqueta, rowIndex, col);
+            }
+        }
+
+        // si esta en reparacion, toda la fila estara pintada de gris
+        String estadoHab = database.buscarEstadoHabitacion(idHab);
+        if (estadoHab != null && estadoHab.toLowerCase().contains("repar")) {
+            for (int col = 1; col < dtm.getColumnCount(); col++) {
+                dtm.setValueAt("Reparacion", rowIndex, col);
+            }
+        }
+    }
+}
+
     
     /**
      * Creates new form JDialogCalendarioHab
@@ -107,6 +113,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     public JDialogCalendarioHab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Calendario de habitaciones");
         cargarCalendario();
         
     }
@@ -125,7 +132,14 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCalenHab = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jButtonBuscar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jtfBuscar = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        BtnAnadir = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonVolver = new javax.swing.JButton();
 
@@ -150,7 +164,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,12 +173,52 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        jLabel4.setBackground(new java.awt.Color(153, 255, 153));
+        jLabel4.setText("Libre     ");
+        jLabel4.setOpaque(true);
+        jPanel3.add(jLabel4);
 
-        jButtonBuscar.setText("Buscar");
-        jPanel3.add(jButtonBuscar);
+        jLabel3.setBackground(new java.awt.Color(255, 102, 102));
+        jLabel3.setText("Ocupado   ");
+        jLabel3.setOpaque(true);
+        jPanel3.add(jLabel3);
+
+        jLabel2.setBackground(new java.awt.Color(102, 102, 102));
+        jLabel2.setText("En reparación  ");
+        jLabel2.setOpaque(true);
+        jPanel3.add(jLabel2);
+
+        jLabel5.setText("                                                                        ");
+        jPanel3.add(jLabel5);
+
+        jLabel6.setText("Buscar:  ");
+        jPanel3.add(jLabel6);
+
+        jtfBuscar.setPreferredSize(new java.awt.Dimension(80, 22));
+        jtfBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfBuscarKeyReleased(evt);
+            }
+        });
+        jPanel3.add(jtfBuscar);
+
+        jLabel1.setText("                                                                    ");
+        jPanel3.add(jLabel1);
+
+        BtnAnadir.setText("Añadir");
+        BtnAnadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAnadirActionPerformed(evt);
+            }
+        });
+        jPanel3.add(BtnAnadir);
 
         jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
         jPanel3.add(jButtonEditar);
 
         jButtonVolver.setText("Volver");
@@ -175,7 +229,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         jPanelMainLayout.setHorizontalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1062, Short.MAX_VALUE)
         );
         jPanelMainLayout.setVerticalGroup(
             jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,6 +254,66 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+
+    int row = jTableCalenHab.getSelectedRow();
+
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una habitación primero.",
+                                          "No hay seleccion",
+                                          JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Object valor = jTableCalenHab.getValueAt(row, 0);
+
+    int idHabitacion = Integer.parseInt(valor.toString());
+
+    // Abrir JDialog de edición enviando el ID
+    JDialogEditarHabitaciones editar = new JDialogEditarHabitaciones(
+            (java.awt.Frame) this.getParent(),
+            true,
+            idHabitacion
+    );
+    editar.setVisible(true);
+    cargarCalendario();
+
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void BtnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAnadirActionPerformed
+        //te manda a anadirHabitaciones al pulsar el boton
+        JDialogAnadirHabitaciones crear = new JDialogAnadirHabitaciones(
+            (java.awt.Frame) this.getParent(),
+            true
+    );
+    crear.setVisible(true);
+    cargarCalendario();
+    }//GEN-LAST:event_BtnAnadirActionPerformed
+
+    private void jtfBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfBuscarKeyReleased
+        // selecciona por el numero de id que busques
+        String texto = jtfBuscar.getText().trim();
+
+    // si está vacío → deselecciona todo 🤧
+    if (texto.isEmpty()) {
+        jTableCalenHab.clearSelection();
+        return;
+    }
+    for (int row = 0; row < jTableCalenHab.getRowCount(); row++) {
+        Object valor = jTableCalenHab.getValueAt(row, 0);
+
+        if (valor != null && valor.toString().contains(texto)) {
+
+            jTableCalenHab.setRowSelectionInterval(row, row);
+            jTableCalenHab.scrollRectToVisible(
+                jTableCalenHab.getCellRect(row, 0, true)
+            );
+            return; 
+        }
+    }
+    jTableCalenHab.clearSelection();
+    }//GEN-LAST:event_jtfBuscarKeyReleased
 
     /**
      * @param args the command line arguments
@@ -239,13 +353,66 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton BtnAnadir;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonVolver;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableCalenHab;
+    private javax.swing.JTextField jtfBuscar;
     // End of variables declaration//GEN-END:variables
+}
+
+// ------------------ Renderer para colorear según estado ------------------
+class EstadoCellRenderer extends DefaultTableCellRenderer {
+    //una clase que renderiza colores en la tabla
+    @Override
+    public Component getTableCellRendererComponent(javax.swing.JTable table, Object value,
+            boolean isSelected, boolean hasFocus, int row, int column) {
+
+        Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+        // columna 0, son los ids, que salgan en blanco
+        if (column == 0) {
+            c.setBackground(Color.WHITE);
+            c.setForeground(Color.BLACK);
+            setText(value == null ? "" : value.toString());
+            return c;
+        }
+
+        // si hay fechas que tengan su respetivo color
+        String estado;
+        if (value == null) {
+            estado = "";
+        } else {
+            estado = value.toString().toLowerCase();
+        }
+
+        if (estado.contains("ocup")) {
+            c.setBackground(new Color(0xFF6666)); // rojo
+        } else if (estado.contains("repar")) {
+            c.setBackground(new Color(0x666666)); // gris
+            c.setForeground(Color.WHITE);
+        } else {
+            c.setBackground(new Color(0xCCFFCC)); // verde
+            c.setForeground(Color.BLACK);
+        }
+
+        setText("");
+
+        if (isSelected) {
+            c.setBackground(table.getSelectionBackground());
+            c.setForeground(table.getSelectionForeground());
+        }
+
+        return c;
+    }
 }

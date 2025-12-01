@@ -6,6 +6,7 @@ package Vista;
 
 import Controlador.ConexionBBDD;
 import Modelo.Habitacion;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,9 +28,7 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogEditarHabitaciones.class.getName());
     //VARIABLES
     ConexionBBDD database = new ConexionBBDD();
-    
-    //esta variable cambiarla y traerla por calendario
-    int idHabitacion = 1;
+    int idHabitacion; 
     
     public void MostrarEditable(int idHabitacion) {
         Habitacion habitacion = database.buscarHabitacionPorId(idHabitacion);
@@ -47,9 +46,12 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     /**
      * Creates new form JDialogEditarHabitaciones
      */
-    public JDialogEditarHabitaciones(java.awt.Frame parent, boolean modal) {
+    public JDialogEditarHabitaciones(java.awt.Frame parent, boolean modal, int idHabitacion) {
         super(parent, modal);
         initComponents();
+        this.idHabitacion = idHabitacion;
+        
+        setTitle("Editar habitaciones");
         MostrarEditable(idHabitacion);
     }
 
@@ -132,6 +134,11 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButtonCancelar);
 
         jButtonAceptar.setText("Aceptar");
@@ -179,29 +186,32 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
                                           "El numero de la habitacion no puede ser nulo",
                                           "Numero incorrecto",
                                           JOptionPane.ERROR_MESSAGE);
-        } else if (jcbFormulas.) {
-            numero = Integer.parseInt(jetNumHab.getText());
-            tipo = jcbTipo.getSelectedItem().toString();
-            capacidad = (int) jsCapacidad.getValue();
-            precio_base = (double) jsPrecioB.getValue();
-            precio_publico = precio_base;
-            estado = (String) jcbEstado.getSelectedItem();
-            JOptionPane.showMessageDialog(rootPane, 
-                                          "vamos bien",
-                                          "vamos bien",
-                                          JOptionPane.ERROR_MESSAGE);
-            
-        } else {
-            numero = Integer.parseInt(jetNumHab.getText());
-            tipo = jcbTipo.getSelectedItem().toString();
-            capacidad = (int) jsCapacidad.getValue();
-            precio_base = (double) jsPrecioB.getValue();
-            precio_publico = precio_base; //aqui cambiar con la formula
-            estado = (String) jcbEstado.getSelectedItem();
+             return;
         }
         
         
+            numero = Integer.parseInt(jetNumHab.getText());
+            tipo = jcbTipo.getSelectedItem().toString();
+            capacidad = (int) jsCapacidad.getValue();
+            precio_base = (double) jsPrecioB.getValue();
+            estado = (String) jcbEstado.getSelectedItem();
+        
+        if (!jcbFormulas.isSelected()) {
+            precio_publico = precio_base;
+        } else {
+            precio_publico = precio_base; //aqui cambiar con la formula
+        }
+        
+        database.actualizarHabitacionPorId(idHabitacion, numero, tipo, capacidad, precio_base, estado);
+        JOptionPane.showMessageDialog(rootPane, "Habitación actualizada correctamente");
+        
+        this.dispose();
     }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        //boton de cancelar, vuelve al calendario sin hacer nada
+        this.dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,7 +238,7 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogEditarHabitaciones dialog = new JDialogEditarHabitaciones(new javax.swing.JFrame(), true);
+                JDialogEditarHabitaciones dialog = new JDialogEditarHabitaciones(new javax.swing.JFrame(), true, 1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

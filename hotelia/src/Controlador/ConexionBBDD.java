@@ -273,18 +273,39 @@ public class ConexionBBDD {
     }
 
     //metodo que actualiza los datos de las habitaciones por id
-    public void actualizarHabitacionPorId(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, String estado) {
+    public void actualizarHabitacionPorId(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, double precio_publico, String estado) {
 
         PreparedStatement ps;
         try {
             ps = conexion.prepareStatement(
-                    "Update habitacion set numero = ?, tipo = ?, capacidad = ?, precio_base = ?, estado = ? FROM habitacion WHERE idHabitacion = ?");
+                    "Update habitacion set numero = ?, tipo = ?, capacidad = ?, precio_base = ?,  precio_publico = ?, estado = ? WHERE idHabitacion = ?");
             ps.setInt(1, numero);
             ps.setString(2, tipo);
             ps.setInt(3, capacidad);
             ps.setDouble(4, precio_base);
+            ps.setDouble(5, precio_publico);
+            ps.setString(6, estado);
+            ps.setInt(7, idHabitacion);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }
+    
+    //metodo que añade habitaciones
+    public void anadirHabitacion(int numero, String tipo, int capacidad, double precio_base, double precio_publico, String estado) {
+
+        PreparedStatement ps;
+        try {
+            ps = conexion.prepareStatement(
+                    "INSERT INTO habitacion (numero, tipo, capacidad, precio_base, precio_publico, estado) VALUES (?, ?, ?, ?, ?)");
+            ps.setInt(1, numero);
+            ps.setString(2, tipo);
+            ps.setInt(3, capacidad);
+            ps.setDouble(4, precio_base);
+            ps.setDouble(4, precio_publico);
             ps.setString(5, estado);
-            ps.setInt(6, idHabitacion);
             ps.executeUpdate();
 
         } catch (SQLException ex) {
