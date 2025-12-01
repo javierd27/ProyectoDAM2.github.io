@@ -43,7 +43,7 @@ public class JFrameLogin extends javax.swing.JFrame {
         jButtonAceptar = new javax.swing.JButton();
         jLabelError = new javax.swing.JLabel();
         jTextFieldContraseña = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        jButtonCerrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,11 +64,11 @@ public class JFrameLogin extends javax.swing.JFrame {
         jLabelError.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelError.setForeground(new java.awt.Color(255, 0, 51));
 
-        jButton1.setText("CERRAR");
-        jButton1.setPreferredSize(new java.awt.Dimension(81, 23));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCerrar.setText("CERRAR");
+        jButtonCerrar.setPreferredSize(new java.awt.Dimension(101, 30));
+        jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCerrarActionPerformed(evt);
             }
         });
 
@@ -92,7 +92,7 @@ public class JFrameLogin extends javax.swing.JFrame {
                 .addContainerGap(31, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(130, 130, 130)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAceptar)
                 .addGap(224, 224, 224))
@@ -113,7 +113,7 @@ public class JFrameLogin extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAceptar)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonCerrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
@@ -150,7 +150,7 @@ public class JFrameLogin extends javax.swing.JFrame {
         
         if (passBD == null || passBD.isEmpty()) {
             
-            jLabelError.setText("Login correcto");
+            jLabelError.setText("Login incorrecto");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
             return;
@@ -166,18 +166,18 @@ public class JFrameLogin extends javax.swing.JFrame {
                 this.dispose();
              
                 jdg.setVisible(true);
-                System.exit(0);
+                
             }else{
                 
                 JDialogGestionEmpleado jdge = new JDialogGestionEmpleado(this, true);
                 jdge.setUsuario(usuario);
                 this.dispose();
                 jdge.setVisible(true);
-                System.exit(0);
+                
             }
             
         } else {
-            jLabelError.setText("Login correcto");
+            jLabelError.setText("Login incorrecto");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
         }
@@ -188,10 +188,10 @@ public class JFrameLogin extends javax.swing.JFrame {
      *
      * @param evt
      */
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +220,8 @@ public class JFrameLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonCerrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelContraseña;
     private javax.swing.JLabel jLabelError;

@@ -5,6 +5,8 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 
 /**
@@ -34,15 +36,30 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jBoxCliente = new javax.swing.JComboBox<>();
+        ActualizarCliente = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jBoxHabitacion = new javax.swing.JComboBox<>();
+        ActualizarHabitacion = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        jBoxServicio = new javax.swing.JComboBox<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
+        ActualizarEmpleado = new javax.swing.JButton();
+
+        jLabel6.setText("jLabel6");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -50,72 +67,82 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ESTADISTICAS");
 
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("CLIENTES");
+        jPanel2.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(597, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(307, Short.MAX_VALUE))
-        );
+        jBoxCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 semana", "1 mes", "6 meses", "1 año" }));
+        jPanel2.add(jBoxCliente, java.awt.BorderLayout.LINE_END);
+
+        ActualizarCliente.setText("Actualizar");
+        ActualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarClienteActionPerformed(evt);
+            }
+        });
+        jPanel2.add(ActualizarCliente, java.awt.BorderLayout.PAGE_END);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
+
+        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Clientes", jPanel2);
+
+        jPanel4.setLayout(new java.awt.BorderLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 204));
         jLabel3.setText("HABITACIONES");
+        jPanel4.add(jLabel3, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel3)
-                .addContainerGap(457, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3)
-                .addContainerGap(307, Short.MAX_VALUE))
-        );
+        jBoxHabitacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 semana", "1 mes", "6 meses", "1 año" }));
+        jPanel4.add(jBoxHabitacion, java.awt.BorderLayout.LINE_END);
+
+        ActualizarHabitacion.setText("Actualizar");
+        ActualizarHabitacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarHabitacionActionPerformed(evt);
+            }
+        });
+        jPanel4.add(ActualizarHabitacion, java.awt.BorderLayout.PAGE_END);
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jScrollPane3.setViewportView(jTextArea2);
+
+        jPanel4.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("Habitaciones", jPanel4);
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 153, 204));
         jLabel4.setText("EMPLEADOS");
+        jPanel5.add(jLabel4, java.awt.BorderLayout.PAGE_START);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addContainerGap(530, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addContainerGap(307, Short.MAX_VALUE))
-        );
+        jBoxServicio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 semana", "1 mes", "6 meses", "1 año" }));
+        jPanel5.add(jBoxServicio, java.awt.BorderLayout.LINE_END);
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setRows(5);
+        jScrollPane4.setViewportView(jTextArea3);
+
+        jPanel5.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        ActualizarEmpleado.setText("Actualizar");
+        ActualizarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel5.add(ActualizarEmpleado, java.awt.BorderLayout.PAGE_END);
 
         jTabbedPane1.addTab("Servicios", jPanel5);
 
@@ -159,6 +186,84 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Con este metodo, recojo la opcion que haya seleccionado el usuario Cojo
+     * el dia de goy y lo paso dependiendo del tiempo seleccionado
+     *
+     * @param opcion
+     * @return
+     */
+    private LocalDate obtenerFechaLimite(String opcion) {
+
+        LocalDate hoy = LocalDate.now();
+        switch (opcion) {
+            case "1 semana":
+                return hoy.minusWeeks(1);
+            case "1 mes":
+                return hoy.minusMonths(1);
+            case "6 meses":
+                return hoy.minusMonths(6);
+            case "1 año":
+                return hoy.minusYears(1);
+            default:
+                return hoy.minusMonths(1); // por defecto 1 mes
+        }
+    }// end obtenerFechaLimite
+
+// boton Actualizar
+    private void ActualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarClienteActionPerformed
+
+        String opcion = (String) jBoxCliente.getSelectedItem();
+        LocalDate fechaLimite = obtenerFechaLimite(opcion);
+
+        int totalClientes = 0;
+        try {
+            totalClientes = c.getTotalClientes(fechaLimite);
+        } catch (SQLException ex) {
+            System.getLogger(JDialogEstadisticas.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        jTextArea1.setText("Total clientes en los últimos " + opcion + ": " + totalClientes);
+
+
+    }//GEN-LAST:event_ActualizarClienteActionPerformed
+
+    private void ActualizarHabitacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarHabitacionActionPerformed
+        try {
+            String opcion = (String) jBoxHabitacion.getSelectedItem();
+            LocalDate fechaLimite = obtenerFechaLimite(opcion);
+
+            int totalHabitaciones;
+
+            totalHabitaciones = c.getTotalHabitaciones(fechaLimite);
+
+            String detalleTipos = c.getCantidadHabitacionesPorTipoString(fechaLimite);
+
+            String resultado = "Total habitaciones reservadas en los últimos " + opcion + ": " + totalHabitaciones + "\n\n"
+                    + "Cantidad por tipo de habitación:\n" + detalleTipos;
+
+            jTextArea2.setText(resultado);
+        } catch (SQLException ex) {
+            System.getLogger(JDialogEstadisticas.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_ActualizarHabitacionActionPerformed
+
+    private void ActualizarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarEmpleadoActionPerformed
+        try {
+            String opcion = (String) jBoxServicio.getSelectedItem();
+            LocalDate fechaLimite = obtenerFechaLimite(opcion);
+
+            int totalServicios = c.getTotalServicios(fechaLimite);
+            String detalleServicios = c.getCantidadServiciosPorNombreString(fechaLimite);
+
+            String resultado = "Total servicios usados en los últimos " + opcion + ": " + totalServicios + "\n\n"
+                    + "Cantidad por servicio:\n" + detalleServicios;
+
+            jTextArea3.setText(resultado);
+        } catch (SQLException ex) {
+            System.getLogger(JDialogEstadisticas.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_ActualizarEmpleadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,14 +303,27 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ActualizarCliente;
+    private javax.swing.JButton ActualizarEmpleado;
+    private javax.swing.JButton ActualizarHabitacion;
+    private javax.swing.JComboBox<String> jBoxCliente;
+    private javax.swing.JComboBox<String> jBoxHabitacion;
+    private javax.swing.JComboBox<String> jBoxServicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
     // End of variables declaration//GEN-END:variables
 }

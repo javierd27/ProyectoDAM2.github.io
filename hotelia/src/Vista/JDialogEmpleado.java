@@ -27,10 +27,9 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
     ConexionBBDD c = new ConexionBBDD();
-    
 
     public void cargaInicial() throws SQLException {
-        
+        dtm.setRowCount(0);
         c.selectTodosEmpleados(dtm);
         jTableEmpleados.setModel(dtm);
 
@@ -207,19 +206,43 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
         // MIRAR JFRAMETABLE DE TableAvanzado el boton de borrar, lo haremos igual para borrar 
-                // hasta que no cierre el jdialogEdita no podre hacer nada
-        JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
-        // hago visible el jframe
-        jdee.setVisible(true);
+        // hasta que no cierre el jdialogEdita no podre hacer nada
+        if (jTableEmpleados.getSelectedRowCount() == 0) {
+
+            JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
+            // hago visible el jframe
+            jdee.setVisible(true);
+        } else if (jTableEmpleados.getSelectedRowCount() == 1) {
+
+            // recojo el indice real de la tabla
+            int filaModelo = jTableEmpleados.convertRowIndexToModel(jTableEmpleados.getSelectedRow());
+
+            // dni_nie (columna 0)
+            String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
+            JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
+            // le pasamos el id
+            jdee.setIdEmpleado(id);
+
+            // hago visible el jframe
+            jdee.setVisible(true);
+            // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+            dtm.setRowCount(0);
+            c.selectTodosEmpleados(dtm);
+        } else {
+            jLabelError.setText("Selecciona exactamente una fila");
+        }// end if
+
+
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * Eliminamos de 1 en 1 los empleados
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         if (jTableEmpleados.getSelectedRowCount() == 1) {
-            
+
             // recojo el indice real de la tabla
             int filaModelo = jTableEmpleados.convertRowIndexToModel(jTableEmpleados.getSelectedRow());
 
@@ -227,8 +250,8 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
 
             // Compruebo si se ha borrado 
-           if (c.deleteUsuario(dtm, id) < 1) {
-                jLabelError.setText("No se ha podido borrar ningún usuario");
+            if (c.deleteUsuario(dtm, id) < 1) {
+                jLabelError.setText("No se ha podido borrar ningún empleado");
             } else {
                 // Quitar del modelo de tabla
                 dtm.removeRow(filaModelo);
@@ -236,12 +259,23 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         } else {
             jLabelError.setText("Selecciona exactamente una fila");
         }// end if
+        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        dtm.setRowCount(0);
+        c.selectTodosEmpleados(dtm);
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         // TODO add your handling code here:
-        
-        
+        JDialogCrearEmpleado jdCe = new JDialogCrearEmpleado(null, true);
+
+        // hago visible el jframe
+        jdCe.setVisible(true);
+
+        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        dtm.setRowCount(0);
+        c.selectTodosEmpleados(dtm);
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     /**

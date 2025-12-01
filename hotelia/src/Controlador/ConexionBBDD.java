@@ -11,6 +11,7 @@ package Controlador;
  * @author DAM2Alu16
  */
 import Modelo.Cliente;
+import Modelo.Empleado;
 import Modelo.Habitacion;
 import Modelo.Servicio;
 import java.sql.*;
@@ -165,9 +166,8 @@ public class ConexionBBDD {
 
         return ps.executeUpdate();
     }
-    
-    
-     public int insertaServicio(Servicio nuevo) throws SQLException {
+
+    public int insertaServicio(Servicio nuevo) throws SQLException {
         String sql = "INSERT INTO servicio (nombre, precio, descripcion) VALUES (?, ?, ?)";
 
         PreparedStatement ps = conexion.prepareStatement(sql);
@@ -177,8 +177,7 @@ public class ConexionBBDD {
 
         return ps.executeUpdate();
     }
-     
-     
+
     public Servicio buscaServicio(String nombre) throws SQLException {
         String sql = "SELECT * FROM servicio WHERE nombre = ?";
 
@@ -189,11 +188,10 @@ public class ConexionBBDD {
         if (!rs.next()) {
             return null;
         } else {
-            return new Servicio(rs.getString("nombre"),  rs.getString("descripcion"), rs.getDouble("precio"));
+            return new Servicio(rs.getString("nombre"), rs.getString("descripcion"), rs.getDouble("precio"));
         }
     }
-     
-    
+
     public int editarServicio(Servicio servicio, String nombre) throws SQLException {
         String sql = "UPDATE servicio SET precio = ?, descripcion = ? WHERE nombre = ?";
         PreparedStatement ps = conexion.prepareStatement(sql);
@@ -201,21 +199,19 @@ public class ConexionBBDD {
         ps.setDouble(1, servicio.getPrecio());
         ps.setString(2, servicio.getDescripción());
         ps.setString(3, nombre);
-       
+
         return ps.executeUpdate();
     }
-    
-    
+
     public int eliminaServicio(String nombre) throws SQLException {
         String sql = "DELETE FROM servicio WHERE idServicio = ?";
         PreparedStatement ps = conexion.prepareStatement(sql);
 
         ps.setString(1, nombre);
-        
+
         return ps.executeUpdate();
     }
-            
-    
+
     //metodo que recoge una lista del id de las habitaciones
     public List<String> buscarIdHabitaciones() {
         List<String> lista = new ArrayList<>();
@@ -409,6 +405,40 @@ public class ConexionBBDD {
         }
     }
 
+    public List<Empleado> selectTodosEmpleadosEditar() {
+        List<Empleado> listaEmpleado = new ArrayList<>();
+        try {
+            PreparedStatement ps;
+            ps = conexion.prepareStatement("Select dni_nie, nombre, apellido1, apellido2, fecha_nac,usuario,rol,correo,telefono,nacionalidad,pais,calle_numero,poblacion,piso from empleado;");
+            ResultSet rs = ps.executeQuery();
+            // recorremos todos los empleados
+            while (rs.next()) {
+                Empleado empleado = new Empleado(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14));
+                listaEmpleado.add(empleado);
+            }// end while
+        } // selectSQL
+        catch (SQLException ex) {
+            System.out.println("Ha entrado en el slqException");
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        return listaEmpleado;
+    }
+
     /**
      * Metodo que elimina de la base de datos los empleados seleccionados (se
      * eliminara de 1 en 1)
@@ -438,20 +468,241 @@ public class ConexionBBDD {
      * @return
      */
     public String comprobarRol(String usuario) {
-        String nombre ="";
+        String nombre = "";
         try {
             PreparedStatement ps = conexion.prepareStatement("Select rol from empleado where usuario = ?");
             ps.setString(1, usuario);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                nombre=rs.getString(1);
+            if (rs.next()) {
+                nombre = rs.getString(1);
             }
             return nombre;
-            
+
         } catch (SQLException ex) {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             return nombre;
         }
+    }
+
+    /**
+     * Actualizar empleado segun lo que quiera el cliente
+     *
+     * @param dtm
+     * @param id
+     * @return
+     */
+    public boolean updateEmpleado(Empleado e) {
+        try {
+            PreparedStatement ps = conexion.prepareStatement(" UPDATE empleado SET nombre = ?,"
+                    + " apellido1 = ?,"
+                    + " apellido2 = ?,"
+                    + "fecha_nac = ?,"
+                    + " usuario = ?,"
+                    + " rol = ?,"
+                    + "correo = ?,"
+                    + "telefono = ?,"
+                    + "nacionalidad = ?,"
+                    + "pais = ?,"
+                    + " calle_numero = ?,"
+                    + " poblacion = ?,"
+                    + " piso = ? "
+                    + "WHERE dni_nie = ? ");
+            //informacion que actualiza
+            ps.setString(1, e.getNombre());
+            ps.setString(2, e.getApellido1());
+            ps.setString(3, e.getApellido2());
+            // casteo para el date de sql si no me petaba todo el rato
+            ps.setDate(4, new java.sql.Date(e.getFecha_nac().getTime()));
+            ps.setString(5, e.getUsuario());
+            ps.setString(6, e.getRol());
+            ps.setString(7, e.getCorreo());
+            ps.setString(8, e.getTelefono());
+            ps.setString(9, e.getNacionalidad());
+            ps.setString(10, e.getPais());
+            ps.setString(11, e.getCalle_numero());
+            ps.setString(12, e.getPoblacion());
+            ps.setString(13, e.getPiso());
+            // id del empleado
+            ps.setString(14, e.getDni_nie());
+            int filas = ps.executeUpdate();
+            return filas > 0; // si se actualiza mas de 0 filas es que se ha actualizado algo
+        } catch (SQLException ex) {
+            // compruebo para mi si falla o no
+            System.out.println("Ha petado al actualizar");
+            return false;
+        }// end try catch
+    }
+
+    /**
+     * Almaceno un empleado
+     *
+     * @param id
+     * @return
+     */
+    public Empleado selectEmpleadoUnico(String id) {
+        Empleado empleado = null;
+        try {
+            PreparedStatement ps;
+            ps = conexion.prepareStatement("Select dni_nie, nombre, apellido1, apellido2, fecha_nac,usuario,contrasenya,rol,correo,telefono,nacionalidad,pais,calle_numero,poblacion,piso from empleado where dni_nie = ?;");
+            ps.setString(1, id);
+            ResultSet rs = ps.executeQuery();
+            // recorremos todos los empleados
+            if (rs.next()) {
+                empleado = new Empleado(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getString(13),
+                        rs.getString(14),
+                        rs.getString(15));
+
+            }// end if
+        } // selectSQL
+        catch (SQLException ex) {
+            System.out.println("Ha entrado en el slqException");
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+
+        return empleado;
+    }
+
+    public boolean insertEmpleado(Empleado empleado) {
+        try {
+            PreparedStatement ps = conexion.prepareStatement("INSERT INTO empleado"
+                    + " (dni_nie, nombre, apellido1, apellido2, fecha_nac, usuario, contrasenya, rol, correo, telefono, nacionalidad, pais, calle_numero, poblacion, piso)"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            //informacion que actualiza
+            ps.setString(1, empleado.getDni_nie());
+            ps.setString(2, empleado.getNombre());
+            ps.setString(3, empleado.getApellido1());
+            ps.setString(4, empleado.getApellido2());
+            ps.setDate(5, new java.sql.Date(empleado.getFecha_nac().getTime()));
+            ps.setString(6, empleado.getUsuario());
+            ps.setString(7, empleado.getContrasenya());
+            ps.setString(8, empleado.getRol());
+            ps.setString(9, empleado.getCorreo());
+            ps.setString(10, empleado.getTelefono());
+            ps.setString(11, empleado.getNacionalidad());
+            ps.setString(12, empleado.getPais());
+            ps.setString(13, empleado.getCalle_numero());
+            ps.setString(14, empleado.getPoblacion());
+            ps.setString(15, empleado.getPiso());
+
+            int filas = ps.executeUpdate();
+            return filas > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Consulta para comprobar al insertar un empleado no haya otro empleado con
+     * el mismo id
+     *
+     * @param dni Si devuelve true es que el dni ya existe por lo cual no se
+     * puede insertar el Empleado
+     */
+    public boolean consultaIdEmpleado(String dni) {
+        try {
+            PreparedStatement ps = conexion.prepareStatement("Select * from empleado where dni_nie =? ");
+            ps.setString(1, dni);
+
+            ResultSet con = ps.executeQuery();
+            // si entra aqui es que hay un id = al que se ha mandado
+            if (con.next()) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            return false;
+        }
+    }
+
+    /**
+     * Metodos para jDialogEstadisticas
+     */
+    
+    public int getTotalClientes(LocalDate fechaLimite) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT idCliente) AS totalClientes FROM reserva WHERE fecha_hora_reserva >= ?";
+        conectar();
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setDate(1, java.sql.Date.valueOf(fechaLimite));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("totalClientes");
+            }
+        }
+        return 0;
+    }
+
+    
+    public int getTotalHabitaciones(LocalDate fechaLimite) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT idHabitacion) AS totalHabitaciones FROM reserva WHERE fecha_hora_reserva >= ?";
+        conectar();
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setDate(1, java.sql.Date.valueOf(fechaLimite));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("totalHabitaciones");
+            }
+        }
+        return 0;
+    }
+
+    
+    public String getCantidadHabitacionesPorTipoString(LocalDate fechaLimite) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        String sql = "SELECT h.tipo, COUNT(*) AS cantidad FROM reserva r JOIN habitacion h ON r.idHabitacion = h.idHabitacion WHERE r.fecha_hora_reserva >= ? GROUP BY h.tipo";
+        conectar();
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setDate(1, java.sql.Date.valueOf(fechaLimite));
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                sb.append(rs.getString("tipo")).append(": ").append(rs.getInt("cantidad")).append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    
+    public int getTotalServicios(LocalDate fechaLimite) throws SQLException {
+        String sql = "SELECT COUNT(DISTINCT idServicio) AS totalServicios FROM reserva WHERE fecha_hora_reserva >= ? AND idServicio IS NOT NULL";
+        conectar();
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setDate(1, java.sql.Date.valueOf(fechaLimite));
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("totalServicios");
+            }
+        }
+        return 0;
+    }
+
+    
+    public String getCantidadServiciosPorNombreString(LocalDate fechaLimite) throws SQLException {
+        StringBuilder sb = new StringBuilder();
+        String sql = "SELECT s.nombre, COUNT(*) AS cantidad FROM reserva r JOIN servicio s ON r.idServicio = s.idServicio WHERE r.fecha_hora_reserva >= ? AND r.idServicio IS NOT NULL GROUP BY s.nombre";
+        conectar();
+        try (PreparedStatement pst = conexion.prepareStatement(sql)) {
+            pst.setDate(1, java.sql.Date.valueOf(fechaLimite));
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                sb.append(rs.getString("nombre")).append(": ").append(rs.getInt("cantidad")).append("\n");
+            }
+        }
+        return sb.toString();
     }
 
     public void cerrar() {
