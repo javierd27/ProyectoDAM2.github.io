@@ -31,16 +31,24 @@ public class JDialogReserva extends javax.swing.JDialog {
     
     private void cargarServicios() throws SQLException {
         ResultSet rs = null;
+        ResultSet rs2 = null;
         try {
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             rs = c.todosServicios();
+            rs2 = c.todasHabitacionesLibres();
             jComboBoxReserva.removeAllItems(); // limpiamos combo
+            
             while (rs.next()) {
                 String nombre = rs.getString("nombre");
                 
                 jComboBoxReserva.addItem(nombre);
             }
+            while (rs2.next()){
+                String hab = rs2.getString("tipo");
+                jComboBoxReserva.addItem(hab);
+            }
+            
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         } finally {
@@ -87,7 +95,7 @@ public class JDialogReserva extends javax.swing.JDialog {
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -164,10 +172,10 @@ public class JDialogReserva extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonEliminarActionPerformed(evt);
             }
         });
 
@@ -184,7 +192,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonCrear))
                     .addGroup(layout.createSequentialGroup()
@@ -207,7 +215,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                     .addComponent(jButtonCrear)
                     .addComponent(jButtonBuscar)
                     .addComponent(jButtonEditar)
-                    .addComponent(jButton1))
+                    .addComponent(jButtonEliminar))
                 .addGap(11, 11, 11))
         );
 
@@ -221,10 +229,15 @@ public class JDialogReserva extends javax.swing.JDialog {
             Connection conexion = c.getConnection();
             
             Reserva nuevo = new Reserva(
-                    
-                    
-                    
-                    
+                    c.buscarServicioId(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscarHabitacion(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscaFactura(jTextFieldDNI.getText()).getIdFactura(), 
+                    (int) jSpinnerNPersonas.getValue(),
+                    jTextFieldDNI.getText(),
+                    jComboBoxEstado.getSelectedItem().toString(),
+                    (Date)jSpinnerFecha_inicio.getValue(),
+                    (Date)jSpinnerFecha_fin.getValue(),
+                    (Date)jSpinnerFecha_reserva.getValue()                        
             );
             
             if(c.insertaReserva(nuevo)>=1){
@@ -238,68 +251,59 @@ public class JDialogReserva extends javax.swing.JDialog {
             
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }*/
+        }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-       /* try {
+        try {
             // TODO add your handling code here:
             
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
             String dni = jTextFieldDNI.getText();
-            Cliente cliente = c.buscaCliente(dni);
+            Reserva reserva = c.buscaReserva(dni);
             
-            if(cliente == null){
+            if(reserva == null){
                 jLabel1.setText("No se ha encontrado");
 
             }else{
                 jLabel1.setText("Encontrado");
                 
-                jTextFieldDNI.setText(cliente.getDni_nie());
-                jTextFieldNombre.setText(cliente.getNombre());
-                jTextFieldApellido1.setText(cliente.getApellido1());
-                jTextFieldApellido2.setText(cliente.getApellido2());
-                jSpinnerFecha_inicio.setValue(cliente.getFecha_nac());
-                jTextFieldMail.setText(cliente.getMail());
-                jTextFieldTelefono.setText(cliente.getTelefono());
-                jTextFieldNacionalidad.setText(cliente.getNacionalidad());
-                jTextFieldPais.setText(cliente.getPais());
-                jTextFieldPoblacion.setText(cliente.getPoblacion());
-                jTextFieldCalle_num.setText(cliente.getCalle_numero());
-                jTextFieldPiso.setText(cliente.getPiso());
-                
+                jTextFieldDNI.setText(reserva.getIdCliente());
+                jComboBoxReserva.setSelectedItem());
+                jSpinnerFecha_inicio.setValue(reserva.getFecha_inicio());
+                jSpinnerFecha_fin.setValue(reserva.getFecha_fin());
+                jSpinnerNPersonas.setValue(reserva.getIdCliente());
+                jSpinnerFecha_reserva.setValue(reserva.getFecha_hora_reserva());
+                jComboBoxEstado.setSelectedItem(reserva.getEstado());
             }
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        */
+        
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-      /*  try {
+        try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
-            Cliente nuevo = new Cliente(
+            Reserva nuevo = new Reserva(
+                    c.buscarServicioId(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscarHabitacion(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscaFactura(jTextFieldDNI.getText()).getIdFactura(), 
+                    (int) jSpinnerNPersonas.getValue(),
                     jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
+                    jComboBoxEstado.getSelectedItem().toString(),
                     (Date)jSpinnerFecha_inicio.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
+                    (Date)jSpinnerFecha_fin.getValue(),
+                    (Date)jSpinnerFecha_reserva.getValue()                        
             );
             
-            if(c.editarCliente(nuevo, jTextFieldDNI.getText()) >= 1){
+            if(c.editarReserva(nuevo, jTextFieldDNI.getText(), ) >= 1){
                 jLabel1.setText("Actualizado con exito");
             }else{
                 jLabel1.setText("No se ha actualizado");
@@ -311,12 +315,12 @@ public class JDialogReserva extends javax.swing.JDialog {
             jLabel1.setText("Error");
         }
         
-        */
+        
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
         // TODO add your handling code here:
@@ -364,10 +368,10 @@ public class JDialogReserva extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBoxEstado;
     private javax.swing.JComboBox<String> jComboBoxReserva;
     private javax.swing.JLabel jLabel1;

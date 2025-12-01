@@ -148,7 +148,7 @@ public class JDialogServicio extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        try {
+         try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -172,11 +172,12 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        try {
+       try {
             // TODO add your handling code here:
             
             ConexionBBDD c = new ConexionBBDD();
@@ -199,11 +200,11 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        try {
+       try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -226,10 +227,10 @@ public class JDialogServicio extends javax.swing.JDialog {
             jLabel1.setText("Error");
         }
         
-        
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
@@ -246,6 +247,7 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     /**

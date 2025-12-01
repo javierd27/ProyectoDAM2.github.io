@@ -20,8 +20,7 @@ public class Reserva {
     String idCliente, estado;
     Date fecha_inicio, fecha_fin, fecha_hora_reserva;
 
-    public Reserva(int idReserva, int idServicio, int idHabitacion, int idFactura, int cantidad_personas, String idCliente, String estado, Date fecha_inicio, Date fecha_fin, Date fecha_hora_reserva) {
-        this.idReserva = idReserva;
+    public Reserva(int idServicio, int idHabitacion, int idFactura, int cantidad_personas, String idCliente, String estado, Date fecha_inicio, Date fecha_fin, Date fecha_hora_reserva) {
         this.idServicio = idServicio;
         this.idHabitacion = idHabitacion;
         this.idFactura = idFactura;
