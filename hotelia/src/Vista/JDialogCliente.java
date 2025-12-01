@@ -30,6 +30,8 @@ public class JDialogCliente extends javax.swing.JDialog {
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        setTitle("Cliente");
+
     }
 
     /**
@@ -81,11 +83,11 @@ public class JDialogCliente extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(13, 2, 10, 10));
 
-        jLabelDNI.setText("DNI");
+        jLabelDNI.setText("DNI*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabelNombre.setText("Nombre");
+        jLabelNombre.setText("Nombre*");
         jPanel1.add(jLabelNombre);
 
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +97,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldNombre);
 
-        jLabelApelliod1.setText("Apellido1");
+        jLabelApelliod1.setText("Apellido1*");
         jPanel1.add(jLabelApelliod1);
         jPanel1.add(jTextFieldApellido1);
 
@@ -109,14 +111,14 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFecha_nac.setText("Fecha de nacimiento");
+        jLabelFecha_nac.setText("Fecha de nacimiento*");
         jPanel1.add(jLabelFecha_nac);
 
-        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
         jPanel1.add(jSpinnerFecha_nac);
 
-        jLabelMail.setText("Correo");
+        jLabelMail.setText("Correo*");
         jPanel1.add(jLabelMail);
 
         jTextFieldMail.addActionListener(new java.awt.event.ActionListener() {
@@ -126,7 +128,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldMail);
 
-        jLabelTelefono.setText("Teléfono");
+        jLabelTelefono.setText("Teléfono*");
         jPanel1.add(jLabelTelefono);
 
         jTextFieldTelefono.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +138,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldTelefono);
 
-        jLabelNacionalidad.setText("Nacionalidad");
+        jLabelNacionalidad.setText("Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
         jPanel1.add(jTextFieldNacionalidad);
 
@@ -147,7 +149,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabel2.setText("____________________________");
         jPanel1.add(jLabel2);
 
-        jLabelPais.setText("País de residencia actual");
+        jLabelPais.setText("País de residencia actual*");
         jPanel1.add(jLabelPais);
 
         jTextFieldPais.addActionListener(new java.awt.event.ActionListener() {
@@ -157,11 +159,11 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldPais);
 
-        jLabelPoblacion.setText("Población");
+        jLabelPoblacion.setText("Población*");
         jPanel1.add(jLabelPoblacion);
         jPanel1.add(jTextFieldPoblacion);
 
-        jLabelCalle_num.setText("Calle y número");
+        jLabelCalle_num.setText("Calle y número*");
         jPanel1.add(jLabelCalle_num);
         jPanel1.add(jTextFieldCalle_num);
 

@@ -32,6 +32,8 @@ public class JDialogFactura extends javax.swing.JDialog {
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        setTitle("Factura");
+
     }
 
     /**
@@ -77,7 +79,7 @@ public class JDialogFactura extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(8, 2, 10, 10));
 
-        jLabelDNI.setText("DNI cliente");
+        jLabelDNI.setText("DNI cliente*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
@@ -89,7 +91,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         jSpinnerFecha_reserva.setEnabled(false);
         jPanel1.add(jSpinnerFecha_reserva);
 
-        jLabel4.setText("Observaciones");
+        jLabel4.setText("Observaciones*");
         jPanel1.add(jLabel4);
 
         jTextFieldObservaciones.addActionListener(new java.awt.event.ActionListener() {
@@ -99,7 +101,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldObservaciones);
 
-        jLabel6.setText("Metodo de pago");
+        jLabel6.setText("Metodo de pago*");
         jPanel1.add(jLabel6);
 
         jComboBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta" }));
@@ -110,7 +112,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxMetodoPago);
 
-        jLabelEstado.setText("Estado");
+        jLabelEstado.setText("Estado*");
         jPanel1.add(jLabelEstado);
 
         jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Pagado" }));
@@ -121,7 +123,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxEstado);
 
-        jLabel5.setText("Descuento");
+        jLabel5.setText("Descuento*");
         jPanel1.add(jLabel5);
         jPanel1.add(jTextFieldDescuento);
 
@@ -129,6 +131,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         jPanel1.add(jLabel7);
 
         jTextFieldSubtotal.setEditable(false);
+        jTextFieldSubtotal.setEnabled(false);
         jTextFieldSubtotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldSubtotalActionPerformed(evt);
@@ -140,6 +143,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         jPanel1.add(jLabel3);
 
         jTextFieldTotal.setEditable(false);
+        jTextFieldTotal.setEnabled(false);
         jTextFieldTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTotalActionPerformed(evt);
@@ -219,7 +223,7 @@ public class JDialogFactura extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        try {
+      /*  try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -243,7 +247,7 @@ public class JDialogFactura extends javax.swing.JDialog {
             
         } catch (SQLException ex) {
             System.getLogger(JDialogFactura.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        }*/
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     @SuppressWarnings("empty-statement")
@@ -280,7 +284,7 @@ public class JDialogFactura extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        try {
+       /* try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -312,7 +316,7 @@ public class JDialogFactura extends javax.swing.JDialog {
             jLabel1.setText("Error");
         }
         
-        
+        */
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed

@@ -88,14 +88,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelDNI">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI cliente"/>
+            <Property name="text" type="java.lang.String" value="DNI cliente*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Reserva"/>
+            <Property name="text" type="java.lang.String" value="Reserva*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxReserva">
@@ -115,13 +115,13 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFecha_nac">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha de inicio"/>
+            <Property name="text" type="java.lang.String" value="Fecha de inicio*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha_inicio">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="now" stepSize="5" type="date"/>
+              <SpinnerModel initial="now" minimum="now" stepSize="5" type="date"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="dd/MM/yyyy" type="1"/>
@@ -130,13 +130,13 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFecha_nac1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha de fin"/>
+            <Property name="text" type="java.lang.String" value="Fecha de fin*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha_fin">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="now" stepSize="5" type="date"/>
+              <SpinnerModel initial="now" minimum="now" stepSize="5" type="date"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="dd/MM/yyyy" type="1"/>
@@ -145,10 +145,15 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelApellido2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cantidad de personas"/>
+            <Property name="text" type="java.lang.String" value="Cantidad de personas*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerNPersonas">
+          <Properties>
+            <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+              <SpinnerModel initial="1" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
@@ -168,7 +173,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelApelliod1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Estado"/>
+            <Property name="text" type="java.lang.String" value="Estado*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxEstado">

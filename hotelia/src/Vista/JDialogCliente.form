@@ -86,14 +86,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelDNI">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI"/>
+            <Property name="text" type="java.lang.String" value="DNI*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nombre"/>
+            <Property name="text" type="java.lang.String" value="Nombre*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
@@ -103,7 +103,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelApelliod1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido1"/>
+            <Property name="text" type="java.lang.String" value="Apellido1*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellido1">
@@ -120,13 +120,13 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFecha_nac">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha de nacimiento"/>
+            <Property name="text" type="java.lang.String" value="Fecha de nacimiento*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha_nac">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="now" stepSize="5" type="date"/>
+              <SpinnerModel initial="now" maximum="now" stepSize="5" type="date"/>
             </Property>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="dd/MM/yyyy" type="1"/>
@@ -135,7 +135,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelMail">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Correo"/>
+            <Property name="text" type="java.lang.String" value="Correo*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldMail">
@@ -145,7 +145,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTelefono">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono"/>
+            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTelefono">
@@ -155,7 +155,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNacionalidad">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nacionalidad"/>
+            <Property name="text" type="java.lang.String" value="Nacionalidad*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNacionalidad">
@@ -175,7 +175,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPais">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pa&#xed;s de residencia actual"/>
+            <Property name="text" type="java.lang.String" value="Pa&#xed;s de residencia actual*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPais">
@@ -185,14 +185,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPoblacion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Poblaci&#xf3;n"/>
+            <Property name="text" type="java.lang.String" value="Poblaci&#xf3;n*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPoblacion">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCalle_num">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Calle y n&#xfa;mero"/>
+            <Property name="text" type="java.lang.String" value="Calle y n&#xfa;mero*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCalle_num">

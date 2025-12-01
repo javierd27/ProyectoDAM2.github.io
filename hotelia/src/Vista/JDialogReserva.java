@@ -63,6 +63,7 @@ public class JDialogReserva extends javax.swing.JDialog {
         initComponents();
         //jSpinnerFecha_nac.setValue("");
         cargarServicios();
+        setTitle("Reserva");
 
     }
 
@@ -104,32 +105,34 @@ public class JDialogReserva extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelDNI.setText("DNI cliente");
+        jLabelDNI.setText("DNI cliente*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabel2.setText("Reserva");
+        jLabel2.setText("Reserva*");
         jPanel1.add(jLabel2);
 
         jComboBoxReserva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(jComboBoxReserva);
 
-        jLabelFecha_nac.setText("Fecha de inicio");
+        jLabelFecha_nac.setText("Fecha de inicio*");
         jPanel1.add(jLabelFecha_nac);
 
-        jSpinnerFecha_inicio.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_inicio.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFecha_inicio.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_inicio, "dd/MM/yyyy"));
         jPanel1.add(jSpinnerFecha_inicio);
 
-        jLabelFecha_nac1.setText("Fecha de fin");
+        jLabelFecha_nac1.setText("Fecha de fin*");
         jPanel1.add(jLabelFecha_nac1);
 
-        jSpinnerFecha_fin.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_fin.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFecha_fin.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_fin, "dd/MM/yyyy"));
         jPanel1.add(jSpinnerFecha_fin);
 
-        jLabelApellido2.setText("Cantidad de personas");
+        jLabelApellido2.setText("Cantidad de personas*");
         jPanel1.add(jLabelApellido2);
+
+        jSpinnerNPersonas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jPanel1.add(jSpinnerNPersonas);
 
         jLabelNombre.setText("Fecha hora reserva");
@@ -140,7 +143,7 @@ public class JDialogReserva extends javax.swing.JDialog {
         jSpinnerFecha_reserva.setEnabled(false);
         jPanel1.add(jSpinnerFecha_reserva);
 
-        jLabelApelliod1.setText("Estado");
+        jLabelApelliod1.setText("Estado*");
         jPanel1.add(jLabelApelliod1);
 
         jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptada", "Cancelada" }));
@@ -272,7 +275,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                 jLabel1.setText("Encontrado");
                 
                 jTextFieldDNI.setText(reserva.getIdCliente());
-                jComboBoxReserva.setSelectedItem());
+              //  jComboBoxReserva.setSelectedItem());
                 jSpinnerFecha_inicio.setValue(reserva.getFecha_inicio());
                 jSpinnerFecha_fin.setValue(reserva.getFecha_fin());
                 jSpinnerNPersonas.setValue(reserva.getIdCliente());
@@ -303,12 +306,12 @@ public class JDialogReserva extends javax.swing.JDialog {
                     (Date)jSpinnerFecha_reserva.getValue()                        
             );
             
-            if(c.editarReserva(nuevo, jTextFieldDNI.getText(), ) >= 1){
+          /*  if(c.editarReserva(nuevo, jTextFieldDNI.getText(), (Date)jSpinnerFecha_inicio.getValue(), (Date)jSpinnerFecha_fin.getValue() ) >= 1){
                 jLabel1.setText("Actualizado con exito");
             }else{
                 jLabel1.setText("No se ha actualizado");
 
-            }
+            }*/
             
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

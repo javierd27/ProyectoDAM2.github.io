@@ -164,7 +164,7 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
         //boton que actualiza los datos puestos en la habitacion
         //hay que hacer ifs para que no sea null
-        
+        /*
         //int idHabitacion
         int numero;
         String tipo;
@@ -199,7 +199,7 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
             precio_publico = precio_base; //aqui cambiar con la formula
             estado = (String) jcbEstado.getSelectedItem();
         }
-        
+        */
         
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 

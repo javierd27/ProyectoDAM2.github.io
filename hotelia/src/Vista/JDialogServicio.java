@@ -32,6 +32,8 @@ public class JDialogServicio extends javax.swing.JDialog {
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        setTitle("Servicio");
+
     }
 
     /**
@@ -64,16 +66,22 @@ public class JDialogServicio extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
 
-        jLabelDNI.setText("Nombre del servicio");
+        jLabelDNI.setText("Nombre del servicio*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldNombreServicio);
 
-        jLabel2.setText("Descripción");
+        jLabel2.setText("Descripción*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldDescripcion);
 
-        jLabelPrecio.setText("Precio");
+        jLabelPrecio.setText("Precio*");
         jPanel1.add(jLabelPrecio);
+
+        jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrecioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldPrecio);
 
         jButtonCrear.setText("Crear");
@@ -249,6 +257,10 @@ public class JDialogServicio extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrecioActionPerformed
 
     /**
      * @param args the command line arguments

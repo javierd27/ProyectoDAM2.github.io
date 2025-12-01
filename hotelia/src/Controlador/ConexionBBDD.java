@@ -284,7 +284,7 @@ public class ConexionBBDD {
                                 rs.getDate("fecha_hora_reserva"));
         }
     }
-    
+    /*
     
     public int editarReserva(Reserva reserva, String dni) throws SQLException {
         String sql = "UPDATE reserva SET precio = ?, descripcion = ? WHERE nombre = ?";
@@ -296,7 +296,7 @@ public class ConexionBBDD {
        
         return ps.executeUpdate();
     }
-    
+    */
     
     public Factura buscaFactura(String dni) throws SQLException {
         String sql = "SELECT * FROM factura WHERE idCliente = ? AND estado = Pendiente";

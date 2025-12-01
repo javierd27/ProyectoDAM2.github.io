@@ -95,7 +95,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelDNI">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI cliente"/>
+            <Property name="text" type="java.lang.String" value="DNI cliente*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
@@ -118,7 +118,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Observaciones"/>
+            <Property name="text" type="java.lang.String" value="Observaciones*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldObservaciones">
@@ -128,7 +128,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Metodo de pago"/>
+            <Property name="text" type="java.lang.String" value="Metodo de pago*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxMetodoPago">
@@ -149,7 +149,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelEstado">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Estado"/>
+            <Property name="text" type="java.lang.String" value="Estado*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBoxEstado">
@@ -170,7 +170,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Descuento"/>
+            <Property name="text" type="java.lang.String" value="Descuento*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDescuento">
@@ -183,6 +183,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldSubtotal">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldSubtotalActionPerformed"/>
@@ -196,6 +197,7 @@
         <Component class="javax.swing.JTextField" name="jTextFieldTotal">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldTotalActionPerformed"/>
