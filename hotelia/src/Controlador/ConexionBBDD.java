@@ -27,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {
 
-// cnxBBDD=new ConexionBBDD("localhost", "3306", "world","root", "root");
+// cnxBBDD=new ConexionBBDD("localhost", "3306", "world","root", "root") ;
     /**
      * Method to connect to the database by passing parameters. Método para
      * establecer la conexión a la base de datos mediante el paso de parámetros.
