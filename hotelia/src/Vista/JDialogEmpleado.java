@@ -14,6 +14,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.sql.*;
+import java.util.List;
+import java.util.regex.PatternSyntaxException;
+import javax.swing.RowFilter;
 
 /**
  *
@@ -27,10 +30,9 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
     ConexionBBDD c = new ConexionBBDD();
-    
 
     public void cargaInicial() throws SQLException {
-        
+        dtm.setRowCount(0);
         c.selectTodosEmpleados(dtm);
         jTableEmpleados.setModel(dtm);
 
@@ -47,6 +49,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     public JDialogEmpleado(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
+        setTitle("Empleados");
         dtm = new DefaultTableModel();
         jTableEmpleados.setModel(dtm);
         dtm.setColumnIdentifiers(Empleado.devuelveColumna());
@@ -79,6 +82,8 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jButtonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldApellido = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -120,12 +125,30 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jPanel2.add(jButtonEliminar);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("BUSQUEDA");
+        jLabel1.setText("NOMBRE");
         jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
         jPanel2.add(jLabel1);
 
         jTextFieldNombre.setPreferredSize(new java.awt.Dimension(255, 40));
+        jTextFieldNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldNombreKeyReleased(evt);
+            }
+        });
         jPanel2.add(jTextFieldNombre);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("APELLIDO");
+        jLabel2.setPreferredSize(new java.awt.Dimension(90, 40));
+        jPanel2.add(jLabel2);
+
+        jTextFieldApellido.setPreferredSize(new java.awt.Dimension(255, 40));
+        jTextFieldApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldApellidoKeyReleased(evt);
+            }
+        });
+        jPanel2.add(jTextFieldApellido);
 
         jButtonCrear.setText("CREAR");
         jButtonCrear.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -207,19 +230,43 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
         // MIRAR JFRAMETABLE DE TableAvanzado el boton de borrar, lo haremos igual para borrar 
-                // hasta que no cierre el jdialogEdita no podre hacer nada
-        JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
-        // hago visible el jframe
-        jdee.setVisible(true);
+        // hasta que no cierre el jdialogEdita no podre hacer nada
+        if (jTableEmpleados.getSelectedRowCount() == 0) {
+
+            JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
+            // hago visible el jframe
+            jdee.setVisible(true);
+        } else if (jTableEmpleados.getSelectedRowCount() == 1) {
+
+            // recojo el indice real de la tabla
+            int filaModelo = jTableEmpleados.convertRowIndexToModel(jTableEmpleados.getSelectedRow());
+
+            // dni_nie (columna 0)
+            String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
+            JDialogEditarEmpleado jdee = new JDialogEditarEmpleado(null, true);
+            // le pasamos el id
+            jdee.setIdEmpleado(id);
+
+            // hago visible el jframe
+            jdee.setVisible(true);
+            // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+            dtm.setRowCount(0);
+            c.selectTodosEmpleados(dtm);
+        } else {
+            jLabelError.setText("Selecciona exactamente una fila");
+        }// end if
+
+
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * Eliminamos de 1 en 1 los empleados
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         if (jTableEmpleados.getSelectedRowCount() == 1) {
-            
+
             // recojo el indice real de la tabla
             int filaModelo = jTableEmpleados.convertRowIndexToModel(jTableEmpleados.getSelectedRow());
 
@@ -227,8 +274,8 @@ public class JDialogEmpleado extends javax.swing.JDialog {
             String id = jTableEmpleados.getModel().getValueAt(filaModelo, 0).toString();
 
             // Compruebo si se ha borrado 
-           if (c.deleteUsuario(dtm, id) < 1) {
-                jLabelError.setText("No se ha podido borrar ningún usuario");
+            if (c.deleteUsuario(dtm, id) < 1) {
+                jLabelError.setText("No se ha podido borrar ningún empleado");
             } else {
                 // Quitar del modelo de tabla
                 dtm.removeRow(filaModelo);
@@ -236,13 +283,58 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         } else {
             jLabelError.setText("Selecciona exactamente una fila");
         }// end if
+        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        dtm.setRowCount(0);
+        c.selectTodosEmpleados(dtm);
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         // TODO add your handling code here:
-        
-        
+        JDialogCrearEmpleado jdCe = new JDialogCrearEmpleado(null, true);
+
+        // hago visible el jframe
+        jdCe.setVisible(true);
+
+        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        dtm.setRowCount(0);
+        c.selectTodosEmpleados(dtm);
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    
+
+/**
+ * Metodo para gestionar y buscar por nombre y apellido
+ */
+private void busqueda() {
+    try {
+        // Hago un array de objetos (de la fila)
+        List<RowFilter<Object,Object>> filtros = new ArrayList<>();
+
+        // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
+        if (!jTextFieldNombre.getText().trim().isEmpty()) {
+            filtros.add(RowFilter.regexFilter(jTextFieldNombre.getText().trim(), 1));
+        }
+        // Si el campo apellido no está vacío, creamos el filtro para la columna 2 
+        if (!jTextFieldApellido.getText().trim().isEmpty()) {
+            filtros.add(RowFilter.regexFilter(jTextFieldApellido.getText().trim(), 2));
+        }        
+        RowFilter<Object,Object> rf = RowFilter.andFilter(filtros);
+
+        order.setRowFilter(rf);
+
+    } catch (PatternSyntaxException pse) {
+        System.out.println("Bad regex pattern");
+    }
+}
+    private void jTextFieldNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNombreKeyReleased
+        busqueda();
+    }//GEN-LAST:event_jTextFieldNombreKeyReleased
+
+    private void jTextFieldApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldApellidoKeyReleased
+        busqueda();
+    }//GEN-LAST:event_jTextFieldApellidoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -291,6 +383,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelError;
     private javax.swing.JPanel jPanel1;
@@ -298,6 +391,7 @@ public class JDialogEmpleado extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEmpleados;
+    private javax.swing.JTextField jTextFieldApellido;
     private javax.swing.JTextField jTextFieldNombre;
     // End of variables declaration//GEN-END:variables
 }

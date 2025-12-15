@@ -167,9 +167,9 @@ public class ConexionBBDD {
 
         return ps.executeUpdate();
     }
+
     
-    
-     public int insertaServicio(Servicio nuevo) throws SQLException {
+    public int insertaServicio(Servicio nuevo) throws SQLException {
         String sql = "INSERT INTO servicio (nombre, precio, descripcion) VALUES (?, ?, ?)";
 
         PreparedStatement ps = conexion.prepareStatement(sql);
@@ -179,7 +179,7 @@ public class ConexionBBDD {
 
         return ps.executeUpdate();
     }
-     
+
      
     public Servicio buscaServicio(String nombre) throws SQLException {
         String sql = "SELECT * FROM servicio WHERE nombre = ?";
@@ -194,7 +194,7 @@ public class ConexionBBDD {
             return new Servicio(rs.getString("nombre"),  rs.getString("descripcion"), rs.getDouble("precio"));
         }
     }
-     
+
     
     public int editarServicio(Servicio servicio, String nombre) throws SQLException {
         String sql = "UPDATE servicio SET precio = ?, descripcion = ? WHERE nombre = ?";
@@ -203,17 +203,17 @@ public class ConexionBBDD {
         ps.setDouble(1, servicio.getPrecio());
         ps.setString(2, servicio.getDescripción());
         ps.setString(3, nombre);
-       
+
         return ps.executeUpdate();
     }
-    
+
     
     public int eliminaServicio(String nombre) throws SQLException {
         String sql = "DELETE FROM servicio WHERE nombre = ?";
         PreparedStatement ps = conexion.prepareStatement(sql);
 
         ps.setString(1, nombre);
-        
+
         return ps.executeUpdate();
     }
     
@@ -529,7 +529,7 @@ public class ConexionBBDD {
                 nombre=rs.getString(1);
             }
             return nombre;
-            
+
         } catch (SQLException ex) {
             System.getLogger(ConexionBBDD.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             return nombre;

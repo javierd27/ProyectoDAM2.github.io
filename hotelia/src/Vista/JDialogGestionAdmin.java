@@ -35,7 +35,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     public JDialogGestionAdmin(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+        setTitle("Gestionar administradores");
         
     }
 
@@ -56,6 +56,8 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         jButtonCalendario = new javax.swing.JButton();
         jButtonServicios = new javax.swing.JButton();
         jButtonEstadisticas = new javax.swing.JButton();
+        Reserva = new javax.swing.JButton();
+        factura = new javax.swing.JButton();
         jButtonCerrarSesion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
@@ -110,6 +112,22 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonEstadisticas);
 
+        Reserva.setText("Reserva");
+        Reserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Reserva);
+
+        factura.setText("Factura");
+        factura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facturaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(factura);
+
         jButtonCerrarSesion.setText("Cerrar Sesión");
         jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,7 +153,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
                 .addComponent(jLabelBienvenido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addContainerGap(562, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,17 +181,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /*
-        ======================================================
-        BOTONES PARA 
-        EMPLEADO
-        CLIENTES    
-        CALENDARIO
-        SERVICIOS
-        ESTADISTICAS
-        HABITACION
-        
-    */
     private void jButtonEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpleadosActionPerformed
          try {
              // TODO add your handling code here:
@@ -187,26 +194,49 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
         // TODO add your handling code here:
+        
+        JDialogCliente jdc = new JDialogCliente((java.awt.Frame) this.getParent(), true);
+        jdc.setVisible(true);
     }//GEN-LAST:event_jButtonClientesActionPerformed
 
     private void jButtonCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalendarioActionPerformed
         // TODO add your handling code here:
+        JDialogCalendarioHab jdch = new JDialogCalendarioHab((java.awt.Frame) this.getParent(), true);
+        jdch.setVisible(true);
     }//GEN-LAST:event_jButtonCalendarioActionPerformed
 
     private void jButtonServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonServiciosActionPerformed
         // TODO add your handling code here:
+        JDialogServicio jds = new JDialogServicio((java.awt.Frame) this.getParent(), true);
+        jds.setVisible(true);
     }//GEN-LAST:event_jButtonServiciosActionPerformed
 
     private void jButtonEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasActionPerformed
         // TODO add your handling code here:
+        JDialogEstadisticas jde = new JDialogEstadisticas((java.awt.Frame) this.getParent(), true);
+        
+        jde.setVisible(true);
     }//GEN-LAST:event_jButtonEstadisticasActionPerformed
 
     private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
         JFrameLogin jfl = new JFrameLogin();
+        jfl.setVisible(true);
         this.dispose();
         
-        jfl.setVisible(true);
+        
     }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
+
+    private void ReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservaActionPerformed
+        //JDialogReserva jdr = new JDialogReserva((java.awt.Frame) this.getParent(), true);
+        //jdr.setVisible(true);
+    }//GEN-LAST:event_ReservaActionPerformed
+
+    private void facturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturaActionPerformed
+        // TODO add your handling code here:
+        JDialogFactura jdf = new JDialogFactura((java.awt.Frame) this.getParent(), true);
+        jdf.setVisible(true);
+
+    }//GEN-LAST:event_facturaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,7 +269,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        
                         System.exit(0);
                     }
                 });
@@ -249,6 +278,8 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Reserva;
+    private javax.swing.JButton factura;
     private javax.swing.JButton jButtonCalendario;
     private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonClientes;
