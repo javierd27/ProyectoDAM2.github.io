@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
-
+// SE SUPONE QUE TODOS LOS METODOS YA SE HAN METIDO EN TODOS LOS DAO
 public class ConexionBBDD {
 
 // cnxBBDD=new ConexionBBDD("localhost", "3306", "world","root", "root") ;
@@ -45,7 +45,7 @@ public class ConexionBBDD {
     String database;
     String user;
     String password;
-    Connection conexion = null;
+    static Connection conexion = null;
 
     public ConexionBBDD() {
         this.host = "localhost";
@@ -68,7 +68,6 @@ public class ConexionBBDD {
     private void conectar() {
         String url = "";
         try {
-
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
             } catch (ClassNotFoundException ex) {
@@ -87,11 +86,12 @@ public class ConexionBBDD {
         }
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return conexion;
     }
 
-    // CONSULTAS PARA LA APP 
+    // CONSULTAS PARA LA APP ç
+    // copiado
     public String BuscarContraseñaEmpleado(String us) {
         String resul = "";
         try {
