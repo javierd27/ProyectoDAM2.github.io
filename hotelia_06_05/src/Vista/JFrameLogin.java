@@ -160,7 +160,6 @@ public class JFrameLogin extends javax.swing.JFrame {
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
          ConexionBBDD c = new ConexionBBDD();
         
-        // ✅ Validar conexión ANTES de usarla
         if (!ConexionBBDD.isConexionValida()) {
             jLabelError.setText("❌ No se pudo conectar a la base de datos");
             return;
@@ -172,7 +171,7 @@ public class JFrameLogin extends javax.swing.JFrame {
         
         // Validar campos vacíos
         if (usuario.isEmpty() || pass.isEmpty()) {
-            jLabelError.setText("❌ El usuario o la contraseña están vacíos");
+            jLabelError.setText(" El usuario o la contraseña están vacíos");
             return;
         }
         
@@ -180,15 +179,15 @@ public class JFrameLogin extends javax.swing.JFrame {
         String passBD = e.BuscarContraseñaEmpleado(usuario);
         
         if (passBD == null || passBD.isEmpty()) {
-            jLabelError.setText("❌ Usuario o contraseña incorrectos");
+            jLabelError.setText(" Usuario o contraseña incorrectos");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
             return;
         }
         
-        // ✅ Comprobar contraseña usando BCrypt
+        // Comprobar contraseña usando BCrypt
         if (checkPassword(pass, passBD)) {
-            jLabelError.setText("✅ Login correcto");
+            jLabelError.setText(" Login correcto");
             
             // Obtener rol y abrir ventana correspondiente
             String rol = c.comprobarRol(usuario);
@@ -204,11 +203,11 @@ public class JFrameLogin extends javax.swing.JFrame {
                 this.dispose();
                 jdge.setVisible(true);
             } else {
-                jLabelError.setText("❌ Rol no reconocido: " + rol);
+                jLabelError.setText(" Rol no reconocido: " + rol);
             }
             
         } else {
-            jLabelError.setText("❌ Usuario o contraseña incorrectos");
+            jLabelError.setText("Usuario o contraseña incorrectos");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
         }
