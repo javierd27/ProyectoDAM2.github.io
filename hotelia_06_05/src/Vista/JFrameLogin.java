@@ -161,7 +161,7 @@ public class JFrameLogin extends javax.swing.JFrame {
          ConexionBBDD c = new ConexionBBDD();
         
         if (!ConexionBBDD.isConexionValida()) {
-            jLabelError.setText("❌ No se pudo conectar a la base de datos");
+            jLabelError.setText(" No se pudo conectar a la base de datos");
             return;
         }
         
