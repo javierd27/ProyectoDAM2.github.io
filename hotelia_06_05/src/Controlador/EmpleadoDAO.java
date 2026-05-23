@@ -30,7 +30,7 @@ public class EmpleadoDAO {
 
     public String BuscarContraseñaEmpleado(String us) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return "";
         }
         
@@ -63,7 +63,7 @@ public class EmpleadoDAO {
      */
     public void selectTodosEmpleados(DefaultTableModel dtm) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return;
         }
         
@@ -101,7 +101,7 @@ public class EmpleadoDAO {
     public List<Empleado> selectTodosEmpleadosEditar() {
         List<Empleado> listaEmpleado = new ArrayList<>();
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return listaEmpleado;
         }
         
@@ -145,7 +145,7 @@ public class EmpleadoDAO {
      */
     public Empleado selectEmpleadoUnico(String id) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return null;
         }
         
@@ -191,7 +191,7 @@ public class EmpleadoDAO {
      */
     public boolean updateEmpleado(Empleado e) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return false;
         }
         
@@ -231,7 +231,7 @@ public class EmpleadoDAO {
      */
     public boolean consultaIdEmpleado(String dni) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return false;
         }
         
@@ -253,7 +253,7 @@ public class EmpleadoDAO {
 
     public boolean insertEmpleado(Empleado empleado) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return false;
         }
         
@@ -288,7 +288,7 @@ public class EmpleadoDAO {
     
     public int deleteEmpleado(DefaultTableModel dtm, String id) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return 0;
         }
         

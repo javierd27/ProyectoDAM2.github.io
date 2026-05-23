@@ -87,9 +87,7 @@ public class Habitacion {
         this.estado = estado;
     }
     
-    /**
-     * ✅ AÑADIDO: toString para consistencia con otros modelos
-     */
+ 
     @Override
     public String toString() {
         return "Habitacion{" + "idHabitacion=" + idHabitacion + ", numero=" + numero + 
@@ -97,17 +95,12 @@ public class Habitacion {
                ", precio_publico=" + precio_publico + ", estado=" + estado + '}';
     }
     
-    /**
-     * ✅ AÑADIDO: getColumnas para JTable (consistencia con otros modelos)
-     */
+
     public static String[] getColumnas() {
         String[] columnas = {"idHabitacion", "Número", "Tipo", "Capacidad", "Precio base", "Precio público", "Estado"};
         return columnas;
     }
-    
-    /**
-     * ✅ AÑADIDO: devuelveFila para JTable (consistencia con otros modelos)
-     */
+
     public String[] devuelveFila() {
         String[] fila = {
             String.valueOf(idHabitacion),

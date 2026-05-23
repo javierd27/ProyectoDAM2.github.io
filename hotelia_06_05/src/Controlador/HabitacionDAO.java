@@ -26,17 +26,11 @@ public class HabitacionDAO {
         this.conexion = ConexionBBDD.getConnection();
     }
 
-    /**
-     * ✅ CORREGIDO: Antes buscaba en la tabla 'servicio' (BUG grave).
-     * Ahora busca correctamente en la tabla 'habitacion'.
-     * 
-     * NOTA: este método busca por "nombre" pero la tabla habitacion no tiene
-     * columna 'nombre'. Se ha cambiado a buscar por 'tipo' que es lo lógico.
-     */
+    
     public int buscarHabitacion(String tipo) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
-        // ✅ CORREGIDO: FROM habitacion (antes era FROM servicio)
+        
         String sql = "SELECT idHabitacion FROM habitacion WHERE tipo = ?";
 
         PreparedStatement ps = conexion.prepareStatement(sql);
@@ -56,7 +50,7 @@ public class HabitacionDAO {
     public List<String> buscarIdHabitaciones() {
         List<String> lista = new ArrayList<>();
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return lista;
         }
         
@@ -80,7 +74,7 @@ public class HabitacionDAO {
     public List<Object[]> buscarFechayEstadoPorHabitacion(int idHab) {
         List<Object[]> lista = new ArrayList<>();
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return lista;
         }
         
@@ -112,7 +106,7 @@ public class HabitacionDAO {
     //metodo que busca el estado de la habitacion
     public String buscarEstadoHabitacion(int idHabitacion) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return null;
         }
         
@@ -137,7 +131,7 @@ public class HabitacionDAO {
     //metodo que actualiza estado de la habitacion
     public void ActualizarEstadoHabitacion(int idHabitacion, String estado) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return;
         }
         
@@ -156,7 +150,7 @@ public class HabitacionDAO {
     //metodo que busca los datos de las habitaciones por id
     public Habitacion buscarHabitacionPorId(int idHabitacion) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return null;
         }
         
@@ -189,7 +183,7 @@ public class HabitacionDAO {
                                           int capacidad, double precio_base,
                                           double precio_publico, String estado) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return;
         }
         
@@ -273,7 +267,7 @@ public class HabitacionDAO {
     public void insertarHabitacion(int numero, String tipo, int capacidad,
                                     double precio_base, double precio_publico, String estado) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return;
         }
         

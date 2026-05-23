@@ -67,20 +67,20 @@ public class ConexionBBDD {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
             } catch (ClassNotFoundException ex) {
-                System.out.println("❌ Error al registrar el driver de MySQL: " + ex);
+                System.out.println("Error al registrar el driver de MySQL: " + ex);
                 return;
             }
             url = "jdbc:mysql://" + host + ":" + port + "/" + database;
             conexion = DriverManager.getConnection(url, user, password);
             
             if (conexion != null && conexion.isValid(5)) {
-                System.out.println("✅ Conexión a BD exitosa: " + url);
+                System.out.println("Conexión a BD exitosa: " + url);
             } else {
-                System.out.println("⚠️ Validación de conexión falló");
+                System.out.println(" Validación de conexión falló");
                 conexion = null;
             }
         } catch (java.sql.SQLException sqle) {
-            System.out.println("❌ Error al conectar con MySQL (" + url + "): " + sqle.getMessage());
+            System.out.println("Error al conectar con MySQL (" + url + "): " + sqle.getMessage());
             conexion = null;
         }
     }
@@ -104,7 +104,7 @@ public class ConexionBBDD {
      */
     public String BuscarContraseñaEmpleado(String us) {
         if (conexion == null) {
-            System.out.println("❌ Error: Conexión a BD no disponible");
+            System.out.println("Error: Conexión a BD no disponible");
             return "";
         }
         
@@ -136,7 +136,7 @@ public class ConexionBBDD {
      */
     public String comprobarRol(String usuario) {
         if (conexion == null) {
-            System.out.println("❌ Error: Conexión a BD no disponible");
+            System.out.println("Error: Conexión a BD no disponible");
             return "";
         }
         
@@ -163,10 +163,10 @@ public class ConexionBBDD {
         try {
             if (conexion != null) {
                 conexion.close();
-                System.out.println("✅ Conexión cerrada correctamente");
+                System.out.println("Conexión cerrada correctamente");
             }
         } catch (java.sql.SQLException sqle) {
-            System.out.println("❌ No se ha podido cerrar la conexión: " + sqle.getMessage());
+            System.out.println("No se ha podido cerrar la conexión: " + sqle.getMessage());
         }
     }
     
@@ -197,7 +197,7 @@ public class ConexionBBDD {
     public boolean cargarDatosDePrueba() {
         if (conexion == null) {
             JOptionPane.showMessageDialog(null, 
-                "❌ No hay conexión a la base de datos", 
+                "No hay conexión a la base de datos", 
                 "Error", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -230,7 +230,7 @@ public class ConexionBBDD {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, 
-                "❌ Error al cargar datos: " + e.getMessage(), 
+                " Error al cargar datos: " + e.getMessage(), 
                 "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             return false;
@@ -273,7 +273,7 @@ public class ConexionBBDD {
                     totalInsertados += ps.executeUpdate();
                     ps.close();
                 } catch (Exception ex) {
-                    System.out.println("⚠️ Error al insertar cliente: " + ex.getMessage());
+                    System.out.println("Error al insertar cliente: " + ex.getMessage());
                 }
             }
         }
@@ -309,7 +309,7 @@ public class ConexionBBDD {
                     totalInsertados += ps.executeUpdate();
                     ps.close();
                 } catch (Exception ex) {
-                    System.out.println("⚠️ Error al insertar empleado: " + ex.getMessage());
+                    System.out.println("Error al insertar empleado: " + ex.getMessage());
                 }
             }
         }
@@ -333,7 +333,7 @@ public class ConexionBBDD {
                     totalInsertados += ps.executeUpdate();
                     ps.close();
                 } catch (Exception ex) {
-                    System.out.println("⚠️ Error al insertar habitación: " + ex.getMessage());
+                    System.out.println("Error al insertar habitación: " + ex.getMessage());
                 }
             }
         }
@@ -354,7 +354,7 @@ public class ConexionBBDD {
                     totalInsertados += ps.executeUpdate();
                     ps.close();
                 } catch (Exception ex) {
-                    System.out.println("⚠️ Error al insertar servicio: " + ex.getMessage());
+                    System.out.println("Error al insertar servicio: " + ex.getMessage());
                 }
             }
         }
@@ -425,7 +425,7 @@ public class ConexionBBDD {
                     total += insertarServicioDesdeJSON(objeto);
                 }
             } catch (Exception e) {
-                System.out.println("⚠️ Error procesando objeto " + tipo + ": " + e.getMessage());
+                System.out.println("Error procesando objeto " + tipo + ": " + e.getMessage());
             }
             pos = finObj + 1;
         }

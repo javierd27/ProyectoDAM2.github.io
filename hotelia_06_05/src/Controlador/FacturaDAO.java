@@ -73,10 +73,7 @@ public class FacturaDAO {
         return f;
     }
 
-    /**
-     * ✅ CORREGIDO: Ahora usa Statement.RETURN_GENERATED_KEYS
-     * para que getGeneratedKeys() funcione correctamente.
-     */
+    
     public int crearFacturaPendiente(String dni) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         

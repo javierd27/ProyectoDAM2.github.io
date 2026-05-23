@@ -18,9 +18,6 @@ public class ReservaDAO {
 
     private Connection conexion;
 
-    /**
-     * ✅ CORREGIDO: Antes tenía 'new ConexionBBDD()' duplicado.
-     */
     public ReservaDAO() {
         // Creo primero la conexion
         new ConexionBBDD();
@@ -29,7 +26,7 @@ public class ReservaDAO {
 
     public void selectTodasReservas(DefaultTableModel dtm) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return;
         }
         
@@ -102,7 +99,7 @@ public class ReservaDAO {
         ResultSet rs = ps.executeQuery();
         Reserva reserva = null;
         if (rs.next()) {
-            // ✅ Manejo de nulls al leer
+            
             Integer idServ = rs.getObject("idServicio") != null ? rs.getInt("idServicio") : null;
             Integer idHab = rs.getObject("idHabitacion") != null ? rs.getInt("idHabitacion") : null;
             
@@ -117,11 +114,7 @@ public class ReservaDAO {
         return reserva;
     }
 
-    /**
-     * ✅ CORREGIDO: Ahora maneja correctamente los valores null
-     * de idServicio e idHabitacion (igual que insertaReserva).
-     * Antes daba NullPointerException si alguno era null.
-     */
+ 
     public int editarReserva(Reserva reserva) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -130,14 +123,12 @@ public class ReservaDAO {
                 + "WHERE idReserva=?";
         PreparedStatement ps = conexion.prepareStatement(sql);
 
-        // ✅ CORREGIDO: Manejo de null en idServicio
         if (reserva.getIdServicio() == null) {
             ps.setNull(1, java.sql.Types.INTEGER);
         } else {
             ps.setInt(1, reserva.getIdServicio());
         }
         
-        // ✅ CORREGIDO: Manejo de null en idHabitacion
         if (reserva.getIdHabitacion() == null) {
             ps.setNull(2, java.sql.Types.INTEGER);
         } else {
@@ -168,7 +159,6 @@ public class ReservaDAO {
         ResultSet rs = ps.executeQuery();
         Reserva reserva = null;
         if (rs.next()) {
-            // ✅ Manejo de nulls al leer
             Integer idServ = rs.getObject("idServicio") != null ? rs.getInt("idServicio") : null;
             Integer idHab = rs.getObject("idHabitacion") != null ? rs.getInt("idHabitacion") : null;
             
@@ -186,7 +176,7 @@ public class ReservaDAO {
 
     public int eliminarReserva(DefaultTableModel dtm, int id) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return 0;
         }
         
