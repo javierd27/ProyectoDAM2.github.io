@@ -7,6 +7,7 @@ package Vista;
 
 import Controlador.ConexionBBDD;
 import Modelo.Cliente;
+import Modelo.Factura;
 import Modelo.Reserva;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,6 +32,8 @@ public class JDialogFactura extends javax.swing.JDialog {
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        setTitle("Factura");
+
     }
 
     /**
@@ -47,25 +50,25 @@ public class JDialogFactura extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabelDNI = new javax.swing.JLabel();
         jTextFieldDNI = new javax.swing.JTextField();
-        jLabelFecha_nac = new javax.swing.JLabel();
-        jSpinnerFecha_nac = new javax.swing.JSpinner();
-        jLabelFecha_nac1 = new javax.swing.JLabel();
-        jSpinnerFecha_nac1 = new javax.swing.JSpinner();
+        jLabelNombre = new javax.swing.JLabel();
+        jSpinnerFecha_reserva = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldObservaciones = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextFieldDescuento = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxMetodoPago = new javax.swing.JComboBox<>();
         jLabelEstado = new javax.swing.JLabel();
         jComboBoxEstado = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldDescuento = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextFieldSubtotal = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldTotal = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         jLabel2.setText("jLabel2");
 
@@ -76,25 +79,19 @@ public class JDialogFactura extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(8, 2, 10, 10));
 
-        jLabelDNI.setText("DNI cliente");
+        jLabelDNI.setText("DNI cliente*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabelFecha_nac.setText("Fecha de inicio");
-        jPanel1.add(jLabelFecha_nac);
+        jLabelNombre.setText("Fecha y hora emisión de factura");
+        jPanel1.add(jLabelNombre);
 
-        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac);
+        jSpinnerFecha_reserva.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_reserva.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_reserva, "dd/MM/yyyy HH:mm:ss"));
+        jSpinnerFecha_reserva.setEnabled(false);
+        jPanel1.add(jSpinnerFecha_reserva);
 
-        jLabelFecha_nac1.setText("Fecha de fin");
-        jPanel1.add(jLabelFecha_nac1);
-
-        jSpinnerFecha_nac1.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac1.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac1, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac1);
-
-        jLabel4.setText("Observaciones");
+        jLabel4.setText("Observaciones*");
         jPanel1.add(jLabel4);
 
         jTextFieldObservaciones.addActionListener(new java.awt.event.ActionListener() {
@@ -104,11 +101,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldObservaciones);
 
-        jLabel5.setText("Descuento");
-        jPanel1.add(jLabel5);
-        jPanel1.add(jTextFieldDescuento);
-
-        jLabel6.setText("Metodo de pago");
+        jLabel6.setText("Metodo de pago*");
         jPanel1.add(jLabel6);
 
         jComboBoxMetodoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Efectivo", "Tarjeta" }));
@@ -119,7 +112,7 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxMetodoPago);
 
-        jLabelEstado.setText("Estado");
+        jLabelEstado.setText("Estado*");
         jPanel1.add(jLabelEstado);
 
         jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Pagado" }));
@@ -130,10 +123,27 @@ public class JDialogFactura extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxEstado);
 
+        jLabel5.setText("Descuento*");
+        jPanel1.add(jLabel5);
+        jPanel1.add(jTextFieldDescuento);
+
+        jLabel7.setText("Subtotal");
+        jPanel1.add(jLabel7);
+
+        jTextFieldSubtotal.setEditable(false);
+        jTextFieldSubtotal.setEnabled(false);
+        jTextFieldSubtotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSubtotalActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFieldSubtotal);
+
         jLabel3.setText("Total");
         jPanel1.add(jLabel3);
 
         jTextFieldTotal.setEditable(false);
+        jTextFieldTotal.setEnabled(false);
         jTextFieldTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldTotalActionPerformed(evt);
@@ -162,10 +172,10 @@ public class JDialogFactura extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonEliminarActionPerformed(evt);
             }
         });
 
@@ -181,8 +191,8 @@ public class JDialogFactura extends javax.swing.JDialog {
                         .addComponent(jButtonEditar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonCrear))
                     .addGroup(layout.createSequentialGroup()
@@ -205,7 +215,7 @@ public class JDialogFactura extends javax.swing.JDialog {
                     .addComponent(jButtonCrear)
                     .addComponent(jButtonBuscar)
                     .addComponent(jButtonEditar)
-                    .addComponent(jButton1))
+                    .addComponent(jButtonEliminar))
                 .addGap(11, 11, 11))
         );
 
@@ -213,13 +223,13 @@ public class JDialogFactura extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        try {
+      /*  try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
             
-            Reserva nuevo = new Reserva(
+            Factura nuevo = new Factura(
                     
                     
                     
@@ -237,7 +247,7 @@ public class JDialogFactura extends javax.swing.JDialog {
             
         } catch (SQLException ex) {
             System.getLogger(JDialogFactura.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        }*/
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     @SuppressWarnings("empty-statement")
@@ -249,26 +259,22 @@ public class JDialogFactura extends javax.swing.JDialog {
             Connection conexion = c.getConnection();
             
             String dni = jTextFieldDNI.getText();
-            Cliente cliente = c.buscaCliente(dni);
+            Factura factura = c.buscaFactura(dni);
             
-            if(cliente == null){
+            if(factura == null){
                 jLabel1.setText("No se ha encontrado");
 
             }else{
                 jLabel1.setText("Encontrado");
                 
-                jTextFieldDNI.setText(cliente.getDni_nie());
-                jTextFieldNombre.setText(cliente.getNombre());
-                jTextFieldApellido1.setText(cliente.getApellido1());
-                jTextFieldApellido2.setText(cliente.getApellido2());
-                jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
-                jTextFieldMail.setText(cliente.getMail());
-                jTextFieldTelefono.setText(cliente.getTelefono());
-                jTextFieldNacionalidad.setText(cliente.getNacionalidad());
-                jTextFieldPais.setText(cliente.getPais());
-                jTextFieldPoblacion.setText(cliente.getPoblacion());
-                jTextFieldCalle_num.setText(cliente.getCalle_numero());
-                jTextFieldPiso.setText(cliente.getPiso());
+                jTextFieldDNI.setText(factura.getIdCliente());
+                jSpinnerFecha_reserva.setValue(factura.getFecha_emision());
+                jTextFieldObservaciones.setText(factura.getObservacion());
+                jComboBoxMetodoPago.setSelectedItem(factura.getMetodo_pago());
+                jComboBoxEstado.setSelectedItem(factura.getEstado());
+                jTextFieldDescuento.setText(String.valueOf(factura.getDescuento()));
+                jTextFieldSubtotal.setText(String.valueOf(factura.getSub_total()));
+                jTextFieldTotal.setText(String.valueOf(factura.getTotal()));
                 
             }
         } catch (SQLException ex) {
@@ -278,7 +284,7 @@ public class JDialogFactura extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        try {
+       /* try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -310,12 +316,12 @@ public class JDialogFactura extends javax.swing.JDialog {
             jLabel1.setText("Error");
         }
         
-        
+        */
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTextFieldObservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldObservacionesActionPerformed
         // TODO add your handling code here:
@@ -332,6 +338,10 @@ public class JDialogFactura extends javax.swing.JDialog {
     private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxEstadoActionPerformed
+
+    private void jTextFieldSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSubtotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSubtotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -371,10 +381,10 @@ public class JDialogFactura extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JComboBox<String> jComboBoxEstado;
     private javax.swing.JComboBox<String> jComboBoxMetodoPago;
     private javax.swing.JLabel jLabel1;
@@ -383,17 +393,17 @@ public class JDialogFactura extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelClientes;
     private javax.swing.JLabel jLabelDNI;
     private javax.swing.JLabel jLabelEstado;
-    private javax.swing.JLabel jLabelFecha_nac;
-    private javax.swing.JLabel jLabelFecha_nac1;
+    private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinnerFecha_nac;
-    private javax.swing.JSpinner jSpinnerFecha_nac1;
+    private javax.swing.JSpinner jSpinnerFecha_reserva;
     private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldDescuento;
     private javax.swing.JTextField jTextFieldObservaciones;
+    private javax.swing.JTextField jTextFieldSubtotal;
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,6 +29,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     public JDialogGestionEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Gestionar empleados");
     }
 
     /**
@@ -45,7 +46,9 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButtonClientes = new javax.swing.JButton();
         jButtonCalendario = new javax.swing.JButton();
-        jButtonCalendario1 = new javax.swing.JButton();
+        Reserva = new javax.swing.JButton();
+        factura = new javax.swing.JButton();
+        jButtonCerrarSesion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
@@ -60,13 +63,44 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jPanel1.add(jLabelTitulo, java.awt.BorderLayout.PAGE_START);
 
         jButtonClientes.setText("Clientes");
+        jButtonClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClientesActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButtonClientes);
 
         jButtonCalendario.setText("Calendario");
+        jButtonCalendario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCalendarioActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButtonCalendario);
 
-        jButtonCalendario1.setText("Calendario");
-        jPanel2.add(jButtonCalendario1);
+        Reserva.setText("Reserva");
+        Reserva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Reserva);
+
+        factura.setText("Factura");
+        factura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                facturaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(factura);
+
+        jButtonCerrarSesion.setText("Cerrar Sesión");
+        jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarSesionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCerrarSesion);
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
@@ -113,6 +147,37 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
+        // TODO add your handling code here:
+        JDialogCliente jdc = new JDialogCliente((java.awt.Frame) this.getParent(), true);
+        jdc.setVisible(true);
+    }//GEN-LAST:event_jButtonClientesActionPerformed
+
+    private void jButtonCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalendarioActionPerformed
+        // TODO add your handling code here:
+        JDialogCalendarioHab jdch = new JDialogCalendarioHab((java.awt.Frame) this.getParent(), true);
+        jdch.setVisible(true);
+    }//GEN-LAST:event_jButtonCalendarioActionPerformed
+
+    private void ReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservaActionPerformed
+      // JDialogReserva jdr = new JDialogReserva((java.awt.Frame) this.getParent(), true);
+      //jdr.setVisible(true);
+    }//GEN-LAST:event_ReservaActionPerformed
+
+    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
+        JFrameLogin jfl = new JFrameLogin();
+        this.dispose();
+
+        jfl.setVisible(true);
+    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
+
+    private void facturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturaActionPerformed
+        // TODO add your handling code here:
+        JDialogFactura jdf = new JDialogFactura((java.awt.Frame) this.getParent(), true);
+        jdf.setVisible(true);
+                
+    }//GEN-LAST:event_facturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -151,8 +216,10 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Reserva;
+    private javax.swing.JButton factura;
     private javax.swing.JButton jButtonCalendario;
-    private javax.swing.JButton jButtonCalendario1;
+    private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JLabel jLabelBienvenido;
     private javax.swing.JLabel jLabelTitulo;

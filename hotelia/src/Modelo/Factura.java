@@ -17,9 +17,8 @@ public class Factura {
     Date fecha_emision;
     Double sub_total, total;
 
-    public Factura(int descuento, int idFactura, int iva, String estado, String idCliente, String metodo_pago, String observacion, Date fecha_emision, Double sub_total, Double total) {
+    public Factura(int descuento, int iva, String estado, String idCliente, String metodo_pago, String observacion, Date fecha_emision, Double sub_total, Double total) {
         this.descuento = descuento;
-        this.idFactura = idFactura;
         this.iva = iva;
         this.estado = estado;
         this.idCliente = idCliente;

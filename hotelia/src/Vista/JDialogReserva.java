@@ -8,9 +8,12 @@ package Vista;
 import Controlador.ConexionBBDD;
 import Modelo.Cliente;
 import Modelo.Reserva;
+import Modelo.Servicio;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import java.sql.ResultSet;
+
 
 /**
  *
@@ -26,11 +29,42 @@ public class JDialogReserva extends javax.swing.JDialog {
     
     JFrameLogin jframepadre;
     
-    public JDialogReserva(java.awt.Frame parent, boolean modal) {
+    private void cargarServicios() throws SQLException {
+        ResultSet rs = null;
+        ResultSet rs2 = null;
+        try {
+            ConexionBBDD c = new ConexionBBDD();
+            Connection conexion = c.getConnection();
+            rs = c.todosServicios();
+            rs2 = c.todasHabitacionesLibres();
+            jComboBoxReserva.removeAllItems(); // limpiamos combo
+            
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                
+                jComboBoxReserva.addItem(nombre);
+            }
+            while (rs2.next()){
+                String hab = rs2.getString("tipo");
+                jComboBoxReserva.addItem(hab);
+            }
+            
+        } catch (SQLException ex) {
+            System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        } finally {
+            rs.close();
+        }
+
+}
+    
+    public JDialogReserva(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        cargarServicios();
+        setTitle("Reserva");
+
     }
 
     /**
@@ -47,22 +81,22 @@ public class JDialogReserva extends javax.swing.JDialog {
         jLabelDNI = new javax.swing.JLabel();
         jTextFieldDNI = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBoxReserva = new javax.swing.JComboBox<>();
         jLabelFecha_nac = new javax.swing.JLabel();
-        jSpinnerFecha_nac = new javax.swing.JSpinner();
+        jSpinnerFecha_inicio = new javax.swing.JSpinner();
         jLabelFecha_nac1 = new javax.swing.JLabel();
-        jSpinnerFecha_nac1 = new javax.swing.JSpinner();
+        jSpinnerFecha_fin = new javax.swing.JSpinner();
         jLabelApellido2 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
+        jSpinnerNPersonas = new javax.swing.JSpinner();
         jLabelNombre = new javax.swing.JLabel();
-        jSpinnerFecha_nac2 = new javax.swing.JSpinner();
+        jSpinnerFecha_reserva = new javax.swing.JSpinner();
         jLabelApelliod1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxEstado = new javax.swing.JComboBox<>();
         jButtonCrear = new javax.swing.JButton();
         jButtonBuscar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,52 +105,54 @@ public class JDialogReserva extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelDNI.setText("DNI cliente");
+        jLabelDNI.setText("DNI cliente*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabel2.setText("Reserva");
+        jLabel2.setText("Reserva*");
         jPanel1.add(jLabel2);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2);
+        jComboBoxReserva.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(jComboBoxReserva);
 
-        jLabelFecha_nac.setText("Fecha de inicio");
+        jLabelFecha_nac.setText("Fecha de inicio*");
         jPanel1.add(jLabelFecha_nac);
 
-        jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac);
+        jSpinnerFecha_inicio.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+        jSpinnerFecha_inicio.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_inicio, "dd/MM/yyyy"));
+        jPanel1.add(jSpinnerFecha_inicio);
 
-        jLabelFecha_nac1.setText("Fecha de fin");
+        jLabelFecha_nac1.setText("Fecha de fin*");
         jPanel1.add(jLabelFecha_nac1);
 
-        jSpinnerFecha_nac1.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac1.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac1, "dd/MM/yyyy"));
-        jPanel1.add(jSpinnerFecha_nac1);
+        jSpinnerFecha_fin.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+        jSpinnerFecha_fin.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_fin, "dd/MM/yyyy"));
+        jPanel1.add(jSpinnerFecha_fin);
 
-        jLabelApellido2.setText("Cantidad de personas");
+        jLabelApellido2.setText("Cantidad de personas*");
         jPanel1.add(jLabelApellido2);
-        jPanel1.add(jSpinner1);
+
+        jSpinnerNPersonas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jPanel1.add(jSpinnerNPersonas);
 
         jLabelNombre.setText("Fecha hora reserva");
         jPanel1.add(jLabelNombre);
 
-        jSpinnerFecha_nac2.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_nac2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac2, "dd/MM/yyyy HH:mm:ss"));
-        jSpinnerFecha_nac2.setEnabled(false);
-        jPanel1.add(jSpinnerFecha_nac2);
+        jSpinnerFecha_reserva.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFecha_reserva.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_reserva, "dd/MM/yyyy HH:mm:ss"));
+        jSpinnerFecha_reserva.setEnabled(false);
+        jPanel1.add(jSpinnerFecha_reserva);
 
-        jLabelApelliod1.setText("Estado");
+        jLabelApelliod1.setText("Estado*");
         jPanel1.add(jLabelApelliod1);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptada", "Cancelada" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aceptada", "Cancelada" }));
+        jComboBoxEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxEstadoActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBox1);
+        jPanel1.add(jComboBoxEstado);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -139,10 +175,10 @@ public class JDialogReserva extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEliminar.setText("Eliminar");
+        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonEliminarActionPerformed(evt);
             }
         });
 
@@ -159,7 +195,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(jButtonEliminar)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonCrear))
                     .addGroup(layout.createSequentialGroup()
@@ -182,7 +218,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                     .addComponent(jButtonCrear)
                     .addComponent(jButtonBuscar)
                     .addComponent(jButtonEditar)
-                    .addComponent(jButton1))
+                    .addComponent(jButtonEliminar))
                 .addGap(11, 11, 11))
         );
 
@@ -195,12 +231,16 @@ public class JDialogReserva extends javax.swing.JDialog {
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
-            
             Reserva nuevo = new Reserva(
-                    
-                    
-                    
-                    
+                    c.buscarServicioId(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscarHabitacion(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscaFactura(jTextFieldDNI.getText()).getIdFactura(), 
+                    (int) jSpinnerNPersonas.getValue(),
+                    jTextFieldDNI.getText(),
+                    jComboBoxEstado.getSelectedItem().toString(),
+                    (Date)jSpinnerFecha_inicio.getValue(),
+                    (Date)jSpinnerFecha_fin.getValue(),
+                    (Date)jSpinnerFecha_reserva.getValue()                        
             );
             
             if(c.insertaReserva(nuevo)>=1){
@@ -226,27 +266,21 @@ public class JDialogReserva extends javax.swing.JDialog {
             Connection conexion = c.getConnection();
             
             String dni = jTextFieldDNI.getText();
-            Cliente cliente = c.buscaCliente(dni);
+            Reserva reserva = c.buscaReserva(dni);
             
-            if(cliente == null){
+            if(reserva == null){
                 jLabel1.setText("No se ha encontrado");
 
             }else{
                 jLabel1.setText("Encontrado");
                 
-                jTextFieldDNI.setText(cliente.getDni_nie());
-                jTextFieldNombre.setText(cliente.getNombre());
-                jTextFieldApellido1.setText(cliente.getApellido1());
-                jTextFieldApellido2.setText(cliente.getApellido2());
-                jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
-                jTextFieldMail.setText(cliente.getMail());
-                jTextFieldTelefono.setText(cliente.getTelefono());
-                jTextFieldNacionalidad.setText(cliente.getNacionalidad());
-                jTextFieldPais.setText(cliente.getPais());
-                jTextFieldPoblacion.setText(cliente.getPoblacion());
-                jTextFieldCalle_num.setText(cliente.getCalle_numero());
-                jTextFieldPiso.setText(cliente.getPiso());
-                
+                jTextFieldDNI.setText(reserva.getIdCliente());
+              //  jComboBoxReserva.setSelectedItem());
+                jSpinnerFecha_inicio.setValue(reserva.getFecha_inicio());
+                jSpinnerFecha_fin.setValue(reserva.getFecha_fin());
+                jSpinnerNPersonas.setValue(reserva.getIdCliente());
+                jSpinnerFecha_reserva.setValue(reserva.getFecha_hora_reserva());
+                jComboBoxEstado.setSelectedItem(reserva.getEstado());
             }
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -260,27 +294,24 @@ public class JDialogReserva extends javax.swing.JDialog {
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
             
-            Cliente nuevo = new Cliente(
+            Reserva nuevo = new Reserva(
+                    c.buscarServicioId(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscarHabitacion(jComboBoxReserva.getSelectedItem().toString()),
+                    c.buscaFactura(jTextFieldDNI.getText()).getIdFactura(), 
+                    (int) jSpinnerNPersonas.getValue(),
                     jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
-                    (Date)jSpinnerFecha_nac.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
+                    jComboBoxEstado.getSelectedItem().toString(),
+                    (Date)jSpinnerFecha_inicio.getValue(),
+                    (Date)jSpinnerFecha_fin.getValue(),
+                    (Date)jSpinnerFecha_reserva.getValue()                        
             );
             
-            if(c.editarCliente(nuevo, jTextFieldDNI.getText()) >= 1){
+          /*  if(c.editarReserva(nuevo, jTextFieldDNI.getText(), (Date)jSpinnerFecha_inicio.getValue(), (Date)jSpinnerFecha_fin.getValue() ) >= 1){
                 jLabel1.setText("Actualizado con exito");
             }else{
                 jLabel1.setText("No se ha actualizado");
 
-            }
+            }*/
             
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
@@ -290,13 +321,13 @@ public class JDialogReserva extends javax.swing.JDialog {
         
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxEstadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -323,25 +354,29 @@ public class JDialogReserva extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogReserva dialog = new JDialogReserva(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                try {
+                    JDialogReserva dialog = new JDialogReserva(new javax.swing.JFrame(), true);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
+                    dialog.setVisible(true);
+                } catch (SQLException ex) {
+                    System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JButton jButtonEliminar;
+    private javax.swing.JComboBox<String> jComboBoxEstado;
+    private javax.swing.JComboBox<String> jComboBoxReserva;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
@@ -352,10 +387,10 @@ public class JDialogReserva extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFecha_nac1;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinnerFecha_nac;
-    private javax.swing.JSpinner jSpinnerFecha_nac1;
-    private javax.swing.JSpinner jSpinnerFecha_nac2;
+    private javax.swing.JSpinner jSpinnerFecha_fin;
+    private javax.swing.JSpinner jSpinnerFecha_inicio;
+    private javax.swing.JSpinner jSpinnerFecha_reserva;
+    private javax.swing.JSpinner jSpinnerNPersonas;
     private javax.swing.JTextField jTextFieldDNI;
     // End of variables declaration//GEN-END:variables
 }

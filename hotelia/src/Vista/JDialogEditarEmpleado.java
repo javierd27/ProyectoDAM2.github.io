@@ -4,20 +4,73 @@
  */
 package Vista;
 
+import Controlador.ConexionBBDD;
+import Modelo.Empleado;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author DAM2Alu4
  */
 public class JDialogEditarEmpleado extends javax.swing.JDialog {
-    
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogEditarEmpleado.class.getName());
 
-    /**
-     * Creates new form JDialogEditarEmpleado
-     */
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogEditarEmpleado.class.getName());
+    String idEmpleado;
+    ConexionBBDD c = new ConexionBBDD();
+
+    public void cargaID() {
+        jComboBoxID.removeAllItems();
+        List<Empleado> lista = c.selectTodosEmpleadosEditar();
+        for (Empleado empleado : lista) {
+            jComboBoxID.addItem(String.valueOf(empleado.getDni_nie()));
+        }
+    }
+
+    private void cargarDatosEmpleado(Empleado empleado) {
+        if (empleado == null) {
+            return;
+        }
+        jTextFieldNombre.setText(empleado.getNombre());
+        jTextFieldApellido1.setText(empleado.getApellido1());
+        jTextFieldApellido2.setText(empleado.getApellido2());
+        jSpinnerFechaAlt.setValue(empleado.getFecha_nac());
+        jTextFieldUsuario.setText(empleado.getUsuario());
+        jComboBoxROL.setSelectedItem(empleado.getRol());
+        jTextFieldCorreo.setText(empleado.getCorreo());
+        jTextFieldTelefono.setText(empleado.getTelefono());
+        jTextFieldNacionalidad.setText(empleado.getNacionalidad());
+        jTextFieldPais.setText(empleado.getPais());
+        jTextFieldPoblacion.setText(empleado.getPoblacion());
+        jTextFieldCalle_Numero.setText(empleado.getCalle_numero());
+        jTextFieldPiso.setText(empleado.getPiso());
+    }
+
     public JDialogEditarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setTitle("Editar empleados");
+
+        cargaID();
+
+        if (idEmpleado != null) {
+            Empleado empleado = c.selectEmpleadoUnico(idEmpleado);
+            cargarDatosEmpleado(empleado);
+        }
+    }
+
+    public void setIdEmpleado(String id) {
+        cargaID();
+        this.idEmpleado = id;
+        for (int i = 0; i < jComboBoxID.getItemCount(); i++) {
+            if (jComboBoxID.getItemAt(i).equals(idEmpleado)) {
+                jComboBoxID.setSelectedIndex(i);
+                break;
+            }
+        }
+        Empleado empleado = c.selectEmpleadoUnico(idEmpleado);
+        cargarDatosEmpleado(empleado);
+
     }
 
     /**
@@ -36,26 +89,41 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextFieldApellido = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jComboBoxProvincia = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jTextFieldMail = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextFieldEdad = new javax.swing.JTextField();
+        jTextFieldApellido1 = new javax.swing.JTextField();
+        jLabelApellido2 = new javax.swing.JLabel();
+        jTextFieldApellido2 = new javax.swing.JTextField();
         jLabelFechaAlta = new javax.swing.JLabel();
         jSpinnerFechaAlt = new javax.swing.JSpinner();
-        jButtonAlta = new javax.swing.JButton();
+        jLabelUsuario = new javax.swing.JLabel();
+        jTextFieldUsuario = new javax.swing.JTextField();
+        jLabelRol = new javax.swing.JLabel();
+        jComboBoxROL = new javax.swing.JComboBox<>();
+        jLabelCorreo = new javax.swing.JLabel();
+        jTextFieldCorreo = new javax.swing.JTextField();
+        jLabelTelefono = new javax.swing.JLabel();
+        jTextFieldTelefono = new javax.swing.JTextField();
+        jLabelNacionalidad = new javax.swing.JLabel();
+        jTextFieldNacionalidad = new javax.swing.JTextField();
+        jLabelPais = new javax.swing.JLabel();
+        jTextFieldPoblacion = new javax.swing.JTextField();
+        jLabelCalle_numero = new javax.swing.JLabel();
+        jTextFieldCalle_Numero = new javax.swing.JTextField();
+        jLabelPoblacion = new javax.swing.JLabel();
+        jTextFieldPais = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jTextFieldPiso = new javax.swing.JTextField();
+        jButtonEditar = new javax.swing.JButton();
+        jLabelPosibleError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ALTA CLIENTES");
+        jLabel1.setText("ACTUALIZAR EMPLEADOS");
 
-        jPanel1.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(14, 2, 10, 10));
 
-        jLabelid.setText("ID");
+        jLabelid.setText("DNI*");
         jPanel1.add(jLabelid);
 
         jComboBoxID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -64,68 +132,113 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
                 jComboBoxIDItemStateChanged(evt);
             }
         });
+        jComboBoxID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxIDActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxID);
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Nombre*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldNombre);
 
-        jLabel3.setText("Apellido");
+        jLabel3.setText("Apellido1 *");
         jPanel1.add(jLabel3);
-        jPanel1.add(jTextFieldApellido);
+        jPanel1.add(jTextFieldApellido1);
 
-        jLabel4.setText("Provincia");
-        jPanel1.add(jLabel4);
+        jLabelApellido2.setText("Apellido2");
+        jPanel1.add(jLabelApellido2);
+        jPanel1.add(jTextFieldApellido2);
 
-        jComboBoxProvincia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Huesca", "Zaragoza", "Teruel" }));
-        jPanel1.add(jComboBoxProvincia);
-
-        jLabel5.setText("Mail");
-        jPanel1.add(jLabel5);
-        jPanel1.add(jTextFieldMail);
-
-        jLabel6.setText("Edad");
-        jPanel1.add(jLabel6);
-        jPanel1.add(jTextFieldEdad);
-
-        jLabelFechaAlta.setText("Fecha Alta");
+        jLabelFechaAlta.setText("Fecha Nacimiento*");
         jPanel1.add(jLabelFechaAlta);
 
         jSpinnerFechaAlt.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy hh:mm"));
+        jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy"));
         jPanel1.add(jSpinnerFechaAlt);
 
-        jButtonAlta.setText("Alta");
-        jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAltaActionPerformed(evt);
+        jLabelUsuario.setText("Usuario*");
+        jPanel1.add(jLabelUsuario);
+        jPanel1.add(jTextFieldUsuario);
+
+        jLabelRol.setText("Rol*");
+        jPanel1.add(jLabelRol);
+
+        jComboBoxROL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "recepcionista", "servicio" }));
+        jComboBoxROL.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxROLItemStateChanged(evt);
             }
         });
+        jPanel1.add(jComboBoxROL);
+
+        jLabelCorreo.setText("Correo*");
+        jPanel1.add(jLabelCorreo);
+        jPanel1.add(jTextFieldCorreo);
+
+        jLabelTelefono.setText("Telefono");
+        jPanel1.add(jLabelTelefono);
+        jPanel1.add(jTextFieldTelefono);
+
+        jLabelNacionalidad.setText("Nacionalidad");
+        jPanel1.add(jLabelNacionalidad);
+        jPanel1.add(jTextFieldNacionalidad);
+
+        jLabelPais.setText("País");
+        jPanel1.add(jLabelPais);
+        jPanel1.add(jTextFieldPoblacion);
+
+        jLabelCalle_numero.setText("Calle_numero");
+        jPanel1.add(jLabelCalle_numero);
+        jPanel1.add(jTextFieldCalle_Numero);
+
+        jLabelPoblacion.setText("Población");
+        jPanel1.add(jLabelPoblacion);
+        jPanel1.add(jTextFieldPais);
+
+        jLabel13.setText("Piso");
+        jPanel1.add(jLabel13);
+        jPanel1.add(jTextFieldPiso);
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.setPreferredSize(new java.awt.Dimension(90, 40));
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelPosibleError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1237, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jButtonAlta)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAlta)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPosibleError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -133,13 +246,70 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
     private void jComboBoxIDItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxIDItemStateChanged
         // TODO add your handling code here:
-        // Esto se hace para que no pete
-        
+        // informacion la he recogido de https://stackoverflow.com/questions/37332290/getting-jcombobox-selected-item
+        // No supe hacerlo de otra forma
+        // si el evento ha seleccionada un item nuevo
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            // recojo el item y lo paso a id
+            String id = (String) jComboBoxID.getSelectedItem();
+            // si el id no es null
+            if (id != null) {
+                // Consulto todos los datos del empleado
+                Empleado empleado = c.selectEmpleadoUnico(id);
+                // y escribo todos los datos en cada TextField
+                cargarDatosEmpleado(empleado);
+            }// end if id
+        }// end if evt
     }//GEN-LAST:event_jComboBoxIDItemStateChanged
 
-    private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
-        
-    }//GEN-LAST:event_jButtonAltaActionPerformed
+    /**
+     * Boton para actualizar el empleado
+     *
+     * @param evt
+     */
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+
+        String id = (String) jComboBoxID.getSelectedItem();
+        if (id != null) {
+            // Consulto todos los datos del empleado
+            Empleado empleado = c.selectEmpleadoUnico(id);
+            // almaceno todos los cambios que ha hecho el usuario en el empleado
+            empleado.setNombre(jTextFieldNombre.getText());
+            empleado.setApellido1(jTextFieldApellido1.getText());
+            empleado.setApellido1(jTextFieldApellido2.getText());
+            // recojo el dato por fecha
+            Date fecha = (Date) jSpinnerFechaAlt.getValue();
+            empleado.setFecha_nac(fecha);
+            empleado.setUsuario(jTextFieldUsuario.getText());
+            String rol = (String) jComboBoxROL.getSelectedItem();
+            empleado.setRol(rol);
+            empleado.setCorreo(jTextFieldCorreo.getText());
+            empleado.setTelefono(jTextFieldTelefono.getText());
+            empleado.setNacionalidad(jTextFieldNacionalidad.getText());
+            empleado.setPais(jTextFieldPais.getText());
+            empleado.setCalle_numero(jTextFieldCalle_Numero.getText());
+            empleado.setPoblacion(jTextFieldPoblacion.getText());
+            empleado.setPiso(jTextFieldPiso.getText());
+            boolean prueba = c.updateEmpleado(empleado);
+            if(prueba == false){
+                jLabelPosibleError.setText("Error al actualizar el empleado");
+            }else{
+                jLabelPosibleError.setText("Empleado actualizado");
+            }
+            
+        }// end if id
+
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jComboBoxROLItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxROLItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxROLItemStateChanged
+
+    private void jComboBoxIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxIDActionPerformed
+        // TODO add your handling code here:
+
+
+    }//GEN-LAST:event_jComboBoxIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,22 +349,37 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAlta;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JComboBox<String> jComboBoxID;
-    private javax.swing.JComboBox<String> jComboBoxProvincia;
+    private javax.swing.JComboBox<String> jComboBoxROL;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabelApellido2;
+    private javax.swing.JLabel jLabelCalle_numero;
+    private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelFechaAlta;
+    private javax.swing.JLabel jLabelNacionalidad;
+    private javax.swing.JLabel jLabelPais;
+    private javax.swing.JLabel jLabelPoblacion;
+    private javax.swing.JLabel jLabelPosibleError;
+    private javax.swing.JLabel jLabelRol;
+    private javax.swing.JLabel jLabelTelefono;
+    private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLabelid;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinnerFechaAlt;
-    private javax.swing.JTextField jTextFieldApellido;
-    private javax.swing.JTextField jTextFieldEdad;
-    private javax.swing.JTextField jTextFieldMail;
+    private javax.swing.JTextField jTextFieldApellido1;
+    private javax.swing.JTextField jTextFieldApellido2;
+    private javax.swing.JTextField jTextFieldCalle_Numero;
+    private javax.swing.JTextField jTextFieldCorreo;
+    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JTextField jTextFieldPais;
+    private javax.swing.JTextField jTextFieldPiso;
+    private javax.swing.JTextField jTextFieldPoblacion;
+    private javax.swing.JTextField jTextFieldTelefono;
+    private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }

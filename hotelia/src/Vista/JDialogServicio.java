@@ -32,6 +32,8 @@ public class JDialogServicio extends javax.swing.JDialog {
         //jframepadre = (JFrameLogin)parent;
         initComponents();
         //jSpinnerFecha_nac.setValue("");
+        setTitle("Servicio");
+
     }
 
     /**
@@ -64,16 +66,22 @@ public class JDialogServicio extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.GridLayout(3, 2, 10, 10));
 
-        jLabelDNI.setText("Nombre del servicio");
+        jLabelDNI.setText("Nombre del servicio*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldNombreServicio);
 
-        jLabel2.setText("Descripción");
+        jLabel2.setText("Descripción*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldDescripcion);
 
-        jLabelPrecio.setText("Precio");
+        jLabelPrecio.setText("Precio*");
         jPanel1.add(jLabelPrecio);
+
+        jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrecioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldPrecio);
 
         jButtonCrear.setText("Crear");
@@ -148,7 +156,7 @@ public class JDialogServicio extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        try {
+         try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -172,11 +180,12 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     @SuppressWarnings("empty-statement")
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        try {
+       try {
             // TODO add your handling code here:
             
             ConexionBBDD c = new ConexionBBDD();
@@ -199,11 +208,11 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-        
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        try {
+       try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
             Connection conexion = c.getConnection();
@@ -226,10 +235,10 @@ public class JDialogServicio extends javax.swing.JDialog {
             jLabel1.setText("Error");
         }
         
-        
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
             ConexionBBDD c = new ConexionBBDD();
@@ -246,7 +255,12 @@ public class JDialogServicio extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+
     }//GEN-LAST:event_jButtonEliminarActionPerformed
+
+    private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrecioActionPerformed
 
     /**
      * @param args the command line arguments
