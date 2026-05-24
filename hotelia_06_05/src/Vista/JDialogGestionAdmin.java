@@ -37,7 +37,15 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Gestionar administradores");
-        
+        // Agrego un listener para que en el momento que se cierre pestala
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            // Cierro del todo el programa
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
     /**
@@ -195,7 +203,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
         // TODO add your handling code here:
-        
         JDialogCliente jdc = new JDialogCliente((java.awt.Frame) this.getParent(), true);
         jdc.setVisible(true);
     }//GEN-LAST:event_jButtonClientesActionPerformed
@@ -228,9 +235,9 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
 
     private void ReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservaActionPerformed
-        JDialogReserva jdr;
+        JDialogReservaTable jdr;
          try {
-             jdr = new JDialogReserva((java.awt.Frame) this.getParent(), true);
+             jdr = new JDialogReservaTable((java.awt.Frame) this.getParent(), true);
              jdr.setVisible(true);
          } catch (SQLException ex) {
              System.getLogger(JDialogGestionAdmin.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);

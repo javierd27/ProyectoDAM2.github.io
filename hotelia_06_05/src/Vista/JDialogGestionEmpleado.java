@@ -33,6 +33,14 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Gestionar empleados");
+        // Agrego un listener para que en el momento que se cierre pestala
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                // cierrro del todo el programa
+                System.exit(0);
+            }
+        });
     }
 
     /**
