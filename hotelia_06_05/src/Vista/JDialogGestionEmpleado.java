@@ -159,9 +159,13 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
-        // TODO add your handling code here:
-        JDialogCliente jdc = new JDialogCliente((java.awt.Frame) this.getParent(), true);
-        jdc.setVisible(true);
+        JDialogClienteTable jdc;
+        try {
+            jdc = new JDialogClienteTable((java.awt.Frame) this.getParent(), true);
+            jdc.setVisible(true);
+        } catch (SQLException ex) {
+            System.getLogger(JDialogGestionAdmin.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
     }//GEN-LAST:event_jButtonClientesActionPerformed
 
     private void jButtonCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalendarioActionPerformed

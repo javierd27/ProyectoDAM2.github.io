@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
  * @author DAM2Alu4
  */
 public class Empleado {
@@ -88,9 +87,6 @@ public class Empleado {
         this.poblacion = poblacion;
         this.piso = piso;
     }
-
- 
-
 
 
     public String getDni_nie() {
