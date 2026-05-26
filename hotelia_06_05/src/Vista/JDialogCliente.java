@@ -12,25 +12,29 @@ import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
  * @author DAM2Alu3
  */
 public class JDialogCliente extends javax.swing.JDialog {
-    
+    private JTable JDialogClienteTable;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogCliente.class.getName());
+    private ClienteDAO cl = new ClienteDAO();
 
     /**
-     * Creates new form JDialogAltaCliente
+     * Creates new form 
      */
     
     JFrameLogin jframepadre;
+    private String dni;
     
-    public JDialogCliente(java.awt.Frame parent, boolean modal) {
+    public JDialogCliente(java.awt.Frame parent, boolean modal, JTable tabla) {
         super(parent, modal);
         //jframepadre = (JFrameLogin)parent;
         initComponents();
+        this.JDialogClienteTable = tabla;
         //jSpinnerFecha_nac.setValue("");
         setTitle("Cliente");
     }
@@ -73,8 +77,6 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelPiso = new javax.swing.JLabel();
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
-        jButtonBuscar = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -172,24 +174,10 @@ public class JDialogCliente extends javax.swing.JDialog {
         jPanel1.add(jLabelPiso);
         jPanel1.add(jTextFieldPiso);
 
-        jButtonCrear.setText("Crear");
+        jButtonCrear.setText("Aceptar");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
-            }
-        });
-
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarActionPerformed(evt);
-            }
-        });
-
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
             }
         });
 
@@ -202,10 +190,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonEditar)
-                        .addGap(83, 83, 83)
-                        .addComponent(jButtonBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonCrear)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
@@ -224,10 +209,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCrear)
-                    .addComponent(jButtonBuscar)
-                    .addComponent(jButtonEditar))
+                .addComponent(jButtonCrear)
                 .addGap(11, 11, 11))
         );
 
@@ -249,36 +231,51 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         try {
             // TODO add your handling code here:
-            //ConexionBBDD c = new ConexionBBDD();
-            ClienteDAO c = new ClienteDAO();
-            
             Cliente nuevo = new Cliente(
-                    jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
-                    (Date)jSpinnerFecha_nac.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
+                jTextFieldDNI.getText(),
+                jTextFieldNombre.getText(),
+                jTextFieldApellido1.getText(),
+                jTextFieldApellido2.getText(),
+                (Date) jSpinnerFecha_nac.getValue(),
+                jTextFieldMail.getText(),
+                jTextFieldTelefono.getText(),
+                jTextFieldNacionalidad.getText(),
+                jTextFieldPais.getText(),
+                jTextFieldCalle_num.getText(),
+                jTextFieldPoblacion.getText(),
+                jTextFieldPiso.getText()
             );
-            
-            if(c.insertaCliente(nuevo)>=1){
-                jLabel1.setText("Creado con exito");
-            }else{
-                jLabel1.setText("No se ha creado");
 
+                int resultado;
+
+                // CREAR
+                if (dni == null) {
+
+                    resultado = cl.insertaCliente(nuevo);
+
+                    if (resultado >= 1) {
+                        jLabel1.setText("Creado con exito");
+                    } else {
+                        jLabel1.setText("No se ha creado");
+                    }
+
+                // EDITAR
+                } else {
+
+                    resultado = cl.editarCliente(nuevo, dni);
+
+                    if (resultado >= 1) {
+                        jLabel1.setText("Editado con exito");
+                    } else {
+                        jLabel1.setText("No se ha editado");
+                    }
+                }
+
+                dispose();
+
+            } catch (SQLException ex) {
+                System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
-            //dispose();  cierra el jdialog
-            
-            
-        } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jTextFieldApellido2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldApellido2ActionPerformed
@@ -288,78 +285,6 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jTextFieldPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPaisActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPaisActionPerformed
-
-    @SuppressWarnings("empty-statement")
-    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-        try {
-            // TODO add your handling code here:
-            
-            //ConexionBBDD c = new ConexionBBDD();
-            //Connection conexion = c.getConnection();
-            ClienteDAO c = new ClienteDAO();
-            String dni = jTextFieldDNI.getText();
-            Cliente cliente = c.buscaCliente(dni);
-            
-            if(cliente == null){
-                jLabel1.setText("No se ha encontrado");
-
-            }else{
-                jLabel1.setText("Encontrado");     
-                jTextFieldDNI.setText(cliente.getDni_nie());
-                jTextFieldNombre.setText(cliente.getNombre());
-                jTextFieldApellido1.setText(cliente.getApellido1());
-                jTextFieldApellido2.setText(cliente.getApellido2());
-                jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
-                jTextFieldMail.setText(cliente.getMail());
-                jTextFieldTelefono.setText(cliente.getTelefono());
-                jTextFieldNacionalidad.setText(cliente.getNacionalidad());
-                jTextFieldPais.setText(cliente.getPais());
-                jTextFieldPoblacion.setText(cliente.getPoblacion());
-                jTextFieldCalle_num.setText(cliente.getCalle_numero());
-                jTextFieldPiso.setText(cliente.getPiso());
-                
-            }
-        } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-        
-    }//GEN-LAST:event_jButtonBuscarActionPerformed
-
-    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        try {
-            // TODO add your handling code here:
-             ClienteDAO c = new ClienteDAO();
-
-
-            Cliente nuevo = new Cliente(
-                    jTextFieldDNI.getText(),
-                    jTextFieldNombre.getText(),
-                    jTextFieldApellido1.getText(),
-                    jTextFieldApellido2.getText(),
-                    (Date)jSpinnerFecha_nac.getValue(),
-                    jTextFieldMail.getText(),
-                    jTextFieldTelefono.getText(),
-                    jTextFieldNacionalidad.getText(),
-                    jTextFieldPais.getText(),
-                    jTextFieldCalle_num.getText(),
-                    jTextFieldPoblacion.getText(),
-                    jTextFieldPiso.getText()
-            );
-            
-            if(c.editarCliente(nuevo, jTextFieldDNI.getText()) >= 1){
-                jLabel1.setText("Actualizado con exito");
-            }else{
-                jLabel1.setText("No se ha actualizado");
-
-            }
-            
-        } catch (SQLException ex) {
-            System.getLogger(JDialogCliente.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            jLabel1.setText("Error");
-        }
-        
-        
-    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -382,27 +307,10 @@ public class JDialogCliente extends javax.swing.JDialog {
         }
         //</editor-fold>
         FlatCobalt2IJTheme.setup();
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JDialogCliente dialog = new JDialogCliente(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
-    private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
@@ -433,4 +341,25 @@ public class JDialogCliente extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldPoblacion;
     private javax.swing.JTextField jTextFieldTelefono;
     // End of variables declaration//GEN-END:variables
-}
+
+   void setDniNie(String dni) throws SQLException {
+        this.dni = dni;
+
+        Cliente cliente = cl.buscaCliente(dni);
+
+        jTextFieldDNI.setText(cliente.getDni_nie());
+        jTextFieldNombre.setText(cliente.getNombre());
+        jTextFieldApellido1.setText(cliente.getApellido1());
+        jTextFieldApellido2.setText(cliente.getApellido2());
+        jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
+        jTextFieldMail.setText(cliente.getMail());
+        jTextFieldTelefono.setText(cliente.getTelefono());
+        jTextFieldNacionalidad.setText(cliente.getNacionalidad());
+        jTextFieldPais.setText(cliente.getPais());
+        jTextFieldCalle_num.setText(cliente.getCalle_numero());
+        jTextFieldPoblacion.setText(cliente.getPoblacion());
+        jTextFieldPiso.setText(cliente.getPiso());
+
+        jTextFieldDNI.setEditable(false);
+    }
+   }

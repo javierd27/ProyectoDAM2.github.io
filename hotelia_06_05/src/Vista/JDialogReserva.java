@@ -13,6 +13,7 @@ import Controlador.ReservaDAO;
 import Controlador.ServicioDAO;
 import Modelo.Cliente;
 import Modelo.Factura;
+import Modelo.Habitacion;
 import Modelo.Reserva;
 import Modelo.Servicio;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 
 /**
@@ -36,10 +38,12 @@ public class JDialogReserva extends javax.swing.JDialog {
     private FacturaDAO f = new FacturaDAO();
     private ClienteDAO ClienteDAO = new ClienteDAO();
     /**
-     * Creates new form JDialogAltaCliente
+     * Creates new form
      */
     
     JFrameLogin jframepadre;
+    private JTable jTableClientes;
+    private Integer idReserva;
     
     private void cargarServicios() throws SQLException {
         ResultSet rs = null;
@@ -76,9 +80,7 @@ public class JDialogReserva extends javax.swing.JDialog {
     
     public JDialogReserva(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
-        //jframepadre = (JFrameLogin)parent;
         initComponents();
-        //jSpinnerFecha_nac.setValue("");
         jSpinnerFecha_reserva.setValue(new Date());
         cargarServicios();
         setTitle("Reserva");
@@ -228,12 +230,9 @@ public class JDialogReserva extends javax.swing.JDialog {
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         try {
-            // TODO add your handling code here:
-            ConexionBBDD c = new ConexionBBDD();
-            Connection conexion = c.getConnection();
-            
+
             Cliente cliente = ClienteDAO.buscaCliente(jTextFieldDNI.getText().trim());
-            
+
             if(cliente == null){
 
                 JOptionPane.showMessageDialog(
@@ -242,46 +241,49 @@ public class JDialogReserva extends javax.swing.JDialog {
                 );
 
                 JDialogCliente dialog =
-                    new JDialogCliente(null, true);
+                    new JDialogCliente(null, true, jTableClientes);
 
                 dialog.setVisible(true);
 
                 return;
             }
-            
+
             Factura factura = f.buscaFactura(jTextFieldDNI.getText());
 
             int idFactura;
             Integer idServicio = null;
             Integer idHabitacion = null;
-            
+
             if (factura == null) {
                 idFactura = f.crearFacturaPendiente(jTextFieldDNI.getText());
             } else {
                 idFactura = factura.getIdFactura();
             }
-            
-            if(jComboBoxReserva.getSelectedIndex()!= 0){
-                idServicio = s.buscarServicioId(jComboBoxReserva.getSelectedItem().toString());
+
+            if(jComboBoxReserva.getSelectedIndex() != 0){
+                idServicio = s.buscarServicioId(
+                    jComboBoxReserva.getSelectedItem().toString()
+                );
             }
-            
-            if(jComboBoxReserva1.getSelectedIndex()!= 0){
-                idHabitacion = h.buscarHabitacionId(jComboBoxReserva1.getSelectedItem().toString());
-            }           
-            
-            
+
+            if(jComboBoxReserva1.getSelectedIndex() != 0){
+                idHabitacion = h.buscarHabitacionId(
+                    jComboBoxReserva1.getSelectedItem().toString()
+                );
+            }
+
             Reserva nuevo = new Reserva(
                     idServicio,
                     idHabitacion,
-                    idFactura, 
+                    idFactura,
                     (int) jSpinnerNPersonas.getValue(),
                     jTextFieldDNI.getText(),
                     jComboBoxEstado.getSelectedItem().toString(),
-                    (Date)jSpinnerFecha_inicio.getValue(),
-                    (Date)jSpinnerFecha_fin.getValue(),
-                    (Date)jSpinnerFecha_reserva.getValue()                        
+                    (Date) jSpinnerFecha_inicio.getValue(),
+                    (Date) jSpinnerFecha_fin.getValue(),
+                    (Date) jSpinnerFecha_reserva.getValue()
             );
-            
+
             if(idServicio == null && idHabitacion == null){
 
                 JOptionPane.showMessageDialog(
@@ -291,20 +293,40 @@ public class JDialogReserva extends javax.swing.JDialog {
 
                 return;
             }
-            
-            if(r.insertaReserva(nuevo)>=1){
-                jLabel1.setText("Creado con exito");
-            }else{
-                jLabel1.setText("No se ha creado");
 
+            int resultado;
+
+            // CREAR
+            if (idReserva == null) {
+
+                resultado = r.insertaReserva(nuevo);
+
+                if (resultado >= 1) {
+                    jLabel1.setText("Creado con exito");
+                } else {
+                    jLabel1.setText("No se ha creado");
+                }
+
+            // EDITAR
+            } else {
+
+                resultado = r.editarReserva(nuevo, idReserva);
+
+                if (resultado >= 1) {
+                    jLabel1.setText("Editado con exito");
+                } else {
+                    jLabel1.setText("No se ha editado");
+                }
             }
+
             f.recalcularFactura(idFactura);
-            dispose();  //cierra el jdialog
-            
-            
+
+            dispose();
+
         } catch (SQLException ex) {
             System.getLogger(JDialogReserva.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
+        
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jComboBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxEstadoActionPerformed
@@ -386,20 +408,47 @@ public class JDialogReserva extends javax.swing.JDialog {
 
     public void setIdReserva(int idReserva) throws SQLException {
         cargarServicios();
-        //this.idReserva = idReserva;
-        Reserva reserva = r.buscaReservaId(idReserva);
-        
-        //jTextFieldIdReserva.setText(String.valueOf(idReserva));
-        
+        this.idReserva = idReserva;
+        Reserva reserva = r.buscaReservaId(idReserva);        
         cargarDatosReserva(reserva);
 
     }
 
-    private void cargarDatosReserva(Reserva reserva) {
+    private void cargarDatosReserva(Reserva reserva) throws SQLException {
         jTextFieldDNI.setText(reserva.getIdCliente());
         jSpinnerNPersonas.setValue(reserva.getCantidad_personas());
         jComboBoxEstado.setSelectedItem(reserva.getEstado());
+        
+        if (reserva.getIdServicio() != null) {
 
+            Servicio servicio =
+                    s.buscarServicioPorId(
+                            reserva.getIdServicio()
+                    );
+
+            if (servicio != null) {
+
+                jComboBoxReserva.setSelectedItem(
+                        servicio.getNombre()
+                );
+            }
+        }
+        
+        if (reserva.getIdHabitacion() != null) {
+
+            Habitacion habitacion =
+                    h.buscarHabitacionPorId(
+                            reserva.getIdHabitacion()
+                    );
+
+            if (habitacion != null) {
+
+                jComboBoxReserva1.setSelectedItem(
+                        habitacion.getTipo()
+                );
+            }
+        }
+       
         jSpinnerFecha_inicio.setValue(reserva.getFecha_inicio());
         jSpinnerFecha_fin.setValue(reserva.getFecha_fin());
         jSpinnerFecha_reserva.setValue(reserva.getFecha_hora_reserva());    

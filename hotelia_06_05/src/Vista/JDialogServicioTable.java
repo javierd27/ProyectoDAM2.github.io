@@ -5,11 +5,11 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
-import Controlador.FacturaDAO;
 import Controlador.ReservaDAO;
+import Controlador.ServicioDAO;
 import Modelo.Empleado;
-import Modelo.Factura;
 import Modelo.Reserva;
+import Modelo.Servicio;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -27,49 +27,47 @@ import javax.swing.RowFilter;
  *
  * @author DAM2Alu3
  */
-public class JDialogFacturaTable extends javax.swing.JDialog {
+public class JDialogServicioTable extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogFacturaTable.class.getName());
-
-    
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogServicioTable.class.getName());    
 
     // objetos globales
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
-    FacturaDAO c = new FacturaDAO();
+    ServicioDAO s= new ServicioDAO();
 
     public void cargaInicial() throws SQLException {
         dtm.setRowCount(0);
-        c.selectTodasFacturas(dtm);
-        jTableFacturas.setModel(dtm);
+        s.selectTodosServicios(dtm);
+        jTableServicio.setModel(dtm);
 
     }
 
     public void configuraColumna(int ncol, int ancho) {
-        TableColumn columna = jTableFacturas.getColumnModel().getColumn(ncol);
+        TableColumn columna = jTableServicio.getColumnModel().getColumn(ncol);
         columna.setPreferredWidth(ancho);
     }
 
     /**
-     * Creates new form 
+     * Creates new form JDialogEmpleado
      */
-    public JDialogFacturaTable(java.awt.Frame parent, boolean modal) throws SQLException {
+    public JDialogServicioTable(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
-        setTitle("Facturas");
+        setTitle("Servicios");
         dtm = new DefaultTableModel();
-        jTableFacturas.setModel(dtm);
-        dtm.setColumnIdentifiers(Factura.getColumnas());
-        c.selectTodasFacturas(dtm);
+        jTableServicio.setModel(dtm);
+        dtm.setColumnIdentifiers(Servicio.getColumnas());
+        s.selectTodosServicios(dtm);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setSize(screenSize.width, screenSize.height);
         this.setLocation(0, 0);
         cargaInicial();
         order = new TableRowSorter<>(dtm);
-        jTableFacturas.setRowSorter(order);
+        jTableServicio.setRowSorter(order);
         configuraColumna(0, 5);
-        configuraColumna(4, 30);
+        configuraColumna(3, 30);
     }
 
     /**
@@ -83,12 +81,13 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFacturas = new javax.swing.JTable();
+        jTableServicio = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButtonEditar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldDNICliente = new javax.swing.JTextField();
+        jButtonCrear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabelError = new javax.swing.JLabel();
@@ -97,7 +96,7 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1059, 700));
 
-        jTableFacturas.setModel(new javax.swing.table.DefaultTableModel(
+        jTableServicio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -108,7 +107,7 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTableFacturas);
+        jScrollPane1.setViewportView(jTableServicio);
 
         jButtonEditar.setText("EDITAR");
         jButtonEditar.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -141,8 +140,17 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
         });
         jPanel2.add(jTextFieldDNICliente);
 
+        jButtonCrear.setText("CREAR");
+        jButtonCrear.setPreferredSize(new java.awt.Dimension(90, 40));
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonCrear);
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel3.setText("FACTURAS");
+        jLabel3.setText("RESERVAS");
 
         jLabelError.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
 
@@ -204,73 +212,119 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * Para editar empleado, esto si lo haremos con otro jdialog mas bonico
+     * (tendra que hacer click en el empleado que quiera editar)
+     *
      * @param evt
      */
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        // TODO add your handling code here:
-        if (jTableFacturas.getSelectedRowCount() == 0) {
+        
+        if (jTableServicio.getSelectedRowCount() != 1) {
+        jLabelError.setText("Selecciona exactamente una fila");
+        return;
+    }
 
-            JDialogEditarFactura jdef = new JDialogEditarFactura(null, true, jTableFacturas);
-            // hago visible el jframe
-            jdef.setVisible(true);
-        } else if (jTableFacturas.getSelectedRowCount() == 1) {
+    try {
+        int filaModelo = jTableServicio.convertRowIndexToModel(
+                jTableServicio.getSelectedRow());
 
-            try {
-                // recojo el indice real de la tabla
-                int filaModelo = jTableFacturas.convertRowIndexToModel(jTableFacturas.getSelectedRow());
-                
-                // idFactura (columna 0)
-                int idFactura = Integer.parseInt(jTableFacturas.getModel().getValueAt(filaModelo, 0).toString());
-                JDialogEditarFactura jdef = new JDialogEditarFactura(null, true, jTableFacturas);
-                // le pasamos el id
-                jdef.setIdFactura(idFactura);
-                
-                // hago visible el jframe
-                jdef.setVisible(true);
-                // Reseteo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
-                dtm.setRowCount(0);
-                c.selectTodasFacturas(dtm);
-            } catch (SQLException ex) {
-                System.getLogger(JDialogFacturaTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        } else {
-            jLabelError.setText("Selecciona exactamente una fila");
-        }// end if
+        int idServicio = Integer.parseInt(
+                jTableServicio.getModel()
+                        .getValueAt(filaModelo, 0)
+                        .toString());
 
+        JDialogServicio jds = new JDialogServicio(null, true, jTableServicio);
+
+        jds.setIdServicio(idServicio);
+
+        jds.setVisible(true);
+
+        dtm.setRowCount(0);
+        s.selectTodosServicios(dtm);
+
+        jLabelError.setText("");
+
+    } catch (SQLException ex) {
+        logger.log(java.util.logging.Level.SEVERE, null, ex);
+    }
 
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
-     * Eliminamos de 1 en 1 las facturas
+     * Eliminamos de 1 en 1 los servicios
      *
      * @param evt
      */
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        if (jTableFacturas.getSelectedRowCount() == 0) {
-            jLabelError.setText("Selecciona una factura primero");
-        } else if (jTableFacturas.getSelectedRowCount() == 1) {
-            try {
-                int filaModelo = jTableFacturas.convertRowIndexToModel(jTableFacturas.getSelectedRow());
-                int id = (int) jTableFacturas.getModel().getValueAt(filaModelo, 0);
+        if (jTableServicio.getSelectedRowCount() == 1) {
 
-                if (c.eliminarFactura(dtm, id) < 1) {
-                    jLabelError.setText("No se ha podido borrar la factura");
+            try {
+
+                // recojo el indice real de la tabla
+                int filaModelo = jTableServicio.convertRowIndexToModel(
+                        jTableServicio.getSelectedRow()
+                );
+
+                // idServicio (columna 0)
+                int idServicio = (int)
+                        jTableServicio.getModel()
+                                .getValueAt(filaModelo, 0);
+
+                // Compruebo si se ha borrado
+                if (s.eliminaServicio(idServicio) < 1) {
+
+                    jLabelError.setText(
+                            "No se ha podido borrar ningún servicio"
+                    );
+
                 } else {
+
+                    // quitar del modelo de tabla
                     dtm.removeRow(filaModelo);
+
+                    jLabelError.setText("");
                 }
-                dtm.setRowCount(0);
-                c.selectTodasFacturas(dtm);
+
+            } catch (SQLIntegrityConstraintViolationException ex) {
+
+                jLabelError.setText(
+                        "No puedes borrar un servicio asociado a reservas"
+                );
+
             } catch (SQLException ex) {
-                System.getLogger(JDialogFacturaTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+
+                System.getLogger(JDialogServicioTable.class.getName())
+                        .log(System.Logger.Level.ERROR,
+                                (String) null,
+                                ex);
             }
+
         } else {
-            jLabelError.setText("Selecciona exactamente una fila");
+
+            jLabelError.setText(
+                    "Selecciona exactamente una fila"
+            );
         }
 
+        // refrescar tabla
+        dtm.setRowCount(0);
+
+        s.selectTodosServicios(dtm);
 
     }//GEN-LAST:event_jButtonEliminarActionPerformed
-/*
-    */
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        // TODO add your handling code here:
+        JDialogServicio jds = new JDialogServicio(null, true, jTableServicio);
+        // hago visible el jframe
+        jds.setVisible(true);
+        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        dtm.setRowCount(0);
+        s.selectTodosServicios(dtm);
+
+    }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    
 
 /**
  * Metodo para gestionar y buscar por nombre y apellido
@@ -323,27 +377,25 @@ private void busqueda() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                JDialogFacturaTable dialog = null;
+                JDialogServicioTable dialog = null;
                 try {
-                    dialog = new JDialogFacturaTable(new javax.swing.JFrame(), true);
+                    dialog = new JDialogServicioTable(new javax.swing.JFrame(), true);
                 } catch (SQLException ex) {
-                    System.getLogger(JDialogFacturaTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    System.getLogger(JDialogServicioTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
                 }
-                if (dialog != null) {  
-                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
-                        }
-                    });
-                    dialog.setVisible(true);
-                }
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
@@ -353,7 +405,7 @@ private void busqueda() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFacturas;
+    private javax.swing.JTable jTableServicio;
     private javax.swing.JTextField jTextFieldDNICliente;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,6 +14,7 @@ import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JTable;
 
 /**
  *
@@ -22,19 +23,20 @@ import java.util.Date;
 public class JDialogServicio extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogServicio.class.getName());
-    private ServicioDAO c = new ServicioDAO();
+    private ServicioDAO s = new ServicioDAO();
+    private JTable JDialogServicioTable;
 
     /**
-     * Creates new form JDialogAltaCliente
+     * Creates new form 
      */
     
     JFrameLogin jframepadre;
+    Integer idServicio;
     
-    public JDialogServicio(java.awt.Frame parent, boolean modal) {
+    public JDialogServicio(java.awt.Frame parent, boolean modal, JTable tabla) {
         super(parent, modal);
-        //jframepadre = (JFrameLogin)parent;
         initComponents();
-        //jSpinnerFecha_nac.setValue("");
+        this.JDialogServicioTable = tabla;
         setTitle("Servicio");
 
     }
@@ -57,10 +59,7 @@ public class JDialogServicio extends javax.swing.JDialog {
         jLabelPrecio = new javax.swing.JLabel();
         jTextFieldPrecio = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
-        jButtonBuscar = new javax.swing.JButton();
-        jButtonEditar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButtonEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,6 +70,12 @@ public class JDialogServicio extends javax.swing.JDialog {
 
         jLabelDNI.setText("Nombre del servicio*");
         jPanel1.add(jLabelDNI);
+
+        jTextFieldNombreServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreServicioActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldNombreServicio);
 
         jLabel2.setText("Descripción*");
@@ -94,27 +99,6 @@ public class JDialogServicio extends javax.swing.JDialog {
             }
         });
 
-        jButtonBuscar.setText("Buscar");
-        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonBuscarActionPerformed(evt);
-            }
-        });
-
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
-
-        jButtonEliminar.setText("Eliminar");
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,16 +108,11 @@ public class JDialogServicio extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonEditar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonBuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButtonEliminar)
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonCrear))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -147,11 +126,7 @@ public class JDialogServicio extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCrear)
-                    .addComponent(jButtonBuscar)
-                    .addComponent(jButtonEditar)
-                    .addComponent(jButtonEliminar))
+                .addComponent(jButtonCrear)
                 .addGap(11, 11, 11))
         );
 
@@ -169,94 +144,57 @@ public class JDialogServicio extends javax.swing.JDialog {
                     Double.parseDouble(jTextFieldPrecio.getText())
             );
             
-            if(c.insertaServicio(nuevo)>=1){
-                jLabel1.setText("Creado con exito");
-            }else{
-                jLabel1.setText("No se ha creado");
+            int resultado; 
+            
+            if (idServicio == null) {
 
+                resultado = s.insertaServicio(nuevo);
+
+                if (resultado >= 1) {
+
+                    jLabel1.setText("Creado con exito");
+
+                } else {
+
+                    jLabel1.setText("No se ha creado");
+                }
+            } else {
+
+                resultado = s.editarServicio(
+                        nuevo,
+                        jTextFieldNombreServicio.getText()
+                );
+
+                if (resultado >= 1) {
+
+                    jLabel1.setText("Editado con exito");
+
+                } else {
+
+                    jLabel1.setText("No se ha editado");
+                }
             }
-            //dispose();  cierra el jdialog
-            
-            
+
+            dispose();
+
         } catch (SQLException ex) {
-            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+
+            System.getLogger(JDialogServicio.class.getName())
+                    .log(System.Logger.Level.ERROR,
+                            (String) null,
+                            ex);
         }
+
 
     }//GEN-LAST:event_jButtonCrearActionPerformed
-
-    @SuppressWarnings("empty-statement")
-    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-       try {
-            // TODO add your handling code here:
-            
-            
-            
-            String nombre = jTextFieldNombreServicio.getText();
-            Servicio servicio = c.buscaServicio(nombre);
-            
-            if(servicio == null){
-                jLabel1.setText("No se ha encontrado");
-
-            }else{
-                jLabel1.setText("Encontrado");
-                
-                jTextFieldNombreServicio.setText(servicio.getNombre());
-                jTextFieldDescripcion.setText(servicio.getDescripción());
-                jTextFieldPrecio.setText(servicio.getPrecio().toString());
-                
-            }
-        } catch (SQLException ex) {
-            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-
-    }//GEN-LAST:event_jButtonBuscarActionPerformed
-
-    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-       try {
-            
-            
-             Servicio nuevo = new Servicio(
-                    jTextFieldNombreServicio.getText(),
-                    jTextFieldDescripcion.getText(),
-                    Double.parseDouble(jTextFieldPrecio.getText())
-            );
-            
-            if(c.editarServicio(nuevo, jTextFieldNombreServicio.getText()) >= 1){
-                jLabel1.setText("Actualizado el precio y/o descripción con exito");
-            }else{
-                jLabel1.setText("No se ha actualizado");
-
-            }
-            
-        } catch (SQLException ex) {
-            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            jLabel1.setText("Error");
-        }
-        
-    }//GEN-LAST:event_jButtonEditarActionPerformed
-
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        // TODO add your handling code here:
-        try {
-           
-            
-            String nombre = jTextFieldNombreServicio.getText();
-            
-            if(c.eliminaServicio(nombre) >= 1){
-                jLabel1.setText("Servicio eliminado con éxito");
-            }else{
-                jLabel1.setText("No se ha eliminado");
-
-            }
-        } catch (SQLException ex) {
-            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
-
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPrecioActionPerformed
+
+    private void jTextFieldNombreServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreServicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreServicioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,28 +217,30 @@ public class JDialogServicio extends javax.swing.JDialog {
         }
         //</editor-fold>
         FlatCobalt2IJTheme.setup();
+       
+    }
+    
+    public void setIdServicio(int idServicio) throws SQLException {
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JDialogServicio dialog = new JDialogServicio(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+        this.idServicio = idServicio;
+
+        Servicio servicio = s.buscarServicioPorId(idServicio);
+
+        jTextFieldNombreServicio.setText(servicio.getNombre());
+
+        jTextFieldPrecio.setText(
+                String.valueOf(servicio.getPrecio())
+        );
+
+        jTextFieldDescripcion.setText(
+                servicio.getDescripción()
+        );
+
+ 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCrear;
-    private javax.swing.JButton jButtonEditar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelClientes;

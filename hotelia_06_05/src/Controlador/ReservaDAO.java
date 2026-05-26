@@ -115,7 +115,7 @@ public class ReservaDAO {
     }
 
  
-    public int editarReserva(Reserva reserva) throws SQLException {
+    public int editarReserva(Reserva reserva, int idReserva) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
         String sql = "UPDATE reserva SET idServicio=?, idHabitacion=?, idFactura=?, fecha_inicio=?, "
@@ -141,7 +141,7 @@ public class ReservaDAO {
         ps.setInt(6, reserva.getCantidad_personas());
         ps.setDate(7, new java.sql.Date(reserva.getFecha_hora_reserva().getTime()));
         ps.setString(8, reserva.getEstado());
-        ps.setInt(9, reserva.getIdReserva());
+        ps.setInt(9, idReserva);
 
         int resultado = ps.executeUpdate();
         ps.close();

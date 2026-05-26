@@ -51,7 +51,7 @@ public class Servicio {
     }
     
     
-     public  String[] getColumnas(){
+     public static String[] getColumnas(){
         String[] columnas = {"idServicio", "Nombre", "Precio", "Descripción"};
         return columnas;
     }

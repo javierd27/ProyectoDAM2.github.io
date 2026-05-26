@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +26,38 @@ public class ClienteDAO {
         this.conexion = ConexionBBDD.getConnection();
     }
 
+    public void selectTodosClientes(DefaultTableModel dtm) throws SQLException {
+        if (conexion == null) throw new SQLException("Conexión no disponible");
+
+        PreparedStatement ps = conexion.prepareStatement(
+            "SELECT dni_nie, nombre, apellido1, apellido2, fecha_nac, correo, telefono, nacionalidad, pais, calle_numero, poblacion, piso FROM cliente ORDER BY nombre"
+        );
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Object[] fila = new Object[]{
+                rs.getString(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                rs.getDate(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getString(8),
+                rs.getString(9),
+                rs.getString(10),
+                rs.getString(11),
+                rs.getString(12)
+            };
+
+            dtm.addRow(fila);
+        }
+
+        rs.close();
+        ps.close();
+    }
+    
     public int insertaCliente(Cliente cliente) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         

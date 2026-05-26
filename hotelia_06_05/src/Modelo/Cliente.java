@@ -135,7 +135,7 @@ public class Cliente {
     }
   
     
-    public  String[] getColumnas(){
+    public static String[] getColumnas(){
         String[] columnas = {"DNI/NIE", "Nombre", "Apellido1", "Apellido2", "Fecha de nacimiento", "Correo", "Teléfono", "Nacionalidad", "Pais", "Calle y número", "Poblacion", "Piso"};
         return columnas;
     }

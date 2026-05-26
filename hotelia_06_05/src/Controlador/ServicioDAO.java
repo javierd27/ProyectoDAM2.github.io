@@ -10,6 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import javax.swing.table.DefaultTableModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -76,7 +79,7 @@ public class ServicioDAO {
         ps.close();
         return resultado;
     }
-
+/*
     public int eliminaServicio(String nombre) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -89,7 +92,24 @@ public class ServicioDAO {
         ps.close();
         return resultado;
     }
+*/
+    public int eliminaServicio(int idServicio) throws SQLException {
 
+        if (conexion == null)
+            throw new SQLException("Conexión no disponible");
+
+        String sql = "DELETE FROM servicio WHERE idServicio = ?";
+
+        PreparedStatement ps = conexion.prepareStatement(sql);
+
+        ps.setInt(1, idServicio);
+
+        int resultado = ps.executeUpdate();
+
+        ps.close();
+
+        return resultado;
+    }
     public int buscarServicioId(String nombre) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -116,6 +136,32 @@ public class ServicioDAO {
         return ps.executeQuery();
     }
 
+    public Servicio buscarServicioPorId(int idServicio) throws SQLException {
+        if (conexion == null)
+            throw new SQLException("Conexión no disponible");
+
+        String sql = "SELECT * FROM servicio WHERE idServicio = ?";
+        PreparedStatement ps = conexion.prepareStatement(sql);
+
+        ps.setInt(1, idServicio);
+        ResultSet rs = ps.executeQuery();
+        Servicio servicio = null;
+
+        if (rs.next()) {
+
+            servicio = new Servicio(
+                    rs.getString("nombre"),
+                    rs.getString("descripcion"),
+                    rs.getDouble("precio")
+            );
+        }
+
+        rs.close();
+        ps.close();
+
+        return servicio;
+    }
+    
     public int getTotalServicios(LocalDate fechaLimite) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -143,5 +189,42 @@ public class ServicioDAO {
             }
         }
         return sb.toString();
+    }
+    
+    public void selectTodosServicios(DefaultTableModel dtm) {
+        if (conexion == null) {
+            System.out.println("Conexión no disponible");
+            return;
+        }
+
+        try {
+
+            PreparedStatement ps = conexion.prepareStatement(
+                "SELECT idServicio, nombre, precio, descripcion FROM servicio ORDER BY nombre"
+            );
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Object[] fila = new Object[]{
+
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getDouble(3),
+                    rs.getString(4)
+                };
+
+                dtm.addRow(fila);
+            }
+
+            rs.close();
+            ps.close();
+
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ServicioDAO.class.getName())
+                    .log(Level.SEVERE, null, ex);
+        }
     }
 }

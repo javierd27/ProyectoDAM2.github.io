@@ -23,7 +23,7 @@ import javax.swing.RowFilter;
 
 /**
  *
- * @author DAM2Alu4
+ * @author DAM2Alu3
  */
 public class JDialogReservaTable extends javax.swing.JDialog {
 
@@ -47,7 +47,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
     }
 
     /**
-     * Creates new form JDialogEmpleado
+     * Creates new form 
      */
     public JDialogReservaTable(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -210,8 +210,6 @@ public class JDialogReservaTable extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Para editar empleado, esto si lo haremos con otro jdialog mas bonico
-     * (tendra que hacer click en el empleado que quiera editar)
      *
      * @param evt
      */
@@ -249,7 +247,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
-     * Eliminamos de 1 en 1 los empleados
+     * Eliminamos de 1 en 1 las reservas
      *
      * @param evt
      */
@@ -259,7 +257,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
             // recojo el indice real de la tabla
             int filaModelo = jTableReservas.convertRowIndexToModel(jTableReservas.getSelectedRow());
 
-            // dni_nie (columna 0)
+            // id (columna 0)
             int id = (int) jTableReservas.getModel().getValueAt(filaModelo, 0);
 
             // Compruebo si se ha borrado 
@@ -272,7 +270,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
         } else {
             jLabelError.setText("Selecciona exactamente una fila");
         }// end if
-        // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+        // Reseteo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
         dtm.setRowCount(0);
         c.selectTodasReservas(dtm);
 
@@ -286,7 +284,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
             // hago visible el jframe
             jdr.setVisible(true);
             
-            // Reseteo por asi decirlo todo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
+            // Reseteo el dtm para luego hacer el select de todos y asi tenerlo actualizado y que no se me duplique la informacion
             dtm.setRowCount(0);
             c.selectTodasReservas(dtm);
         } catch (SQLException ex) {
@@ -307,7 +305,7 @@ private void busqueda() {
 
         // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
         if (!jTextFieldDNICliente.getText().trim().isEmpty()) {
-            filtros.add(RowFilter.regexFilter(jTextFieldDNICliente.getText().trim(), 3));
+            filtros.add(RowFilter.regexFilter(jTextFieldDNICliente.getText().trim(), 1));
         }
            
         RowFilter<Object,Object> rf = RowFilter.andFilter(filtros);

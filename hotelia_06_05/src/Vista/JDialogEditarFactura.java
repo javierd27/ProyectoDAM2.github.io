@@ -30,7 +30,7 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
     private ReservaDAO r = new ReservaDAO();
     private ClienteDAO c = new ClienteDAO();
     /**
-     * Creates new form JDialogAltaCliente
+     * Creates new form
      */
     
     JFrameLogin jframepadre;
@@ -38,10 +38,8 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
     
     public JDialogEditarFactura(java.awt.Frame parent, boolean modal, JTable tabla) {
         super(parent, modal);
-        //jframepadre = (JFrameLogin)parent;
         initComponents();
         this.JDialogFacturaTable = tabla;
-        //jSpinnerFecha_nac.setValue("");
         setTitle("Factura");
 
     }
@@ -305,7 +303,6 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
 
     public void setIdFactura(int idFactura) {
         this.idFactura= idFactura;
-        //Factura factura = f.
     
     }
 }
