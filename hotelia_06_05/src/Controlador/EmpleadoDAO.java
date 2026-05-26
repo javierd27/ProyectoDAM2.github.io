@@ -14,7 +14,6 @@ import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author DAM2Alu4
  */
 public class EmpleadoDAO {
