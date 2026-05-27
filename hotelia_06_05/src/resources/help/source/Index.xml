@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE index PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Index Version 2.0//EN"
+                       "http://java.sun.com/products/javahelp/index_2_0.dtd">
+
+<index version="2.0">
+    <indexitem text="Hotelia" target="index" />
+    <indexitem text="Clientes" target="gestion_clientes" />
+    <indexitem text="Reservas" target="gestion_reservas" />
+    <indexitem text="Habitaciones" target="gestion_habitaciones" />
+    <indexitem text="Empleados" target="gestion_empleados" />
+    <indexitem text="Facturación" target="gestion_facturas" />
+    <indexitem text="Servicios" target="gestion_servicios" />
+    <indexitem text="Ayuda" target="faq" />
+    <indexitem text="Problemas" target="troubleshooting" />
+    <indexitem text="Soporte" target="soporte" />
+</index>

@@ -27,9 +27,21 @@ public class JFrameLogin extends javax.swing.JFrame {
     public JFrameLogin() {
         initComponents();
         setTitle("Login"); 
-        
+        initializeJavaHelp();
     }
-
+    private void initializeJavaHelp(){
+        try{
+            Controlador.HoteliaHelp help = new Controlador.HoteliaHelp();
+            if(help.isInitialized()){
+                
+                // this.getRootPane, para poder hacer un this
+                help.enableF1Help(this.getRootPane(), "index");
+                System.out.println("Java Help inicializado correctamente");
+            }
+        }catch(Exception e){
+            System.err.println("Error al inicializar JavaHelp"+ e.getMessage());
+        }
+    }
     // creo la conexion
     /**
      * This method is called from within the constructor to initialize the form.

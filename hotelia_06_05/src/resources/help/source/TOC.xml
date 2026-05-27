@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE toc PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 2.0//EN"
+                      "http://java.sun.com/products/javahelp/toc_2_0.dtd">
+
+<toc version="2.0">
+    <tocitem text="Hotelia - Sistema de Gestión Hotelera" target="index" image="book">
+        <tocitem text="Bienvenida" target="index" />
+        
+        <tocitem text="Módulos del Sistema" image="folder">
+            <tocitem text="Gestión de Clientes" target="gestion_clientes" />
+            <tocitem text="Sistema de Reservas" target="gestion_reservas" />
+            <tocitem text="Gestión de Habitaciones" target="gestion_habitaciones" />
+            <tocitem text="Gestión de Empleados" target="gestion_empleados" />
+            <tocitem text="Facturación" target="gestion_facturas" />
+            <tocitem text="Servicios Adicionales" target="gestion_servicios" />
+        </tocitem>
+        
+        <tocitem text="Información General" image="folder">
+            <tocitem text="Preguntas Frecuentes" target="faq" />
+            <tocitem text="Solución de Problemas" target="troubleshooting" />
+            <tocitem text="Contacto y Soporte" target="soporte" />
+            <tocitem text="Acerca de" target="about" />
+        </tocitem>
+    </tocitem>
+</toc>
