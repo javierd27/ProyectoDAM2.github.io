@@ -16,7 +16,8 @@ import java.util.List;
 import javax.swing.*;
 
 /**
- * Calendario de habitaciones con panel visual tipo timeline.
+ * Calendario de habitaciones con panel visual tipo timeline, con varias opciones de filtrado
+ * y navegacion entre fechas intuitiva. (este por fin va bien 🎃)
  *
  * @author DAM2Alu16
  */
@@ -32,16 +33,16 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private static final int HABITACION_ANCHO = 120;
 
     // Colores
-    private static final Color COLOR_LIBRE = new Color(200, 230, 200);
-    private static final Color COLOR_OCUPADO = new Color(255, 150, 150);
-    private static final Color COLOR_REPARACION = new Color(100, 150, 200);
-    private static final Color COLOR_HOY = new Color(255, 235, 100);
+    private static final Color COLOR_LIBRE = new Color(200, 230, 200);      // Verde
+    private static final Color COLOR_OCUPADO = new Color(100, 150, 200);  // Azul clarito
+    private static final Color COLOR_REPARACION = new Color(255, 100, 100); // Rojo
+    private static final Color COLOR_HOY = new Color(255, 235, 100);    // Amarillo
     private static final Color COLOR_FONDO = Color.WHITE;
     private static final Color COLOR_LINEA = new Color(220, 220, 220);
 
     // Datos
     private LocalDate fechaInicio;
-    private int diasVisibles = 30;
+    private int diasVisibles;
     private HabitacionDAO habitacionDAO;
     private List<Object[]> datosHabitaciones;
     private List<Object[]> datosFiltrados;
@@ -49,7 +50,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
 
     public JDialogCalendarioHab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.fechaInicio = LocalDate.now();
+        this.fechaInicio = LocalDate.now().withDayOfMonth(1);
         this.habitacionDAO = new HabitacionDAO();
         this.datosHabitaciones = new ArrayList<>();
         this.datosFiltrados = new ArrayList<>();
@@ -58,21 +59,21 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     }
 
     private void initCalendario() {
-        // Crear timeline
+        // Crear timeline 
         timeline = new TimelinePanel();
         
         JScrollPane scrollTimeline = new JScrollPane(timeline);
         scrollTimeline.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollTimeline.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         
-        // Limpiar panelCalendario y añadir timeline
+        // Limpiar panelCalendario y anadir timeline
         panelCalendario.removeAll();
         panelCalendario.setLayout(new BorderLayout());
         panelCalendario.add(scrollTimeline, BorderLayout.CENTER);
         panelCalendario.revalidate();
         panelCalendario.repaint();
         
-        // ===== INICIALIZAR FILTROS =====
+        // =====🦐 INICIALIZAR FILTROS 🦐=====
         cmbFiltroTipo.removeAllItems();
         cmbFiltroTipo.addItem("Todos");
         cmbFiltroTipo.addItem("Simple");
@@ -86,25 +87,38 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         cmbFiltroEstado.addItem("Ocupado");
         cmbFiltroEstado.addItem("Reparacion");
         
+        // buscar el titulo
+        if (txtBuscar != null) {
+            txtBuscar.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+                public void insertUpdate(javax.swing.event.DocumentEvent e) { aplicarFiltros(); }
+                public void removeUpdate(javax.swing.event.DocumentEvent e) { aplicarFiltros(); }
+                public void changedUpdate(javax.swing.event.DocumentEvent e) { aplicarFiltros(); }
+            });
+        }
+        
         btnFiltrar.addActionListener(e -> aplicarFiltros());
         btnLimpiarFiltro.addActionListener(e -> limpiarFiltros());
         
-        // Listeners botones navegacion
-        btnAnterior.addActionListener(e -> moverFecha(-diasVisibles));
-        btnHoy.addActionListener(e -> { fechaInicio = LocalDate.now(); cargarDatos(); });
-        btnSiguiente.addActionListener(e -> moverFecha(diasVisibles));
+        // Navegacion por meses
+        btnAnterior.addActionListener(e -> moverMes(-1));
+        btnHoy.addActionListener(e -> { 
+            fechaInicio = LocalDate.now().withDayOfMonth(1); 
+            cargarDatos(); 
+        });
+        btnSiguiente.addActionListener(e -> moverMes(1));
         btnNueva.addActionListener(e -> abrirNueva());
         btnEditar.addActionListener(e -> abrirEditar());
         btnVolver.addActionListener(e -> dispose());
+        btnHoy.setText("Mes Actual");
         
         cargarDatos();
     }
 
-    private void moverFecha(int dias) {
-        fechaInicio = fechaInicio.plusDays(dias);
+    private void moverMes(int meses) {
+        fechaInicio = fechaInicio.plusMonths(meses);
         cargarDatos();
     }
-
+    // Cargar datos en donde las 
     private void cargarDatos() {
         datosHabitaciones.clear();
         
@@ -121,6 +135,9 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 for (Object[] r : reservas) {
                     String estado = (String) r[2];
                     if (estado == null || estado.equalsIgnoreCase("Cancelado")) continue;
+                    if (estado.equalsIgnoreCase("Aceptado")) {
+                        r[2] = "Ocupado";
+                    }
                     reservasFiltradas.add(r);
                 }
 
@@ -141,39 +158,59 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     }
 
     private void actualizarLabelFechas() {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fin = fechaInicio.plusDays(diasVisibles - 1);
-        lblFechas.setText(fechaInicio.format(fmt) + "  -  " + fin.format(fmt));
+        // Mostrar nombre del mes y ano, ej: "MAYO 2026"
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMMM yyyy");
+        String mesTexto = fechaInicio.format(fmt).toUpperCase();
+        lblFechas.setText(mesTexto);
+        lblFechas.setFont(new Font("Segoe UI", Font.BOLD, 16));
     }
 
     private void aplicarFiltros() {
         String tipoFiltro = (String) cmbFiltroTipo.getSelectedItem();
         String estadoFiltro = (String) cmbFiltroEstado.getSelectedItem();
+        String textoBusqueda = (txtBuscar != null) ? txtBuscar.getText().trim().toLowerCase() : "";
         
         datosFiltrados.clear();
         
         for (Object[] hab : datosHabitaciones) {
             String tipo = (String) hab[2];
             String estado = (String) hab[4];
+            int numero = (Integer) hab[1];
             
+            // Filtro por tipo
             if (!"Todos".equals(tipoFiltro) && !tipoFiltro.equalsIgnoreCase(tipo)) {
                 continue;
             }
+            
+            // Filtro por estado
             if (!"Todos".equals(estadoFiltro)) {
                 String est = estado != null ? estado.toLowerCase() : "";
                 if (!est.contains(estadoFiltro.toLowerCase())) {
                     continue;
                 }
             }
+            
+            // Filtro por texto de busqueda
+            if (!textoBusqueda.isEmpty()) {
+                String numStr = String.valueOf(numero);
+                String tipoLower = tipo != null ? tipo.toLowerCase() : "";
+                if (!numStr.contains(textoBusqueda) && !tipoLower.contains(textoBusqueda)) {
+                    continue;
+                }
+            }
+            
             datosFiltrados.add(hab);
         }
         
         timeline.repaint();
     }
-
+    
     private void limpiarFiltros() {
         cmbFiltroTipo.setSelectedIndex(0);
         cmbFiltroEstado.setSelectedIndex(0);
+        if (txtBuscar != null) {
+            txtBuscar.setText("");
+        }
         aplicarFiltros();
     }
 
@@ -211,7 +248,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         }
     }
 
-    // ==================== PANEL VISUAL ====================
+    // ==================== Panel del timeline calendario ====================
 
     private class TimelinePanel extends JPanel {
         private int filaHover = -1;
@@ -243,7 +280,6 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                         lblInfoHabitacion.setText("Seleccionada: Hab. " + numero + " | " + tipo + " | " + capacidad + " pers. | Estado: " + estado);
 
                         if (e.getClickCount() == 2) {
-                            // ✅ FIX: No usar getParent() en cadena
                             Window ventana = SwingUtilities.getWindowAncestor(TimelinePanel.this);
                             JFrame framePadre = (ventana instanceof JFrame) ? (JFrame) ventana : null;
                             JDialogEditarHabitaciones dialog = new JDialogEditarHabitaciones(
@@ -259,12 +295,12 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 public void mouseExited(MouseEvent e) {
                     filaHover = -1;
                     diaHover = -1;
-                    lblInfoHabitacion.setText("Haz doble clic en una habitacion para editar");
+                    lblInfoHabitacion.setText("Haz doble click en una habitacion para editar");
                     repaint();
                 }
             });
         }
-
+        // Metodo para calcular el Hover 
         private void calcularHover(Point p) {
             filaHover = -1;
             diaHover = -1;
@@ -278,31 +314,35 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
             }
         }
 
+        // Metodo para pintar los componentes del calendario
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2d = (Graphics2D) g;
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+            int diasEnMes = fechaInicio.lengthOfMonth();
+            diasVisibles = diasEnMes;
+
             int anchoTotal = HABITACION_ANCHO + (diasVisibles * DIA_ANCHO) + 20;
             int altoTotal = CABECERA_ALTURA + (datosFiltrados.size() * FILA_ALTURA) + 30;
             setPreferredSize(new Dimension(anchoTotal, Math.max(altoTotal, 300)));
             revalidate();
 
-            // Fondo
+            // Coloritos majos
             g2d.setColor(COLOR_FONDO);
             g2d.fillRect(0, 0, getWidth(), getHeight());
 
-            // Cabecera
             g2d.setColor(new Color(60, 60, 60));
             g2d.fillRect(0, 0, getWidth(), CABECERA_ALTURA);
             g2d.setColor(Color.WHITE);
             g2d.setFont(new Font("Segoe UI", Font.BOLD, 11));
             g2d.drawString("HABITACION", 30, 30);
 
-            // Dias
+            // Horas consulta
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd");
             String[] diasSemana = {"L", "M", "X", "J", "V", "S", "D"};
+            
             for (int i = 0; i < diasVisibles; i++) {
                 LocalDate fecha = fechaInicio.plusDays(i);
                 int x = HABITACION_ANCHO + (i * DIA_ANCHO);
@@ -356,7 +396,6 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 g2d.setColor(COLOR_LINEA);
                 g2d.drawLine(0, y + FILA_ALTURA, getWidth(), y + FILA_ALTURA);
 
-                // Info habitacion - NUMERO GRANDE + DETALLES
                 g2d.setColor(Color.BLACK);
                 g2d.setFont(new Font("Segoe UI", Font.BOLD, 14));
                 g2d.drawString(String.valueOf(numero), 10, y + 20);
@@ -409,7 +448,6 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                     }
                 }
 
-                // Dia actual
                 long diasHastaHoy = ChronoUnit.DAYS.between(fechaInicio, LocalDate.now());
                 if (diasHastaHoy >= 0 && diasHastaHoy < diasVisibles) {
                     int xHoy = HABITACION_ANCHO + ((int) diasHastaHoy * DIA_ANCHO);
@@ -418,7 +456,6 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 }
             }
 
-            // Lineas verticales
             g2d.setColor(COLOR_LINEA);
             for (int i = 0; i <= diasVisibles; i++) {
                 int x = HABITACION_ANCHO + (i * DIA_ANCHO);
@@ -456,6 +493,10 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
             return (y - yInicio) / FILA_ALTURA;
         }
     }
+    
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        aplicarFiltros();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -474,9 +515,11 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         cmbFiltroEstado = new javax.swing.JComboBox<>();
         btnFiltrar = new javax.swing.JButton();
         btnLimpiarFiltro = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
         panelCalendario = new javax.swing.JPanel();
-        lblFechas = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        lblFechas = new javax.swing.JLabel();
         lblInfoHabitacion = new javax.swing.JLabel();
         btnAnterior = new javax.swing.JButton();
         btnHoy = new javax.swing.JButton();
@@ -484,39 +527,63 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         btnNueva = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelSergio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanelFiltros.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+        jPanelMain.setLayout(new java.awt.BorderLayout());
 
         lblFiltroTipo.setText("Tipo:");
         jPanelFiltros.add(lblFiltroTipo);
 
-        cmbFiltroTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Simple", "Duplex", "Junior", "Presidencial" }));
+        cmbFiltroTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanelFiltros.add(cmbFiltroTipo);
 
         lblFiltroEstado.setText("Estado:");
         jPanelFiltros.add(lblFiltroEstado);
 
-        cmbFiltroEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Libre", "Ocupado", "Reparacion" }));
+        cmbFiltroEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanelFiltros.add(cmbFiltroEstado);
 
         btnFiltrar.setText("Filtrar");
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
         jPanelFiltros.add(btnFiltrar);
 
         btnLimpiarFiltro.setText("Limpiar");
         jPanelFiltros.add(btnLimpiarFiltro);
 
-        panelCalendario.setLayout(new java.awt.BorderLayout());
+        jLabel1.setText("Buscar:");
+        jPanelFiltros.add(jLabel1);
 
-        lblFechas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblFechas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblFechas.setText("01/01/2024  -  30/01/2024");
-        panelCalendario.add(lblFechas, java.awt.BorderLayout.PAGE_START);
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        jPanelFiltros.add(txtBuscar);
+
+        javax.swing.GroupLayout panelCalendarioLayout = new javax.swing.GroupLayout(panelCalendario);
+        panelCalendario.setLayout(panelCalendarioLayout);
+        panelCalendarioLayout.setHorizontalGroup(
+            panelCalendarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 724, Short.MAX_VALUE)
+        );
+        panelCalendarioLayout.setVerticalGroup(
+            panelCalendarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 423, Short.MAX_VALUE)
+        );
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        lblInfoHabitacion.setText("Haz doble clic en una habitacion para editar");
+        lblFechas.setText("Fechas");
+        jPanel3.add(lblFechas);
+
+        lblInfoHabitacion.setText("Info.");
         jPanel3.add(lblInfoHabitacion);
 
         btnAnterior.setText("<");
@@ -537,39 +604,58 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         btnVolver.setText("Volver");
         jPanel3.add(btnVolver);
 
-        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
-        jPanelMain.setLayout(jPanelMainLayout);
-        jPanelMainLayout.setHorizontalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, 954, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanelMainLayout.setVerticalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelSergio.setText("Sergio Vasilev");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelLogoP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(491, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(203, 203, 203)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelSergio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(78, 78, 78))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLogoP)
+                    .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelSergio)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     public static void main(String args[]) {
     // Nimbus fallback primero
@@ -620,6 +706,9 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private javax.swing.JButton btnVolver;
     private javax.swing.JComboBox<String> cmbFiltroEstado;
     private javax.swing.JComboBox<String> cmbFiltroTipo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelLogoP;
+    private javax.swing.JLabel jLabelSergio;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelFiltros;
     private javax.swing.JPanel jPanelMain;
@@ -628,5 +717,6 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private javax.swing.JLabel lblFiltroTipo;
     private javax.swing.JLabel lblInfoHabitacion;
     private javax.swing.JPanel panelCalendario;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

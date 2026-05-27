@@ -77,7 +77,7 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 204));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("CLIENTES");
         jPanel2.add(jLabel2, java.awt.BorderLayout.PAGE_START);
 

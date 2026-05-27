@@ -11,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Diálogo para crear nuevas habitaciones.
- * Valida campos y calcula precio_publico automáticamente.
+ * JDialog para crear nuevas habitaciones.
+ * Valida campos y calcula precio_publico automáticamente dependiendo
+ * de la forma elegida de precio.
  * 
  * @author DAM2Alu16
  */
@@ -21,6 +22,7 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = 
         java.util.logging.Logger.getLogger(JDialogAnadirHabitaciones.class.getName());
 
+    //el margen es para cuando se elige el precio especial 😊
     private static final double MARGEN = 0.30;
     private static final double IVA = 0.21;
     private HabitacionDAO habitacionDAO;
@@ -33,22 +35,22 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
     }
 
     private void initListeners() {
-        jsPrecioB.addChangeListener(e -> actualizarPrecioPublico());
-        jcbFormulas.addActionListener(e -> actualizarPrecioPublico());
+        sPrecioB.addChangeListener(e -> actualizarPrecioPublico());
+        jCheckBox1.addActionListener(e -> actualizarPrecioPublico());
         actualizarPrecioPublico();
     }
 
     private void actualizarPrecioPublico() {
-        double base = ((Number) jsPrecioB.getValue()).doubleValue();
-        double publico = jcbFormulas.isSelected()
+        double base = ((Number) sPrecioB.getValue()).doubleValue();
+        double publico = jCheckBox1.isSelected()
             ? base * (1 + MARGEN) * (1 + IVA)
             : base;
     }
-
+    // Metodo que se asegura que puede guardar cambios y si puede lsos guarda
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {                                               
         List<String> errores = new ArrayList<>();
 
-        String numStr = jetNumHab.getText().trim();
+        String numStr = etNumHab.getText().trim();
         if (numStr.isEmpty()) {
             errores.add("El numero de la habitacion no puede ser nulo");
         } else {
@@ -60,7 +62,7 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
             }
         }
 
-        double precioBase = ((Number) jsPrecioB.getValue()).doubleValue();
+        double precioBase = ((Number) sPrecioB.getValue()).doubleValue();
         if (precioBase <= 0) {
             errores.add("El precio base debe ser mayor que 0");
         }
@@ -73,16 +75,16 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
             return;
         }
 
+        // Guardar
         try {
             int numero = Integer.parseInt(numStr);
-            String tipo = (String) jcbTipo.getSelectedItem();
-            int capacidad = (Integer) jsCapacidad.getValue();
-            String estado = (String) jcbEstado.getSelectedItem();
-            double precioPublico = jcbFormulas.isSelected()
+            String tipo = (String) cbTipo.getSelectedItem();
+            int capacidad = (Integer) sCapacidad.getValue();
+            String estado = (String) cbEstado.getSelectedItem();
+            double precioPublico = jCheckBox1.isSelected()
                 ? precioBase * (1 + MARGEN) * (1 + IVA)
                 : precioBase;
 
-            // ===== USAR HABITACIONDAO (DTO) =====
             habitacionDAO.insertarHabitacion(numero, tipo, capacidad, precioBase, precioPublico, estado);
 
             JOptionPane.showMessageDialog(rootPane, 
@@ -97,12 +99,11 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
-    }                                              
+    }
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                                
         dispose();
-    }                                               
-
+    } 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -113,66 +114,62 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jetNumHab = new javax.swing.JTextField();
+        etNumHab = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jcbTipo = new javax.swing.JComboBox<>();
+        cbTipo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jsCapacidad = new javax.swing.JSpinner();
+        sCapacidad = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
-        jsPrecioB = new javax.swing.JSpinner();
+        sPrecioB = new javax.swing.JSpinner();
         jLabel7 = new javax.swing.JLabel();
-        jcbFormulas = new javax.swing.JCheckBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jcbEstado = new javax.swing.JComboBox<>();
+        cbEstado = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelSergio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel2.setLayout(new java.awt.GridLayout(7, 2, 0, 20));
+        jPanel2.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabelNombre.setText("Nueva habitacion");
-        jPanel2.add(jLabelNombre);
-        jPanel2.add(jLabel6);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Numero de habitacion");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("Número de habitación");
         jPanel2.add(jLabel1);
-        jPanel2.add(jetNumHab);
+        jPanel2.add(etNumHab);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Tipo");
         jPanel2.add(jLabel2);
 
-        jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Duplex", "Junior", "Presidencial" }));
-        jPanel2.add(jcbTipo);
+        cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Duplex", "Junior", "Presidencial" }));
+        jPanel2.add(cbTipo);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Capacidad");
         jPanel2.add(jLabel3);
-        jPanel2.add(jsCapacidad);
+        jPanel2.add(sCapacidad);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
-        jPanel2.add(jsPrecioB);
+        jPanel2.add(sPrecioB);
         jPanel2.add(jLabel7);
 
-        jcbFormulas.setSelected(true);
-        jcbFormulas.setText("¿Usar formulas de precio?");
-        jPanel2.add(jcbFormulas);
+        jCheckBox1.setSelected(true);
+        jCheckBox1.setText("¿Usar formulas de precio?");
+        jPanel2.add(jCheckBox1);
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Estado");
         jPanel2.add(jLabel5);
 
-        jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion" }));
-        jPanel2.add(jcbEstado);
+        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion" }));
+        jPanel2.add(cbEstado);
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
@@ -192,20 +189,54 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonAceptar);
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("CREAR HABITACIÓN");
+
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelSergio.setText("Sergio Vasilev");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelSergio, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(180, 180, 180))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(405, Short.MAX_VALUE)
+                    .addComponent(jLabelLogoP)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jLabelSergio)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabelLogoP)
+                    .addContainerGap(342, Short.MAX_VALUE)))
         );
 
         pack();
@@ -240,23 +271,24 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbEstado;
+    private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.JTextField etNumHab;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelLogoP;
+    private javax.swing.JLabel jLabelSergio;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JComboBox<String> jcbEstado;
-    private javax.swing.JCheckBox jcbFormulas;
-    private javax.swing.JComboBox<String> jcbTipo;
-    private javax.swing.JTextField jetNumHab;
-    private javax.swing.JSpinner jsCapacidad;
-    private javax.swing.JSpinner jsPrecioB;
+    private javax.swing.JSpinner sCapacidad;
+    private javax.swing.JSpinner sPrecioB;
     // End of variables declaration//GEN-END:variables
 }

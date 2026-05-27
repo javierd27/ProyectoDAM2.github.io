@@ -78,19 +78,21 @@ public class JDialogCliente extends javax.swing.JDialog {
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonCrear = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelJulia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabelClientes.setText("CLIENTES");
 
         jPanel1.setLayout(new java.awt.GridLayout(13, 2, 10, 10));
 
-        jLabelDNI.setText("DNI*");
+        jLabelDNI.setText("   DNI*");
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabelNombre.setText("Nombre*");
+        jLabelNombre.setText("   Nombre*");
         jPanel1.add(jLabelNombre);
 
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -100,11 +102,11 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldNombre);
 
-        jLabelApelliod1.setText("Apellido1*");
+        jLabelApelliod1.setText("   Apellido1*");
         jPanel1.add(jLabelApelliod1);
         jPanel1.add(jTextFieldApellido1);
 
-        jLabelApellido2.setText("Apellido2");
+        jLabelApellido2.setText("   Apellido2");
         jPanel1.add(jLabelApellido2);
 
         jTextFieldApellido2.addActionListener(new java.awt.event.ActionListener() {
@@ -114,14 +116,14 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFecha_nac.setText("Fecha de nacimiento*");
+        jLabelFecha_nac.setText("   Fecha de nacimiento*");
         jPanel1.add(jLabelFecha_nac);
 
         jSpinnerFecha_nac.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFecha_nac.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_nac, "dd/MM/yyyy"));
         jPanel1.add(jSpinnerFecha_nac);
 
-        jLabelMail.setText("Correo*");
+        jLabelMail.setText("   Correo*");
         jPanel1.add(jLabelMail);
 
         jTextFieldMail.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +133,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldMail);
 
-        jLabelTelefono.setText("Teléfono*");
+        jLabelTelefono.setText("   Teléfono*");
         jPanel1.add(jLabelTelefono);
 
         jTextFieldTelefono.addActionListener(new java.awt.event.ActionListener() {
@@ -141,7 +143,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldTelefono);
 
-        jLabelNacionalidad.setText("Nacionalidad*");
+        jLabelNacionalidad.setText("   Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
         jPanel1.add(jTextFieldNacionalidad);
 
@@ -152,7 +154,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabel2.setText("____________________________");
         jPanel1.add(jLabel2);
 
-        jLabelPais.setText("País de residencia actual*");
+        jLabelPais.setText("   País de residencia actual*");
         jPanel1.add(jLabelPais);
 
         jTextFieldPais.addActionListener(new java.awt.event.ActionListener() {
@@ -162,15 +164,15 @@ public class JDialogCliente extends javax.swing.JDialog {
         });
         jPanel1.add(jTextFieldPais);
 
-        jLabelPoblacion.setText("Población*");
+        jLabelPoblacion.setText("   Población*");
         jPanel1.add(jLabelPoblacion);
         jPanel1.add(jTextFieldPoblacion);
 
-        jLabelCalle_num.setText("Calle y número*");
+        jLabelCalle_num.setText("   Calle y número*");
         jPanel1.add(jLabelCalle_num);
         jPanel1.add(jTextFieldCalle_num);
 
-        jLabelPiso.setText("Piso");
+        jLabelPiso.setText("   Piso");
         jPanel1.add(jLabelPiso);
         jPanel1.add(jTextFieldPiso);
 
@@ -181,36 +183,55 @@ public class JDialogCliente extends javax.swing.JDialog {
             }
         });
 
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelJulia.setText("Julia Castarlenas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonCrear)
-                        .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51))))
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabelLogoP))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelJulia)
+                        .addGap(175, 175, 175))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonCrear)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelClientes)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLogoP)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabelClientes)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCrear)
-                .addGap(11, 11, 11))
+                .addGap(1, 1, 1)
+                .addComponent(jLabelJulia)
+                .addContainerGap())
         );
 
         pack();
@@ -320,6 +341,8 @@ public class JDialogCliente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelDNI;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelFecha_nac;
+    private javax.swing.JLabel jLabelJulia;
+    private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelMail;
     private javax.swing.JLabel jLabelNacionalidad;
     private javax.swing.JLabel jLabelNombre;

@@ -116,16 +116,18 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonEditar = new javax.swing.JButton();
         jLabelPosibleError = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelJavi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ACTUALIZAR EMPLEADOS");
 
         jPanel1.setLayout(new java.awt.GridLayout(14, 2, 10, 10));
 
-        jLabelid.setText("DNI*");
+        jLabelid.setText("   DNI*");
         jPanel1.add(jLabelid);
 
         jComboBoxID.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -141,30 +143,30 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxID);
 
-        jLabel2.setText("Nombre*");
+        jLabel2.setText("   Nombre*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldNombre);
 
-        jLabel3.setText("Apellido1 *");
+        jLabel3.setText("   Apellido1 *");
         jPanel1.add(jLabel3);
         jPanel1.add(jTextFieldApellido1);
 
-        jLabelApellido2.setText("Apellido2");
+        jLabelApellido2.setText("   Apellido2");
         jPanel1.add(jLabelApellido2);
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFechaAlta.setText("Fecha Nacimiento*");
+        jLabelFechaAlta.setText("   Fecha Nacimiento*");
         jPanel1.add(jLabelFechaAlta);
 
         jSpinnerFechaAlt.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy"));
         jPanel1.add(jSpinnerFechaAlt);
 
-        jLabelUsuario.setText("Usuario*");
+        jLabelUsuario.setText("   Usuario*");
         jPanel1.add(jLabelUsuario);
         jPanel1.add(jTextFieldUsuario);
 
-        jLabelRol.setText("Rol*");
+        jLabelRol.setText("   Rol*");
         jPanel1.add(jLabelRol);
 
         jComboBoxROL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "recepcionista", "servicio" }));
@@ -175,35 +177,35 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxROL);
 
-        jLabelCorreo.setText("Correo*");
+        jLabelCorreo.setText("   Correo*");
         jPanel1.add(jLabelCorreo);
         jPanel1.add(jTextFieldCorreo);
 
-        jLabelTelefono.setText("Telefono");
+        jLabelTelefono.setText("   Telefono");
         jPanel1.add(jLabelTelefono);
         jPanel1.add(jTextFieldTelefono);
 
-        jLabelNacionalidad.setText("Nacionalidad");
+        jLabelNacionalidad.setText("   Nacionalidad");
         jPanel1.add(jLabelNacionalidad);
         jPanel1.add(jTextFieldNacionalidad);
 
-        jLabelPais.setText("País");
+        jLabelPais.setText("   País");
         jPanel1.add(jLabelPais);
         jPanel1.add(jTextFieldPoblacion);
 
-        jLabelCalle_numero.setText("Calle_numero");
+        jLabelCalle_numero.setText("   Numero de calle");
         jPanel1.add(jLabelCalle_numero);
         jPanel1.add(jTextFieldCalle_Numero);
 
-        jLabelPoblacion.setText("Población");
+        jLabelPoblacion.setText("   Población");
         jPanel1.add(jLabelPoblacion);
         jPanel1.add(jTextFieldPais);
 
-        jLabel13.setText("Piso");
+        jLabel13.setText("   Piso");
         jPanel1.add(jLabel13);
         jPanel1.add(jTextFieldPiso);
 
-        jButtonEditar.setText("Editar");
+        jButtonEditar.setText("Aceptar");
         jButtonEditar.setPreferredSize(new java.awt.Dimension(90, 40));
         jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,36 +213,54 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
             }
         });
 
-        jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelPosibleError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelJavi.setText("Javier Dapena");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1237, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPosibleError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                                .addComponent(jLabelLogoP)))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelJavi)
+                .addGap(192, 192, 192))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelLogoP)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPosibleError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelJavi)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -363,6 +383,8 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelCalle_numero;
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelFechaAlta;
+    private javax.swing.JLabel jLabelJavi;
+    private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelNacionalidad;
     private javax.swing.JLabel jLabelPais;
     private javax.swing.JLabel jLabelPoblacion;

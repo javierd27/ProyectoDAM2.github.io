@@ -63,15 +63,14 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
         jLabelUsuario = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelJavi = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setLayout(new java.awt.BorderLayout());
 
         jLabelTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("GESTIÓN EMPLEADO");
-        jPanel1.add(jLabelTitulo, java.awt.BorderLayout.PAGE_START);
 
         jButtonClientes.setText("Clientes");
         jButtonClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -113,8 +112,6 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         });
         jPanel2.add(jButtonCerrarSesion);
 
-        jPanel1.add(jPanel2, java.awt.BorderLayout.PAGE_END);
-
         jLabelBienvenido.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabelBienvenido.setText("Bienvenido ");
 
@@ -126,11 +123,11 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(151, Short.MAX_VALUE)
                 .addComponent(jLabelBienvenido)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(62, 62, 62)
                 .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(302, Short.MAX_VALUE))
+                .addGap(101, 101, 101))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,10 +136,47 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelBienvenido, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                     .addComponent(jLabelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, java.awt.BorderLayout.CENTER);
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelJavi.setText("Javier Dapena");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabelLogoP)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(84, 84, 84))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabelJavi)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLogoP)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabelTitulo)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelJavi))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -242,6 +276,8 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JLabel jLabelBienvenido;
+    private javax.swing.JLabel jLabelJavi;
+    private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;

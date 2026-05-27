@@ -23,20 +23,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jButtonCrear" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="jLabelClientes" min="-2" pref="111" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="117" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                      <Component id="jLabelLogoP" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jPanel1" pref="448" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jLabelJulia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="175" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="jButtonCrear" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -46,15 +56,26 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabelClientes" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel1" alignment="3" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelLogoP" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="jLabelClientes" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel1" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonCrear" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+              <Component id="jLabelJulia" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -63,7 +84,7 @@
     <Component class="javax.swing.JLabel" name="jLabelClientes">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="18" style="1"/>
+          <Font name="Segoe UI" size="24" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="CLIENTES"/>
       </Properties>
@@ -79,14 +100,14 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelDNI">
           <Properties>
-            <Property name="text" type="java.lang.String" value="DNI*"/>
+            <Property name="text" type="java.lang.String" value="   DNI*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDNI">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nombre*"/>
+            <Property name="text" type="java.lang.String" value="   Nombre*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
@@ -96,14 +117,14 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelApelliod1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido1*"/>
+            <Property name="text" type="java.lang.String" value="   Apellido1*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellido1">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelApellido2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Apellido2"/>
+            <Property name="text" type="java.lang.String" value="   Apellido2"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldApellido2">
@@ -113,7 +134,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFecha_nac">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha de nacimiento*"/>
+            <Property name="text" type="java.lang.String" value="   Fecha de nacimiento*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha_nac">
@@ -128,7 +149,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelMail">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Correo*"/>
+            <Property name="text" type="java.lang.String" value="   Correo*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldMail">
@@ -138,7 +159,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelTelefono">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono*"/>
+            <Property name="text" type="java.lang.String" value="   Tel&#xe9;fono*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldTelefono">
@@ -148,7 +169,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNacionalidad">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nacionalidad*"/>
+            <Property name="text" type="java.lang.String" value="   Nacionalidad*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNacionalidad">
@@ -168,7 +189,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPais">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pa&#xed;s de residencia actual*"/>
+            <Property name="text" type="java.lang.String" value="   Pa&#xed;s de residencia actual*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPais">
@@ -178,21 +199,21 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPoblacion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Poblaci&#xf3;n*"/>
+            <Property name="text" type="java.lang.String" value="   Poblaci&#xf3;n*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPoblacion">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCalle_num">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Calle y n&#xfa;mero*"/>
+            <Property name="text" type="java.lang.String" value="   Calle y n&#xfa;mero*"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCalle_num">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPiso">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Piso"/>
+            <Property name="text" type="java.lang.String" value="   Piso"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPiso">
@@ -208,6 +229,18 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelLogoP">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/logoHoteliaMuyChiquito.png"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelJulia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Julia Castarlenas"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

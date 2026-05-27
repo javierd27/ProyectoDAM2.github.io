@@ -183,36 +183,41 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
+        jLabelJulia = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel2.setLayout(new java.awt.GridLayout(7, 2, 0, 20));
+        jPanel2.setLayout(new java.awt.GridLayout(7, 2, 10, 10));
 
-        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelNombre.setText("Habitacion id");
         jPanel2.add(jLabelNombre);
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel2.add(jLabel6);
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Numero de habitacion");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setText("Número de habitación");
         jPanel2.add(jLabel1);
         jPanel2.add(jetNumHab);
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Tipo de habitacion");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel2.setText("Tipo de habitación");
         jPanel2.add(jLabel2);
 
         jcbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple", "Duplex", "Junior", "Presidencial" }));
         jPanel2.add(jcbTipo);
 
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Capacidad de la habitacion");
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel3.setText("Capacidad de la habitación");
         jPanel2.add(jLabel3);
 
         jsCapacidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jPanel2.add(jsCapacidad);
 
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
 
@@ -224,8 +229,8 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jcbFormulas.setText("¿Usar formulas de precio?");
         jPanel2.add(jcbFormulas);
 
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Estado de la habitacion");
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("Estado de la habitación");
         jPanel2.add(jLabel5);
 
         jcbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Libre", "Reparacion", "Ocupado" }));
@@ -235,11 +240,6 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
         jPanel1.add(jButtonCancelar);
 
         jButtonAceptar.setText("Aceptar");
@@ -250,19 +250,46 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         });
         jPanel1.add(jButtonAceptar);
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("ACTUALIZAR HABITACIÓN");
+
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        jLabelJulia.setText("Sergio Vasilev");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addComponent(jLabelLogoP))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(192, 192, 192)
+                .addComponent(jLabelJulia)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 468, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelLogoP))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelJulia)
                 .addContainerGap())
         );
 
@@ -270,7 +297,6 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-    // Nimbus fallback primero
     try {
         for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
             if ("Nimbus".equals(info.getName())) {
@@ -282,7 +308,7 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         logger.log(java.util.logging.Level.SEVERE, null, ex);
     }
     
-    // FlatLaf DESPUÉS (sobrescribe Nimbus)
+    // FlatLaf DESPUÉS (sobrescribe Nimbus, sino no hay colorcito)
     com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme.setup();
 
     // Conectar BD
@@ -318,6 +344,9 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabelJulia;
+    private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

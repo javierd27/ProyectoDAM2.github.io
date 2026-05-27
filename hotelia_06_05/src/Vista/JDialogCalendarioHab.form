@@ -23,14 +23,50 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanelMain" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Component id="jPanelMain" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabelLogoP" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jPanelFiltros" min="-2" pref="567" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="panelCalendario" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="491" max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
+              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jLabelSergio" min="-2" pref="85" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jPanelMain" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabelLogoP" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanelFiltros" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="panelCalendario" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Component id="jLabelSergio" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -39,150 +75,150 @@
     <Container class="javax.swing.JPanel" name="jPanelMain">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanelFiltros">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="jPanelFiltros">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-              <BorderConstraints direction="Last"/>
-            </Constraint>
-          </Constraints>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblFiltroTipo">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Tipo:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cmbFiltroTipo">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblFiltroEstado">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Estado:"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="cmbFiltroEstado">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnFiltrar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Filtrar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiltrarActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnLimpiarFiltro">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Limpiar"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="panelCalendario">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-              <BorderConstraints direction="Center"/>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="444" max="-2" attributes="0"/>
-                      <Component id="lblFechas" min="-2" pref="37" max="-2" attributes="0"/>
-                      <EmptySpace pref="473" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="lblFechas" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="478" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JLabel" name="lblFechas">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Fechas"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="jPanel3">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
-              <BorderConstraints direction="First"/>
-            </Constraint>
-          </Constraints>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
-            <Property name="alignment" type="int" value="2"/>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="btnAnterior">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnHoy">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Hoy"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnSiguiente">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&gt;"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnNueva">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Nueva"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnEditar">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Editar"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnVolver">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Volver"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
+        <Component class="javax.swing.JLabel" name="lblFiltroTipo">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tipo:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cmbFiltroTipo">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblFiltroEstado">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Estado:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cmbFiltroEstado">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnFiltrar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Filtrar"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFiltrarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnLimpiarFiltro">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Limpiar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Buscar:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtBuscar">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtBuscarActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JPanel" name="panelCalendario">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="724" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="0" pref="423" max="32767" attributes="0"/>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel3">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout">
+        <Property name="alignment" type="int" value="2"/>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="lblFechas">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fechas"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblInfoHabitacion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Info."/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnAnterior">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnHoy">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Hoy"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSiguiente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&gt;"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnNueva">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nueva"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnEditar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnVolver">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Volver"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JLabel" name="jLabelLogoP">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/logoHoteliaMuyChiquito.png"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelSergio">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Sergio Vasilev"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

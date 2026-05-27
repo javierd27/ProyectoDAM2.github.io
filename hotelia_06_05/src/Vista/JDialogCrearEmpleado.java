@@ -74,51 +74,53 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jButtonAlta = new javax.swing.JButton();
         jLabelPosibleError = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabelJavi = new javax.swing.JLabel();
+        jLabelLogoP = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ACTUALIZAR EMPLEADOS");
+        jLabel1.setText("CREAR EMPLEADOS");
 
         jPanel1.setLayout(new java.awt.GridLayout(16, 2, 10, 10));
 
-        jLabelid.setText("DNI*");
+        jLabelid.setText("   DNI*");
         jPanel1.add(jLabelid);
         jPanel1.add(jTextDNI_NIE);
 
-        jLabel2.setText("Nombre*");
+        jLabel2.setText("   Nombre*");
         jPanel1.add(jLabel2);
         jPanel1.add(jTextFieldNombre);
 
-        jLabel3.setText("Apellido1 *");
+        jLabel3.setText("   Apellido1 *");
         jPanel1.add(jLabel3);
         jPanel1.add(jTextFieldApellido1);
 
-        jLabelApellido2.setText("Apellido2");
+        jLabelApellido2.setText("   Apellido2");
         jPanel1.add(jLabelApellido2);
         jPanel1.add(jTextFieldApellido2);
 
-        jLabelFechaAlta.setText("Fecha Nacimiento*");
+        jLabelFechaAlta.setText("   Fecha Nacimiento*");
         jPanel1.add(jLabelFechaAlta);
 
         jSpinnerFechaAlt.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFechaAlt.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaAlt, "dd/MM/yy"));
         jPanel1.add(jSpinnerFechaAlt);
 
-        jLabelUsuario.setText("Usuario*");
+        jLabelUsuario.setText("   Usuario*");
         jPanel1.add(jLabelUsuario);
         jPanel1.add(jTextFieldUsuario);
 
-        jLabelContraseña1.setText("Contraseña*");
+        jLabelContraseña1.setText("   Contraseña*");
         jPanel1.add(jLabelContraseña1);
         jPanel1.add(jTContraseña1);
 
-        jLabelContraseña2.setText("Contraseña*");
+        jLabelContraseña2.setText("   Confirmar contraseña*");
         jPanel1.add(jLabelContraseña2);
         jPanel1.add(jTContraseña2);
 
-        jLabelRol.setText("Rol*");
+        jLabelRol.setText("   Rol*");
         jPanel1.add(jLabelRol);
 
         jComboBoxROL.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "recepcionista", "servicio" }));
@@ -129,35 +131,35 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxROL);
 
-        jLabelCorreo.setText("Correo*");
+        jLabelCorreo.setText("   Correo*");
         jPanel1.add(jLabelCorreo);
         jPanel1.add(jTextFieldCorreo);
 
-        jLabelTelefono.setText("Telefono*");
+        jLabelTelefono.setText("   Telefono*");
         jPanel1.add(jLabelTelefono);
         jPanel1.add(jTextFieldTelefono);
 
-        jLabelNacionalidad.setText("Nacionalidad*");
+        jLabelNacionalidad.setText("   Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
         jPanel1.add(jTextFieldNacionalidad);
 
-        jLabelPais.setText("País*");
+        jLabelPais.setText("   País*");
         jPanel1.add(jLabelPais);
         jPanel1.add(jTextFieldPoblacion);
 
-        jLabelCalle_numero.setText("Calle_numero*");
+        jLabelCalle_numero.setText("   Numero de calle*");
         jPanel1.add(jLabelCalle_numero);
         jPanel1.add(jTextFieldCalle_Numero);
 
-        jLabelPoblacion.setText("Población*");
+        jLabelPoblacion.setText("   Población*");
         jPanel1.add(jLabelPoblacion);
         jPanel1.add(jTextFieldPais);
 
-        jLabelPiso.setText("Piso");
+        jLabelPiso.setText("   Piso");
         jPanel1.add(jLabelPiso);
         jPanel1.add(jTextFieldPiso);
 
-        jButtonAlta.setText("Crear");
+        jButtonAlta.setText("Aceptar");
         jButtonAlta.setPreferredSize(new java.awt.Dimension(90, 40));
         jButtonAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,44 +167,63 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
             }
         });
 
-        jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabelPosibleError.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabelPosibleError.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Todos los datos con * son OBLIGATORIOS");
+
+        jLabelJavi.setText("Javier Dapena");
+
+        jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 997, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonAlta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelLogoP))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonAlta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(194, 194, 194)
+                .addComponent(jLabelJavi)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelLogoP)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAlta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPosibleError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 477, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelPosibleError, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelJavi)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -318,6 +339,8 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelContraseña2;
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelFechaAlta;
+    private javax.swing.JLabel jLabelJavi;
+    private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelNacionalidad;
     private javax.swing.JLabel jLabelPais;
     private javax.swing.JLabel jLabelPiso;
