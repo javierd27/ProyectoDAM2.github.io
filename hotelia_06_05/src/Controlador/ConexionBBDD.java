@@ -357,7 +357,7 @@ public class ConexionBBDD {
         }
         
         JOptionPane.showMessageDialog(null, 
-            "✅ Datos cargados correctamente.\nRegistros insertados: " + totalInsertados, 
+            "Datos cargados correctamente.\nRegistros insertados: " + totalInsertados, 
             "Éxito", JOptionPane.INFORMATION_MESSAGE);
         return true;
     }
@@ -383,7 +383,7 @@ public class ConexionBBDD {
         totalInsertados += parsearBloqueJSON(json, "servicios", "servicio");
         
         JOptionPane.showMessageDialog(null, 
-            "✅ Datos JSON cargados correctamente.\nRegistros insertados: " + totalInsertados, 
+            "Datos JSON cargados correctamente.\nRegistros insertados: " + totalInsertados, 
             "Éxito", JOptionPane.INFORMATION_MESSAGE);
         return true;
     }

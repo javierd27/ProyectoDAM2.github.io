@@ -83,6 +83,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         jButtonEstadisticas = new javax.swing.JButton();
         Reserva = new javax.swing.JButton();
         factura = new javax.swing.JButton();
+        jButtonImportacion = new javax.swing.JButton();
         jButtonCerrarSesion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabelBienvenido = new javax.swing.JLabel();
@@ -154,6 +155,14 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
         });
         jPanel2.add(factura);
 
+        jButtonImportacion.setText("Importación");
+        jButtonImportacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonImportacionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButtonImportacion);
+
         jButtonCerrarSesion.setText("Cerrar Sesión");
         jButtonCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,7 +217,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
                         .addComponent(jLabelLogoM)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,6 +327,20 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     }//GEN-LAST:event_facturaActionPerformed
 
+    private void jButtonImportacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportacionActionPerformed
+        // TODO add your handling code here:
+        
+        ConexionBBDD conexion = new ConexionBBDD();
+
+        boolean cargado = conexion.cargarDatosDePrueba();
+
+        if(cargado){
+            System.out.println("Datos cargados correctamente");
+        }else{
+            System.out.println("No se cargaron datos");
+        }
+    }//GEN-LAST:event_jButtonImportacionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -367,6 +390,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JButton jButtonEmpleados;
     private javax.swing.JButton jButtonEstadisticas;
+    private javax.swing.JButton jButtonImportacion;
     private javax.swing.JButton jButtonServicios;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBienvenido;
