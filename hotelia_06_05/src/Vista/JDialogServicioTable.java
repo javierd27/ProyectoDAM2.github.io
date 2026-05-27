@@ -130,7 +130,7 @@ public class JDialogServicioTable extends javax.swing.JDialog {
         jPanel2.add(jButtonEliminar);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DNI cliente");
+        jLabel1.setText("Nombre :");
         jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
         jPanel2.add(jLabel1);
 
@@ -152,7 +152,7 @@ public class JDialogServicioTable extends javax.swing.JDialog {
         jPanel2.add(jButtonCrear);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        jLabel3.setText("RESERVAS");
+        jLabel3.setText("SERVICIOS");
 
         jLabelError.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
 
@@ -224,7 +224,7 @@ public class JDialogServicioTable extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1066, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1072, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

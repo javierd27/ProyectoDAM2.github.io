@@ -12,6 +12,17 @@ import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import javax.swing.JComboBox;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.view.JasperViewer;
+import java.io.InputStream;
 
 /**
  *
@@ -28,7 +39,7 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
      * Creates new form JDialogEstadisticas
      */
     public JDialogEstadisticas(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, false);
         initComponents();
         setTitle("Estadisticas");
     }
@@ -64,6 +75,16 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
         ActualizarEmpleado = new javax.swing.JButton();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        InformeCliente1 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        InformeHabitacion1 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        InformeEmpleado1 = new javax.swing.JButton();
 
         jLabel6.setText("jLabel6");
 
@@ -150,7 +171,61 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
         });
         jPanel5.add(ActualizarEmpleado, java.awt.BorderLayout.PAGE_END);
 
-        jTabbedPane1.addTab("Servicios", jPanel5);
+        jTabbedPane1.addTab("Empleados", jPanel5);
+
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel5.setText("CLIENTES");
+        jPanel3.add(jLabel5, java.awt.BorderLayout.PAGE_START);
+
+        InformeCliente1.setText("Generar informe de clientes");
+        InformeCliente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InformeCliente1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(InformeCliente1, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("Clientes", jPanel3);
+
+        jPanel6.setLayout(new java.awt.BorderLayout());
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel7.setText("FACTURAS");
+        jPanel6.add(jLabel7, java.awt.BorderLayout.PAGE_START);
+
+        InformeHabitacion1.setText("Generar informe de las facturas");
+        InformeHabitacion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InformeHabitacion1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(InformeHabitacion1, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("Facturas", jPanel6);
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 153, 204));
+        jLabel8.setText("EMPLEADOS");
+        jPanel7.add(jLabel8, java.awt.BorderLayout.PAGE_START);
+
+        InformeEmpleado1.setText("Generar informe de los empleados");
+        InformeEmpleado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InformeEmpleado1ActionPerformed(evt);
+            }
+        });
+        jPanel7.add(InformeEmpleado1, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("Empleados", jPanel7);
+
+        jTabbedPane1.addTab("Informes", jTabbedPane2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -271,6 +346,52 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_ActualizarEmpleadoActionPerformed
 
+    private void InformeCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformeCliente1ActionPerformed
+        // TODO add your handling code here:
+        
+         try {
+            ConexionBBDD nueva = new ConexionBBDD();
+
+            String fileJasper = "src/reports/prueba2.jasper";
+            JasperPrint print
+                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_InformeCliente1ActionPerformed
+
+    private void InformeHabitacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformeHabitacion1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            ConexionBBDD nueva = new ConexionBBDD();
+
+            String fileJasper = "src/reports/infFacturas.jasper";
+            JasperPrint print
+                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_InformeHabitacion1ActionPerformed
+
+    private void InformeEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformeEmpleado1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            ConexionBBDD nueva = new ConexionBBDD();
+
+            String fileJasper = "src/reports/Empleado.jasper";
+            JasperPrint print
+                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_InformeEmpleado1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -313,6 +434,9 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
     private javax.swing.JButton ActualizarCliente;
     private javax.swing.JButton ActualizarEmpleado;
     private javax.swing.JButton ActualizarHabitacion;
+    private javax.swing.JButton InformeCliente1;
+    private javax.swing.JButton InformeEmpleado1;
+    private javax.swing.JButton InformeHabitacion1;
     private javax.swing.JComboBox<String> jBoxCliente;
     private javax.swing.JComboBox<String> jBoxHabitacion;
     private javax.swing.JComboBox<String> jBoxServicio;
@@ -320,15 +444,22 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;

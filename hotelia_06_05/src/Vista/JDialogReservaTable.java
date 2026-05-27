@@ -326,7 +326,7 @@ private void busqueda() {
 
         // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
         if (!jTextFieldDNICliente.getText().trim().isEmpty()) {
-            filtros.add(RowFilter.regexFilter(jTextFieldDNICliente.getText().trim(), 1));
+            filtros.add(RowFilter.regexFilter(jTextFieldDNICliente.getText().trim(), 3));
         }
            
         RowFilter<Object,Object> rf = RowFilter.andFilter(filtros);

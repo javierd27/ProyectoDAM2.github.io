@@ -65,7 +65,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelTelefono = new javax.swing.JLabel();
         jTextFieldTelefono = new javax.swing.JTextField();
         jLabelNacionalidad = new javax.swing.JLabel();
-        jTextFieldNacionalidad = new javax.swing.JTextField();
+        jComboBoxNacionalidad = new javax.swing.JComboBox<>();
         jLabelDireccion = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelPais = new javax.swing.JLabel();
@@ -145,7 +145,9 @@ public class JDialogCliente extends javax.swing.JDialog {
 
         jLabelNacionalidad.setText("   Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
-        jPanel1.add(jTextFieldNacionalidad);
+
+        jComboBoxNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Española", "Francesa", "Italiana", "Alemana", "Portuguesa", "Británica", "Estadounidense", "Canadiense", "Mexicana", "Argentina", "Brasileña", "Colombiana", "Peruana", "Chilena", "Venezolana", "China", "Japonesa", "Coreana", "India", "Marroquí", "Argelina", "Egipcia", "Rusa", "Ucraniana", "Polaca", "Rumana", "Neerlandesa", "Sueca", "Noruega", "Australiana", "Otra" }));
+        jPanel1.add(jComboBoxNacionalidad);
 
         jLabelDireccion.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabelDireccion.setText("____________   Dirección de domicilio");
@@ -195,22 +197,24 @@ public class JDialogCliente extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabelLogoP))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(jLabelLogoP))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabelJulia)
-                        .addGap(175, 175, 175))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCrear)
-                        .addContainerGap())))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabelJulia)
+                                .addGap(175, 175, 175))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButtonCrear)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +264,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 (Date) jSpinnerFecha_nac.getValue(),
                 jTextFieldMail.getText(),
                 jTextFieldTelefono.getText(),
-                jTextFieldNacionalidad.getText(),
+                jComboBoxNacionalidad.getSelectedItem().toString(),
                 jTextFieldPais.getText(),
                 jTextFieldCalle_num.getText(),
                 jTextFieldPoblacion.getText(),
@@ -332,6 +336,7 @@ public class JDialogCliente extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCrear;
+    private javax.swing.JComboBox<String> jComboBoxNacionalidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelApellido2;
@@ -357,7 +362,6 @@ public class JDialogCliente extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldCalle_num;
     private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldMail;
-    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPiso;
@@ -377,7 +381,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jSpinnerFecha_nac.setValue(cliente.getFecha_nac());
         jTextFieldMail.setText(cliente.getMail());
         jTextFieldTelefono.setText(cliente.getTelefono());
-        jTextFieldNacionalidad.setText(cliente.getNacionalidad());
+        jComboBoxNacionalidad.setSelectedItem(cliente.getNacionalidad());
         jTextFieldPais.setText(cliente.getPais());
         jTextFieldCalle_num.setText(cliente.getCalle_numero());
         jTextFieldPoblacion.setText(cliente.getPoblacion());

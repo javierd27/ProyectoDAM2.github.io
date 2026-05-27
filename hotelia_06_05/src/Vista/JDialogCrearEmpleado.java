@@ -62,7 +62,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jLabelTelefono = new javax.swing.JLabel();
         jTextFieldTelefono = new javax.swing.JTextField();
         jLabelNacionalidad = new javax.swing.JLabel();
-        jTextFieldNacionalidad = new javax.swing.JTextField();
+        jComboBoxNacionalidad = new javax.swing.JComboBox<>();
         jLabelPais = new javax.swing.JLabel();
         jTextFieldPoblacion = new javax.swing.JTextField();
         jLabelCalle_numero = new javax.swing.JLabel();
@@ -141,7 +141,9 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
         jLabelNacionalidad.setText("   Nacionalidad*");
         jPanel1.add(jLabelNacionalidad);
-        jPanel1.add(jTextFieldNacionalidad);
+
+        jComboBoxNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Española", "Francesa", "Italiana", "Alemana", "Portuguesa", "Británica", "Estadounidense", "Canadiense", "Mexicana", "Argentina", "Brasileña", "Colombiana", "Peruana", "Chilena", "Venezolana", "China", "Japonesa", "Coreana", "India", "Marroquí", "Argelina", "Egipcia", "Rusa", "Ucraniana", "Polaca", "Rumana", "Neerlandesa", "Sueca", "Noruega", "Australiana", "Otra" }));
+        jPanel1.add(jComboBoxNacionalidad);
 
         jLabelPais.setText("   País*");
         jPanel1.add(jLabelPais);
@@ -248,7 +250,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
             return; // si no ponia return me daba error todo elrato por que entraba
         } else if (jTextFieldNombre.getText().isEmpty() || jTextFieldApellido1.getText().isEmpty() || fecha == null || jTextFieldUsuario.getText().isEmpty()
                 || jTContraseña1.getText().isEmpty() || jTContraseña2.getText().isEmpty() || rol.isEmpty() || jTextFieldCorreo.getText().isEmpty()
-                || jTextFieldTelefono.getText().isEmpty() || jTextFieldNacionalidad.getText().isEmpty() || jTextFieldPais.getText().isEmpty()
+                || jTextFieldTelefono.getText().isEmpty() || jTextFieldPais.getText().isEmpty()
                 || jTextFieldCalle_Numero.getText().isEmpty() || jTextFieldPoblacion.getText().isEmpty()) 
         {
             jLabelPosibleError.setText("Rellena todos los datos necesarios");
@@ -269,7 +271,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
                 rol,
                 jTextFieldCorreo.getText(),
                 jTextFieldTelefono.getText(),
-                jTextFieldNacionalidad.getText(),
+                jComboBoxNacionalidad.getSelectedItem().toString(),
                 jTextFieldPais.getText(),
                 jTextFieldCalle_Numero.getText(),
                 jTextFieldPoblacion.getText(),
@@ -328,6 +330,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlta;
+    private javax.swing.JComboBox<String> jComboBoxNacionalidad;
     private javax.swing.JComboBox<String> jComboBoxROL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -359,7 +362,6 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldApellido2;
     private javax.swing.JTextField jTextFieldCalle_Numero;
     private javax.swing.JTextField jTextFieldCorreo;
-    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPiso;

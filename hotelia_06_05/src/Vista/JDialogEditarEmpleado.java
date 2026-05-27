@@ -41,7 +41,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jComboBoxROL.setSelectedItem(empleado.getRol());
         jTextFieldCorreo.setText(empleado.getCorreo());
         jTextFieldTelefono.setText(empleado.getTelefono());
-        jTextFieldNacionalidad.setText(empleado.getNacionalidad());
+        jComboBoxNacionalidad.setSelectedItem(empleado.getNacionalidad());
         jTextFieldPais.setText(empleado.getPais());
         jTextFieldPoblacion.setText(empleado.getPoblacion());
         jTextFieldCalle_Numero.setText(empleado.getCalle_numero());
@@ -105,7 +105,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jLabelTelefono = new javax.swing.JLabel();
         jTextFieldTelefono = new javax.swing.JTextField();
         jLabelNacionalidad = new javax.swing.JLabel();
-        jTextFieldNacionalidad = new javax.swing.JTextField();
+        jComboBoxNacionalidad = new javax.swing.JComboBox<>();
         jLabelPais = new javax.swing.JLabel();
         jTextFieldPoblacion = new javax.swing.JTextField();
         jLabelCalle_numero = new javax.swing.JLabel();
@@ -187,7 +187,9 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
         jLabelNacionalidad.setText("   Nacionalidad");
         jPanel1.add(jLabelNacionalidad);
-        jPanel1.add(jTextFieldNacionalidad);
+
+        jComboBoxNacionalidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Española", "Francesa", "Italiana", "Alemana", "Portuguesa", "Británica", "Estadounidense", "Canadiense", "Mexicana", "Argentina", "Brasileña", "Colombiana", "Peruana", "Chilena", "Venezolana", "China", "Japonesa", "Coreana", "India", "Marroquí", "Argelina", "Egipcia", "Rusa", "Ucraniana", "Polaca", "Rumana", "Neerlandesa", "Sueca", "Noruega", "Australiana", "Otra" }));
+        jPanel1.add(jComboBoxNacionalidad);
 
         jLabelPais.setText("   País");
         jPanel1.add(jLabelPais);
@@ -307,7 +309,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
             empleado.setRol(rol);
             empleado.setCorreo(jTextFieldCorreo.getText());
             empleado.setTelefono(jTextFieldTelefono.getText());
-            empleado.setNacionalidad(jTextFieldNacionalidad.getText());
+            empleado.setNacionalidad(jComboBoxNacionalidad.getSelectedItem().toString());
             empleado.setPais(jTextFieldPais.getText());
             empleado.setCalle_numero(jTextFieldCalle_Numero.getText());
             empleado.setPoblacion(jTextFieldPoblacion.getText());
@@ -374,6 +376,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JComboBox<String> jComboBoxID;
+    private javax.swing.JComboBox<String> jComboBoxNacionalidad;
     private javax.swing.JComboBox<String> jComboBoxROL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -399,7 +402,6 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldApellido2;
     private javax.swing.JTextField jTextFieldCalle_Numero;
     private javax.swing.JTextField jTextFieldCorreo;
-    private javax.swing.JTextField jTextFieldNacionalidad;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPiso;
