@@ -33,6 +33,7 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         setTitle("Gestionar empleados");
+        initializeJavaHelp();
         // Agrego un listener para que en el momento que se cierre pestala
         this.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -41,6 +42,20 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
                 System.exit(0);
             }
         });
+    }
+    
+    // metodo para Java Hekp
+    private void initializeJavaHelp() {
+        try {
+            Controlador.HoteliaHelp help = new Controlador.HoteliaHelp();
+            if (help.isInitialized()) {
+                // this.getRootPane, para poder hacer un this
+                help.enableF1Help(this.getRootPane(), "index");
+                System.out.println("JavaHelp inicializado en Gestión Admin");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al inicializar JavaHelp: " + e.getMessage());
+        }
     }
 
     /**
