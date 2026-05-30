@@ -35,8 +35,6 @@ public class JDialogClienteTable extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogClienteTable.class.getName());
 
-    
-
     // objetos globales
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
@@ -79,6 +77,21 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         jTableClientes.getColumnModel().getColumn(0).setCellRenderer(derecha);
         jTableClientes.getColumnModel().getColumn(4).setCellRenderer(derecha);
         jTableClientes.getColumnModel().getColumn(6).setCellRenderer(derecha);
+        
+        DefaultTableCellRenderer telefonoRenderer = new DefaultTableCellRenderer() {
+            @Override
+            protected void setValue(Object value) {
+                if (value != null) {
+                    String tel = value.toString().replaceAll("\\s+", "");
+                    tel = tel.replaceAll("(\\d{3})(?=\\d)", "$1 ");
+                    super.setValue(tel);
+                } else {
+                    super.setValue(value);
+                }
+            }
+        };
+        
+        jTableClientes.getColumnModel().getColumn(6).setCellRenderer(telefonoRenderer);
     }
 
     /**
@@ -98,6 +111,7 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jButtonEditar = new javax.swing.JButton();
         jButtonCrear = new javax.swing.JButton();
+        jButtonVolver = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabelError = new javax.swing.JLabel();
@@ -149,6 +163,14 @@ public class JDialogClienteTable extends javax.swing.JDialog {
             }
         });
 
+        jButtonVolver.setText("VOLVER");
+        jButtonVolver.setPreferredSize(new java.awt.Dimension(90, 40));
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -162,6 +184,8 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -172,7 +196,8 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -334,6 +359,11 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
+    private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButtonVolverActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -383,6 +413,7 @@ public class JDialogClienteTable extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelError;

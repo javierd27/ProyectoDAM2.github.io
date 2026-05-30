@@ -34,6 +34,10 @@ public class ReservaDAO {
             PreparedStatement ps = conexion.prepareStatement(
                 "SELECT idReserva, idServicio, idHabitacion, idCliente, idFactura, fecha_inicio, fecha_fin, cantidad_personas, fecha_hora_reserva, estado FROM reserva ORDER BY fecha_inicio"
             );
+            
+            java.text.SimpleDateFormat sdf =
+            new java.text.SimpleDateFormat("dd/MM/yyyy");
+            
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Object[] fila = new Object[]{
@@ -42,10 +46,10 @@ public class ReservaDAO {
                     rs.getObject(3),
                     rs.getString(4),
                     rs.getInt(5),
-                    rs.getDate(6),
-                    rs.getDate(7),
+                    sdf.format(rs.getDate(6)),
+                    sdf.format(rs.getDate(7)),
                     rs.getInt(8),
-                    rs.getDate(9),
+                    sdf.format(rs.getDate(9)),
                     rs.getString(10)
                 };
                 dtm.addRow(fila);

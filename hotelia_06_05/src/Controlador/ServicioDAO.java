@@ -79,20 +79,7 @@ public class ServicioDAO {
         ps.close();
         return resultado;
     }
-/*
-    public int eliminaServicio(String nombre) throws SQLException {
-        if (conexion == null) throw new SQLException("Conexión no disponible");
-        
-        String sql = "DELETE FROM servicio WHERE nombre = ?";
-        PreparedStatement ps = conexion.prepareStatement(sql);
 
-        ps.setString(1, nombre);
-
-        int resultado = ps.executeUpdate();
-        ps.close();
-        return resultado;
-    }
-*/
     public int eliminaServicio(int idServicio) throws SQLException {
 
         if (conexion == null)

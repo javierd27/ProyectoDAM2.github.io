@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,6 +36,8 @@ public class ClienteDAO {
         );
 
         ResultSet rs = ps.executeQuery();
+        java.text.SimpleDateFormat sdf =
+        new java.text.SimpleDateFormat("dd/MM/yyyy");
 
         while (rs.next()) {
             Object[] fila = new Object[]{
@@ -42,7 +45,7 @@ public class ClienteDAO {
                 rs.getString(2),
                 rs.getString(3),
                 rs.getString(4),
-                rs.getDate(5),
+                sdf.format(rs.getDate(5)),
                 rs.getString(6),
                 rs.getString(7),
                 rs.getString(8),
@@ -145,5 +148,13 @@ public class ClienteDAO {
             }
         }
         return 0;
+    }
+    
+    public ResultSet todosPaises() throws SQLException {
+        if (conexion == null) throw new SQLException("Conexión no disponible");
+        
+        String sql = "SELECT DISTINCT pais FROM cliente ORDER BY pais";
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        return ps.executeQuery();
     }
 }

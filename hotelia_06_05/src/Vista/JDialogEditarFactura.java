@@ -337,7 +337,7 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
 
     public void setIdFactura(int idFactura) throws SQLException {
         
-        Factura factura = f.buscaFactura(idFactura);
+        Factura factura = f.buscaFacturas(idFactura);
 
         jTextFieldDNI.setText(factura.getIdCliente());
         jTextFieldObservaciones.setText(factura.getObservacion());

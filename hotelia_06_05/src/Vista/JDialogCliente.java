@@ -10,6 +10,7 @@ import Controlador.ConexionBBDD;
 import Modelo.Cliente;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JTable;
@@ -30,12 +31,36 @@ public class JDialogCliente extends javax.swing.JDialog {
     JFrameLogin jframepadre;
     private String dni;
     
-    public JDialogCliente(java.awt.Frame parent, boolean modal, JTable tabla) {
+    private void cargarServicios() throws SQLException {
+        ResultSet rs = cl.todosPaises();
+        jComboBoxPais.removeAllItems();
+
+        while (rs.next()) {
+            jComboBoxPais.addItem(rs.getString("pais"));
+        }
+        jComboBoxPais.addItem("Otro");
+        
+        boolean existe = false;
+
+        for (int i = 0; i < jComboBoxPais.getItemCount(); i++) {
+            if ("España".equals(jComboBoxPais.getItemAt(i))) {
+                existe = true;
+                break;
+            }
+        }
+
+        if (!existe) {
+            jComboBoxPais.insertItemAt("España", 0);
+        }
+
+        jComboBoxPais.setSelectedItem("España");
+    }
+    
+    public JDialogCliente(java.awt.Frame parent, boolean modal, JTable tabla) throws SQLException {
         super(parent, modal);
-        //jframepadre = (JFrameLogin)parent;
         initComponents();
         this.JDialogClienteTable = tabla;
-        //jSpinnerFecha_nac.setValue("");
+        cargarServicios();
         setTitle("Cliente");
     }
 
@@ -69,7 +94,9 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelDireccion = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelPais = new javax.swing.JLabel();
-        jTextFieldPais = new javax.swing.JTextField();
+        jComboBoxPais = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldOtro = new javax.swing.JTextField();
         jLabelPoblacion = new javax.swing.JLabel();
         jTextFieldPoblacion = new javax.swing.JTextField();
         jLabelCalle_num = new javax.swing.JLabel();
@@ -86,7 +113,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelClientes.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabelClientes.setText("CLIENTES");
 
-        jPanel1.setLayout(new java.awt.GridLayout(13, 2, 10, 10));
+        jPanel1.setLayout(new java.awt.GridLayout(14, 2, 10, 10));
 
         jLabelDNI.setText("   DNI*");
         jPanel1.add(jLabelDNI);
@@ -159,12 +186,23 @@ public class JDialogCliente extends javax.swing.JDialog {
         jLabelPais.setText("   País de residencia actual*");
         jPanel1.add(jLabelPais);
 
-        jTextFieldPais.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxPais.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPaisActionPerformed(evt);
+                jComboBoxPaisActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldPais);
+        jPanel1.add(jComboBoxPais);
+
+        jLabel3.setText("   Otro:");
+        jPanel1.add(jLabel3);
+
+        jTextFieldOtro.setEnabled(false);
+        jTextFieldOtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldOtroActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFieldOtro);
 
         jLabelPoblacion.setText("   Población*");
         jPanel1.add(jLabelPoblacion);
@@ -261,12 +299,34 @@ public class JDialogCliente extends javax.swing.JDialog {
                 || jTextFieldApellido1.getText().trim().isEmpty()
                 || jTextFieldMail.getText().trim().isEmpty()
                 || jTextFieldTelefono.getText().trim().isEmpty()
-                || jTextFieldPais.getText().trim().isEmpty()
+                || jComboBoxPais.getSelectedItem().toString().trim().isEmpty()
                 || jTextFieldPoblacion.getText().trim().isEmpty()
                 || jTextFieldCalle_num.getText().trim().isEmpty()) {
 
             jLabel1.setText("Rellena * ");
             return;
+        }
+            
+        String pais;
+
+        if (jComboBoxPais.getSelectedItem().equals("Otro")) {
+            if(!jTextFieldOtro.getText().trim().isEmpty()){
+                pais = jTextFieldOtro.getText().trim();
+            }else{
+                jLabel1.setText("Introduce un país");
+                return;
+            }
+        } else {
+            pais = jComboBoxPais.getSelectedItem().toString();
+        }
+
+        String correo = jTextFieldMail.getText().trim();
+
+        if (!correo.matches("^[^@]+@[^@]+\\.[^@]+$")) {
+            jLabel1.setText("Correo no válido");
+            return;
+        } else {
+            jLabel1.setText("");
         }
             Cliente nuevo = new Cliente(
                 jTextFieldDNI.getText(),
@@ -277,7 +337,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 jTextFieldMail.getText(),
                 jTextFieldTelefono.getText(),
                 jComboBoxNacionalidad.getSelectedItem().toString(),
-                jTextFieldPais.getText(),
+                pais,
                 jTextFieldCalle_num.getText(),
                 jTextFieldPoblacion.getText(),
                 jTextFieldPiso.getText()
@@ -287,7 +347,6 @@ public class JDialogCliente extends javax.swing.JDialog {
 
                 // CREAR
                 if (dni == null) {
-
                     resultado = cl.insertaCliente(nuevo);
 
                     if (resultado >= 1) {
@@ -319,9 +378,19 @@ public class JDialogCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldApellido2ActionPerformed
 
-    private void jTextFieldPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPaisActionPerformed
+    private void jTextFieldOtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldOtroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPaisActionPerformed
+    }//GEN-LAST:event_jTextFieldOtroActionPerformed
+
+    private void jComboBoxPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPaisActionPerformed
+        // TODO add your handling code here:
+        boolean otro = "Otro".equals(jComboBoxPais.getSelectedItem());
+        jTextFieldOtro.setEnabled(otro);
+
+        if (!otro) {
+            jTextFieldOtro.setText("");
+        }
+    }//GEN-LAST:event_jComboBoxPaisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -349,8 +418,10 @@ public class JDialogCliente extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JComboBox<String> jComboBoxNacionalidad;
+    private javax.swing.JComboBox<String> jComboBoxPais;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelApellido2;
     private javax.swing.JLabel jLabelApelliod1;
     private javax.swing.JLabel jLabelCalle_num;
@@ -375,7 +446,7 @@ public class JDialogCliente extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldDNI;
     private javax.swing.JTextField jTextFieldMail;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPais;
+    private javax.swing.JTextField jTextFieldOtro;
     private javax.swing.JTextField jTextFieldPiso;
     private javax.swing.JTextField jTextFieldPoblacion;
     private javax.swing.JTextField jTextFieldTelefono;
@@ -394,7 +465,7 @@ public class JDialogCliente extends javax.swing.JDialog {
         jTextFieldMail.setText(cliente.getMail());
         jTextFieldTelefono.setText(cliente.getTelefono());
         jComboBoxNacionalidad.setSelectedItem(cliente.getNacionalidad());
-        jTextFieldPais.setText(cliente.getPais());
+        jComboBoxPais.setSelectedItem(cliente.getPais());
         jTextFieldCalle_num.setText(cliente.getCalle_numero());
         jTextFieldPoblacion.setText(cliente.getPoblacion());
         jTextFieldPiso.setText(cliente.getPiso());

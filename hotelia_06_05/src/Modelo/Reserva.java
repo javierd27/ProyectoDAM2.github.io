@@ -120,7 +120,7 @@ public class Reserva {
 
        
     public static String[] getColumnas(){
-        String[] columnas = {"idReserva", "idServicio", "idHabitacion", "idCliente", "idFactura", "Fecha inicio", "Fecha fin", "Cantidad personas", "Fecha y hora de la reserva", "Estado"};
+        String[] columnas = {"idReserva", "idServicio", "idHabitacion", "idCliente", "idFactura", "Fecha inicio", "Fecha fin", "Cantidad personas", "Fecha de la reserva", "Estado"};
         return columnas;
     }
     

@@ -27,30 +27,6 @@ public class FacturaDAO {
         this.conexion = ConexionBBDD.getConnection();
     }
 
-    public Factura buscaFactura(int idFac) throws SQLException {
-        if (conexion == null) throw new SQLException("Conexión no disponible");
-        
-        String sql = "SELECT * FROM factura WHERE idFactura = ?";
-
-        PreparedStatement ps = conexion.prepareStatement(sql);
-        ps.setInt(1, idFac);
-
-        ResultSet rs = ps.executeQuery();
-        Factura factura = null;
-        if (rs.next()) {
-            factura = new Factura(
-                rs.getInt("descuento"), rs.getInt("iva"), 
-                rs.getString("estado"), rs.getString("idCliente"), 
-                rs.getString("metodo_pago"), rs.getString("observacion"), 
-                rs.getDate("fecha_emision"), rs.getDouble("sub_total"), 
-                rs.getDouble("total")
-            );
-        }
-        rs.close();
-        ps.close();
-        return factura;
-    }
-    
     public Factura buscaFacturaPendeinte(String dni) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -175,12 +151,15 @@ public class FacturaDAO {
             "SELECT idFactura, idCliente, fecha_emision, sub_total, iva, descuento, metodo_pago, estado, total, observacion FROM factura ORDER BY fecha_emision"
         );
 
+        java.text.SimpleDateFormat sdf =
+        new java.text.SimpleDateFormat("dd/MM/yyyy");
+        
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             Object[] fila = new Object[]{
                 rs.getInt(1),
                 rs.getString(2),
-                rs.getDate(3),
+                sdf.format(rs.getDate(3)),
                 rs.getDouble(4),
                 rs.getInt(5),
                 rs.getInt(6),

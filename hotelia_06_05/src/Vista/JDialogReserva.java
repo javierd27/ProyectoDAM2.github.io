@@ -76,7 +76,7 @@ public class JDialogReserva extends javax.swing.JDialog {
             if (rs2 != null) rs2.close();
         }
 
-}
+    }
     
     public JDialogReserva(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
