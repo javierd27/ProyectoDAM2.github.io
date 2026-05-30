@@ -6,6 +6,7 @@ package Controlador;
 
 import Modelo.Cliente;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -110,21 +111,22 @@ public class ClienteDAO {
     public int editarCliente(Cliente cliente, String dni) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
-        String sql = "UPDATE cliente SET nombre = ?, apellido1 = ?, apellido2 = ?, correo = ?, telefono = ?, nacionalidad = ?, pais = ?, calle_numero = ?, poblacion = ?, piso = ? "
+        String sql = "UPDATE cliente SET nombre = ?, apellido1 = ?, apellido2 = ?, fecha_nac = ?, correo = ?, telefono = ?, nacionalidad = ?, pais = ?, calle_numero = ?, poblacion = ?, piso = ? "
                 + "WHERE dni_nie = ?";
         PreparedStatement ps = conexion.prepareStatement(sql);
 
         ps.setString(1, cliente.getNombre());
         ps.setString(2, cliente.getApellido1());
         ps.setString(3, cliente.getApellido2());
-        ps.setString(4, cliente.getMail());
-        ps.setString(5, cliente.getTelefono());
-        ps.setString(6, cliente.getNacionalidad());
-        ps.setString(7, cliente.getPais());
-        ps.setString(8, cliente.getCalle_numero());
-        ps.setString(9, cliente.getPoblacion());
-        ps.setString(10, cliente.getPiso());
-        ps.setString(11, dni);
+        ps.setDate(4, new java.sql.Date( cliente.getFecha_nac().getTime()));
+        ps.setString(5, cliente.getMail());
+        ps.setString(6, cliente.getTelefono());
+        ps.setString(7, cliente.getNacionalidad());
+        ps.setString(8, cliente.getPais());
+        ps.setString(9, cliente.getCalle_numero());
+        ps.setString(10, cliente.getPoblacion());
+        ps.setString(11, cliente.getPiso());
+        ps.setString(12, dni);
 
         int resultado = ps.executeUpdate();
         ps.close();

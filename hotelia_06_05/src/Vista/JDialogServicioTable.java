@@ -22,6 +22,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -68,6 +70,13 @@ public class JDialogServicioTable extends javax.swing.JDialog {
         jTableServicio.setRowSorter(order);
         configuraColumna(0, 5);
         configuraColumna(3, 30);
+        
+        DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
+        derecha.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        jTableServicio.getColumnModel().getColumn(0).setCellRenderer(derecha);
+        jTableServicio.getColumnModel().getColumn(2).setCellRenderer(derecha);
+        
     }
 
     /**
@@ -118,7 +127,6 @@ public class JDialogServicioTable extends javax.swing.JDialog {
                 jButtonEditarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonEditar);
 
         jButtonEliminar.setText("ELIMINAR");
         jButtonEliminar.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -127,12 +135,10 @@ public class JDialogServicioTable extends javax.swing.JDialog {
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonEliminar);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nombre :");
         jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
-        jPanel2.add(jLabel1);
 
         jTextFieldDNICliente.setPreferredSize(new java.awt.Dimension(255, 40));
         jTextFieldDNICliente.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -140,7 +146,6 @@ public class JDialogServicioTable extends javax.swing.JDialog {
                 jTextFieldDNIClienteKeyReleased(evt);
             }
         });
-        jPanel2.add(jTextFieldDNICliente);
 
         jButtonCrear.setText("CREAR");
         jButtonCrear.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -149,7 +154,36 @@ public class JDialogServicioTable extends javax.swing.JDialog {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonCrear);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(jTextFieldDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel3.setText("SERVICIOS");

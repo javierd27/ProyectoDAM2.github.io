@@ -24,6 +24,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -70,6 +72,13 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         jTableClientes.setRowSorter(order);
         configuraColumna(0, 5);
         configuraColumna(4, 30);
+        
+        DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
+        derecha.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        jTableClientes.getColumnModel().getColumn(0).setCellRenderer(derecha);
+        jTableClientes.getColumnModel().getColumn(4).setCellRenderer(derecha);
+        jTableClientes.getColumnModel().getColumn(6).setCellRenderer(derecha);
     }
 
     /**
@@ -85,9 +94,9 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableClientes = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
-        jButtonEditar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jTextFieldDNICliente = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jButtonEditar = new javax.swing.JButton();
         jButtonCrear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -110,7 +119,19 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableClientes.setShowGrid(false);
         jScrollPane1.setViewportView(jTableClientes);
+
+        jTextFieldDNICliente.setPreferredSize(new java.awt.Dimension(255, 40));
+        jTextFieldDNICliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldDNIClienteKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("DNI cliente:");
+        jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
 
         jButtonEditar.setText("EDITAR");
         jButtonEditar.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -119,20 +140,6 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 jButtonEditarActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonEditar);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("DNI cliente");
-        jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
-        jPanel2.add(jLabel1);
-
-        jTextFieldDNICliente.setPreferredSize(new java.awt.Dimension(255, 40));
-        jTextFieldDNICliente.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldDNIClienteKeyReleased(evt);
-            }
-        });
-        jPanel2.add(jTextFieldDNICliente);
 
         jButtonCrear.setText("CREAR");
         jButtonCrear.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -141,7 +148,33 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonCrear);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDNICliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel3.setText("CLIENTES");
@@ -161,7 +194,7 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelLogoM)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,8 +234,8 @@ public class JDialogClienteTable extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelJulia)
                 .addContainerGap())
         );
@@ -211,7 +244,7 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1053, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1149, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,9 +261,8 @@ public class JDialogClienteTable extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTableClientes.getSelectedRowCount() == 0) {
 
-            JDialogCliente jdc = new JDialogCliente(null, true, jTableClientes);
-            // hago visible el jframe
-            jdc.setVisible(true);
+            jLabelError.setText("Selecciona una factura");
+
         } else if (jTableClientes.getSelectedRowCount() == 1) {
 
             try {

@@ -157,55 +157,55 @@ public class JDialogServicio extends javax.swing.JDialog {
          try {
             // TODO add your handling code here:
             
-            
+             if (jTextFieldNombreServicio.getText().trim().isEmpty()
+                || jTextFieldDescripcion.getText().trim().isEmpty()
+                || jTextFieldPrecio.getText().trim().isEmpty()) {
+
+                jLabel1.setText("Rellena todos los campos");
+                return;
+            }
+             
+            double precio;
+
+            try {
+                precio = Double.parseDouble(jTextFieldPrecio.getText());
+            } catch (NumberFormatException e) {
+                jLabel1.setText("El precio debe ser numérico");
+                return;
+            }
+             
             Servicio nuevo = new Servicio(
                     jTextFieldNombreServicio.getText(),
                     jTextFieldDescripcion.getText(),
-                    Double.parseDouble(jTextFieldPrecio.getText())
+                    Double.valueOf(jTextFieldPrecio.getText())
             );
             
             int resultado; 
             
             if (idServicio == null) {
-
                 resultado = s.insertaServicio(nuevo);
-
                 if (resultado >= 1) {
-
                     jLabel1.setText("Creado con exito");
-
                 } else {
-
                     jLabel1.setText("No se ha creado");
                 }
             } else {
-
                 resultado = s.editarServicio(
                         nuevo,
                         jTextFieldNombreServicio.getText()
                 );
-
                 if (resultado >= 1) {
-
                     jLabel1.setText("Editado con exito");
-
                 } else {
-
                     jLabel1.setText("No se ha editado");
                 }
             }
-
             dispose();
 
         } catch (SQLException ex) {
 
-            System.getLogger(JDialogServicio.class.getName())
-                    .log(System.Logger.Level.ERROR,
-                            (String) null,
-                            ex);
+            System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
-
-
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed

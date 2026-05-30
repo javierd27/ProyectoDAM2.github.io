@@ -27,7 +27,31 @@ public class FacturaDAO {
         this.conexion = ConexionBBDD.getConnection();
     }
 
-    public Factura buscaFactura(String dni) throws SQLException {
+    public Factura buscaFactura(int idFac) throws SQLException {
+        if (conexion == null) throw new SQLException("Conexión no disponible");
+        
+        String sql = "SELECT * FROM factura WHERE idFactura = ?";
+
+        PreparedStatement ps = conexion.prepareStatement(sql);
+        ps.setInt(1, idFac);
+
+        ResultSet rs = ps.executeQuery();
+        Factura factura = null;
+        if (rs.next()) {
+            factura = new Factura(
+                rs.getInt("descuento"), rs.getInt("iva"), 
+                rs.getString("estado"), rs.getString("idCliente"), 
+                rs.getString("metodo_pago"), rs.getString("observacion"), 
+                rs.getDate("fecha_emision"), rs.getDouble("sub_total"), 
+                rs.getDouble("total")
+            );
+        }
+        rs.close();
+        ps.close();
+        return factura;
+    }
+    
+    public Factura buscaFacturaPendeinte(String dni) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
         String sql = "SELECT * FROM factura WHERE idCliente = ? AND estado = 'Pendiente'";
@@ -115,13 +139,29 @@ public class FacturaDAO {
         }
         rs.close();
         ps.close();
+        String sqlDescuento = "SELECT descuento FROM factura WHERE idFactura = ?";
+        PreparedStatement psDescuento = conexion.prepareStatement(sqlDescuento);
+        psDescuento.setInt(1, idFactura);
 
+        ResultSet rsDescuento = psDescuento.executeQuery();
+
+        int descuento = 0;
+
+        if (rsDescuento.next()) {
+            descuento = rsDescuento.getInt("descuento");
+        }
+
+        rsDescuento.close();
+        psDescuento.close();
+
+        // calcular total con  descuento
+        double subtotalConDescuento = subtotal - (subtotal * descuento / 100.0);
         // calcular total con IVA 21%
-        double total = subtotal * 1.21;
+        double total = subtotalConDescuento * 1.21;
 
         String update = "UPDATE factura SET sub_total = ?, total = ? WHERE idFactura = ?";
         PreparedStatement psUpdate = conexion.prepareStatement(update);
-        psUpdate.setDouble(1, subtotal);
+        psUpdate.setDouble(1, subtotalConDescuento);
         psUpdate.setDouble(2, total);
         psUpdate.setInt(3, idFactura);
         psUpdate.executeUpdate();
@@ -175,7 +215,7 @@ public class FacturaDAO {
         }
     }
 
-    public int editarFactura(Factura factura) throws SQLException {
+    public int editarFactura(Factura factura, int idFac) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
         String sql = "UPDATE factura SET metodo_pago = ?, estado = ?, descuento = ?, observacion = ? WHERE idFactura = ?";
@@ -185,7 +225,7 @@ public class FacturaDAO {
         ps.setString(2, factura.getEstado());
         ps.setInt(3, factura.getDescuento());
         ps.setString(4, factura.getObservacion());
-        ps.setInt(5, factura.getIdFactura());
+        ps.setInt(5, idFac);
 
         int resultado = ps.executeUpdate();
         ps.close();

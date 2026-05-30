@@ -268,7 +268,7 @@ public class JDialogReserva extends javax.swing.JDialog {
                 return;
             }
 
-            Factura factura = f.buscaFactura(jTextFieldDNI.getText());
+            Factura factura = f.buscaFacturaPendeinte(jTextFieldDNI.getText());
 
             int idFactura;
             Integer idServicio = null;

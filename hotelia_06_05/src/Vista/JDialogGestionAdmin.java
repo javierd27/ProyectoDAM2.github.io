@@ -34,7 +34,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
      * Creates new form JDialogGestion
      */
     public JDialogGestionAdmin(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, false);
         initComponents();
         setTitle("Gestionar administradores");
         initializeJavaHelp();

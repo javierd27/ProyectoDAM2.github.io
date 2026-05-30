@@ -22,6 +22,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.RowFilter;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -70,6 +72,18 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
         jTableFacturas.setRowSorter(order);
         configuraColumna(0, 5);
         configuraColumna(4, 30);
+        
+        DefaultTableCellRenderer derecha = new DefaultTableCellRenderer();
+        derecha.setHorizontalAlignment(SwingConstants.RIGHT);
+
+        jTableFacturas.getColumnModel().getColumn(0).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(1).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(2).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(3).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(4).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(5).setCellRenderer(derecha);
+        jTableFacturas.getColumnModel().getColumn(8).setCellRenderer(derecha);
+
     }
 
     /**
@@ -234,9 +248,8 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (jTableFacturas.getSelectedRowCount() == 0) {
 
-            JDialogEditarFactura jdef = new JDialogEditarFactura(null, true, jTableFacturas);
-            // hago visible el jframe
-            jdef.setVisible(true);
+                jLabelError.setText("Selecciona una factura");
+
         } else if (jTableFacturas.getSelectedRowCount() == 1) {
 
             try {

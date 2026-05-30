@@ -356,8 +356,9 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
             JasperPrint print
                     = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
             JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jviewer.setVisible(true);
-        } catch (Exception ex) {
+         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_InformeCliente1ActionPerformed

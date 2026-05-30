@@ -256,6 +256,18 @@ public class JDialogCliente extends javax.swing.JDialog {
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         try {
             // TODO add your handling code here:
+            if (jTextFieldDNI.getText().trim().isEmpty()
+                || jTextFieldNombre.getText().trim().isEmpty()
+                || jTextFieldApellido1.getText().trim().isEmpty()
+                || jTextFieldMail.getText().trim().isEmpty()
+                || jTextFieldTelefono.getText().trim().isEmpty()
+                || jTextFieldPais.getText().trim().isEmpty()
+                || jTextFieldPoblacion.getText().trim().isEmpty()
+                || jTextFieldCalle_num.getText().trim().isEmpty()) {
+
+            jLabel1.setText("Rellena * ");
+            return;
+        }
             Cliente nuevo = new Cliente(
                 jTextFieldDNI.getText(),
                 jTextFieldNombre.getText(),

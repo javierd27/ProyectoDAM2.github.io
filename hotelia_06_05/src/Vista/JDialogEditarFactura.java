@@ -15,6 +15,8 @@ import Modelo.Reserva;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -217,6 +219,27 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         try {
             
+            int desc;
+
+            try {
+                desc = Integer.parseInt(jTextFieldDescuento.getText());
+            } catch (NumberFormatException e) {
+                jLabel1.setText("El descuento debe ser numérico");
+                return;
+            }
+            
+            Factura nueva = new Factura(
+                    Integer.parseInt(jTextFieldDescuento.getText()),
+                    21,
+                    jComboBoxEstado.getSelectedItem().toString(),
+                    jTextFieldDNI.getText(),
+                    jComboBoxMetodoPago.getSelectedItem().toString(),
+                    jTextFieldObservaciones.getText(),
+                    java.sql.Date.valueOf(LocalDate.now()),
+                    Double.parseDouble(jTextFieldSubtotal.getText()),
+                    Double.parseDouble(jTextFieldTotal.getText())
+            );
+            
             int filaSeleccionada = JDialogFacturaTable.getSelectedRow();
 
             if (filaSeleccionada == -1) {
@@ -229,11 +252,7 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
             
             idFactura = Integer.parseInt(((DefaultTableModel) JDialogFacturaTable.getModel()).getValueAt(filaModelo, 0).toString());
 
-            Factura facturaEd = f.buscaFacturas(idFactura);
-
-            facturaEd.setMetodo_pago(jComboBoxMetodoPago.getSelectedItem().toString());
-
-            facturaEd.setEstado(jComboBoxEstado.getSelectedItem().toString());
+            //Factura facturaEd = f.buscaFacturas(idFactura);
 
             int descuento;
             try {
@@ -243,14 +262,10 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
                 return;
             }
 
-            facturaEd.setDescuento(descuento);
             
-            facturaEd.setObservacion(jTextFieldObservaciones.getText());
+            if (f.editarFactura(nueva,idFactura) >= 1) {
 
-            
-            if (f.editarFactura(facturaEd) >= 1) {
-
-                f.recalcularFactura(facturaEd.getIdFactura());
+                f.recalcularFactura(idFactura);
 
                 jLabel1.setText("Factura actualizada");
                 dispose();
@@ -320,8 +335,18 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldTotal;
     // End of variables declaration//GEN-END:variables
 
-    public void setIdFactura(int idFactura) {
-        this.idFactura= idFactura;
+    public void setIdFactura(int idFactura) throws SQLException {
+        
+        Factura factura = f.buscaFactura(idFactura);
+
+        jTextFieldDNI.setText(factura.getIdCliente());
+        jTextFieldObservaciones.setText(factura.getObservacion());
+        jComboBoxMetodoPago.setSelectedItem(factura.getMetodo_pago());
+        jComboBoxEstado.setSelectedItem(factura.getEstado());
+        jTextFieldDescuento.setText(String.valueOf(factura.getDescuento()));
+        jTextFieldSubtotal.setText(String.valueOf(factura.getSub_total()));
+        jTextFieldTotal.setText(String.valueOf(factura.getTotal()));
+        jSpinnerFecha_reserva.setValue(factura.getFecha_emision());
     
     }
 }
