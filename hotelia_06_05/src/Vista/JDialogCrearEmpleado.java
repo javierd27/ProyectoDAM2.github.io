@@ -14,7 +14,7 @@ import java.util.Date;
 /**
  *
  * @author DAM2Alu4
- * esto es una prueba 
+ * 
  */
 public class JDialogCrearEmpleado extends javax.swing.JDialog {
 

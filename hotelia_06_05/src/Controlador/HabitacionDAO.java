@@ -177,7 +177,6 @@ public class HabitacionDAO {
 
     /**
      * Método que actualiza los datos de las habitaciones por id.
-     * ✅ Ya estaba correcto (sin FROM en UPDATE).
      */
     public void actualizarHabitacionPorId(int idHabitacion, int numero, String tipo,
                                           int capacidad, double precio_base,
