@@ -47,6 +47,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private List<Object[]> datosHabitaciones;
     private List<Object[]> datosFiltrados;
     private TimelinePanel timeline;
+    private int filaSeleccionada = -1;
 
     public JDialogCalendarioHab(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -65,6 +66,9 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         JScrollPane scrollTimeline = new JScrollPane(timeline);
         scrollTimeline.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollTimeline.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        scrollTimeline.setPreferredSize(new Dimension(1250, 500));
+        scrollTimeline.setMinimumSize(new Dimension(400, 300));
         
         // Limpiar panelCalendario y anadir timeline
         panelCalendario.removeAll();
@@ -262,6 +266,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 @Override
                 public void mouseMoved(MouseEvent e) {
                     calcularHover(e.getPoint());
+                    filaSeleccionada = filaHover;
                     repaint();
                 }
             });
@@ -295,7 +300,8 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 public void mouseExited(MouseEvent e) {
                     filaHover = -1;
                     diaHover = -1;
-                    lblInfoHabitacion.setText("Haz doble click en una habitacion para editar");
+                    filaSeleccionada = -1;
+                    lblInfoHabitacion.setText("Haz doble click en una habitación para editar");
                     repaint();
                 }
             });
@@ -327,7 +333,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
             int anchoTotal = HABITACION_ANCHO + (diasVisibles * DIA_ANCHO) + 20;
             int altoTotal = CABECERA_ALTURA + (datosFiltrados.size() * FILA_ALTURA) + 30;
             setPreferredSize(new Dimension(anchoTotal, Math.max(altoTotal, 300)));
-            revalidate();
+            //revalidate();
 
             // Coloritos majos
             g2d.setColor(COLOR_FONDO);
@@ -509,30 +515,49 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
 
         jPanelMain = new javax.swing.JPanel();
         jPanelFiltros = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtBuscar = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         lblFiltroTipo = new javax.swing.JLabel();
         cmbFiltroTipo = new javax.swing.JComboBox<>();
         lblFiltroEstado = new javax.swing.JLabel();
         cmbFiltroEstado = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
         btnFiltrar = new javax.swing.JButton();
         btnLimpiarFiltro = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         panelCalendario = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        lblFechas = new javax.swing.JLabel();
-        lblInfoHabitacion = new javax.swing.JLabel();
         btnAnterior = new javax.swing.JButton();
         btnHoy = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
         btnNueva = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         jLabelLogoP = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        lblFechas = new javax.swing.JLabel();
+        lblInfoHabitacion = new javax.swing.JLabel();
         jLabelSergio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanelMain.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setText("Buscar:");
+        jPanelFiltros.add(jLabel1);
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        jPanelFiltros.add(txtBuscar);
+
+        jLabel2.setText("                ");
+        jPanelFiltros.add(jLabel2);
 
         lblFiltroTipo.setText("Tipo:");
         jPanelFiltros.add(lblFiltroTipo);
@@ -546,6 +571,9 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         cmbFiltroEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanelFiltros.add(cmbFiltroEstado);
 
+        jLabel3.setText("                ");
+        jPanelFiltros.add(jLabel3);
+
         btnFiltrar.setText("Filtrar");
         btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,34 +585,21 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         btnLimpiarFiltro.setText("Limpiar");
         jPanelFiltros.add(btnLimpiarFiltro);
 
-        jLabel1.setText("Buscar:");
-        jPanelFiltros.add(jLabel1);
-
-        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarActionPerformed(evt);
-            }
-        });
-        jPanelFiltros.add(txtBuscar);
+        jLabel5.setText("                ");
+        jPanelFiltros.add(jLabel5);
 
         javax.swing.GroupLayout panelCalendarioLayout = new javax.swing.GroupLayout(panelCalendario);
         panelCalendario.setLayout(panelCalendarioLayout);
         panelCalendarioLayout.setHorizontalGroup(
             panelCalendarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 724, Short.MAX_VALUE)
+            .addGap(0, 660, Short.MAX_VALUE)
         );
         panelCalendarioLayout.setVerticalGroup(
             panelCalendarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 423, Short.MAX_VALUE)
+            .addGap(0, 377, Short.MAX_VALUE)
         );
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        lblFechas.setText("Fechas");
-        jPanel3.add(lblFechas);
-
-        lblInfoHabitacion.setText("Info.");
-        jPanel3.add(lblInfoHabitacion);
 
         btnAnterior.setText("<");
         jPanel3.add(btnAnterior);
@@ -595,16 +610,33 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         btnSiguiente.setText(">");
         jPanel3.add(btnSiguiente);
 
+        jLabel4.setText("                ");
+        jPanel3.add(jLabel4);
+
         btnNueva.setText("Nueva");
         jPanel3.add(btnNueva);
 
         btnEditar.setText("Editar");
         jPanel3.add(btnEditar);
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnEliminar);
+
         btnVolver.setText("Volver");
         jPanel3.add(btnVolver);
 
         jLabelLogoP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoHoteliaMuyChiquito.png"))); // NOI18N
+
+        lblFechas.setText("Fechas");
+        jPanel1.add(lblFechas);
+
+        lblInfoHabitacion.setText("Info.");
+        jPanel1.add(lblInfoHabitacion);
 
         jLabelSergio.setText("Sergio Vasilev");
 
@@ -613,23 +645,32 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 1188, Short.MAX_VALUE)
+                        .addComponent(jLabelSergio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabelLogoP)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(491, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(203, 203, 203)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelSergio, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 1170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(598, 598, 598)
+                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -637,17 +678,17 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
                 .addComponent(jPanelMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelLogoP)
-                    .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelCalendario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabelSergio)
-                .addContainerGap())
+                    .addComponent(jPanelFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelLogoP))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelCalendario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelSergio, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
         );
 
         pack();
@@ -656,6 +697,73 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
+
+    
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if (filaSeleccionada >= 0 && filaSeleccionada < datosFiltrados.size()) {
+            Object[] hab = datosFiltrados.get(filaSeleccionada);
+            int idHab = (Integer) hab[0];
+            int numero = (Integer) hab[1];
+            String tipo = (String) hab[2];
+
+            eliminarHabitacion(idHab, numero, tipo);
+            return;
+        }
+        String input = JOptionPane.showInputDialog(this, "Número de habitación a eliminar:");
+        if (input == null || input.trim().isEmpty()) {
+            return;
+        }
+
+        try {
+            int numHab = Integer.parseInt(input.trim());
+
+            // busca la habitacion con ese numero
+            int idEncontrado = -1;
+            String tipoEncontrado = "";
+            for (Object[] h : datosHabitaciones) {
+                int num = (Integer) h[1];
+                if (num == numHab) {
+                    idEncontrado = (Integer) h[0];
+                    tipoEncontrado = (String) h[2];
+                    break;
+                }
+            }
+
+            if (idEncontrado == -1) {
+                JOptionPane.showMessageDialog(this, "Habitación no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            eliminarHabitacion(idEncontrado, numHab, tipoEncontrado);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número no valido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // metodo que elimina
+    private void eliminarHabitacion(int id, int numero, String tipo) {
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Eliminar habitación " + numero + " (" + tipo + ")?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean eliminado = habitacionDAO.eliminarHabitacion(id);
+
+        if (eliminado) {
+            JOptionPane.showMessageDialog(this, "Habitación eliminada correctamente", "Exito", JOptionPane.INFORMATION_MESSAGE);
+            cargarDatos();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo eliminar. Tiene reservas activas.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     public static void main(String args[]) {
     // Nimbus fallback primero
@@ -698,6 +806,7 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFiltrar;
     private javax.swing.JButton btnHoy;
     private javax.swing.JButton btnLimpiarFiltro;
@@ -707,8 +816,13 @@ public class JDialogCalendarioHab extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cmbFiltroEstado;
     private javax.swing.JComboBox<String> cmbFiltroTipo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelSergio;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelFiltros;
     private javax.swing.JPanel jPanelMain;

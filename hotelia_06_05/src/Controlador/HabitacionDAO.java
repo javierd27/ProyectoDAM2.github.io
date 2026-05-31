@@ -26,7 +26,7 @@ public class HabitacionDAO {
         this.conexion = ConexionBBDD.getConnection();
     }
 
-    
+    //s metodo que trae todos los ids segun el tipo que le des (ya no se usa)
     public int buscarHabitacion(String tipo) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -46,7 +46,7 @@ public class HabitacionDAO {
         return id;
     }
 
-    //metodo que recoge una lista del id de las habitaciones
+    //s metodo que recoge una lista del id de las habitaciones
     public List<String> buscarIdHabitaciones() {
         List<String> lista = new ArrayList<>();
         if (conexion == null) {
@@ -70,7 +70,7 @@ public class HabitacionDAO {
         return lista;
     }
 
-    //metodo que recoge las fechas de inicio y fin de reserva y el estado de reserva por habitacion
+    //s metodo que recoge las fechas de inicio y fin de reserva y el estado de reserva por habitacion
     public List<Object[]> buscarFechayEstadoPorHabitacion(int idHab) {
         List<Object[]> lista = new ArrayList<>();
         if (conexion == null) {
@@ -103,7 +103,7 @@ public class HabitacionDAO {
         return lista;
     }
 
-    //metodo que busca el estado de la habitacion
+    //s metodo que busca el estado de la habitacion
     public String buscarEstadoHabitacion(int idHabitacion) {
         if (conexion == null) {
             System.out.println("Conexión no disponible");
@@ -128,7 +128,7 @@ public class HabitacionDAO {
         return null;
     }
 
-    //metodo que actualiza estado de la habitacion
+    //s metodo que actualiza estado de la habitacion
     public void ActualizarEstadoHabitacion(int idHabitacion, String estado) {
         if (conexion == null) {
             System.out.println("Conexión no disponible");
@@ -147,7 +147,7 @@ public class HabitacionDAO {
         }
     }
 
-    //metodo que busca los datos de las habitaciones por id
+    //s metodo que busca los datos de las habitaciones por id
     public Habitacion buscarHabitacionPorId(int idHabitacion) {
         if (conexion == null) {
             System.out.println("Conexión no disponible");
@@ -176,16 +176,13 @@ public class HabitacionDAO {
     }
 
     /**
-     * Método que actualiza los datos de las habitaciones por id.
+     * s Método que actualiza los datos de las habitaciones por id.
      */
-    public void actualizarHabitacionPorId(int idHabitacion, int numero, String tipo,
-                                          int capacidad, double precio_base,
-                                          double precio_publico, String estado) {
-        if (conexion == null) {
-            System.out.println("Conexión no disponible");
-            return;
+    public boolean actualizarHabitacionPorId(int idHabitacion, int numero, String tipo, int capacidad, double precio_base, double precio_publico, String estado) {
+        if (numeroDuplicado(numero, idHabitacion)) {
+            return false;
         }
-        
+
         try {
             PreparedStatement ps = conexion.prepareStatement(
                 "UPDATE habitacion SET numero = ?, tipo = ?, capacidad = ?, "
@@ -200,11 +197,12 @@ public class HabitacionDAO {
             ps.setInt(7, idHabitacion);
             ps.executeUpdate();
             ps.close();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(HabitacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
-
     public int getTotalHabitaciones(LocalDate fechaLimite) throws SQLException {
         if (conexion == null) throw new SQLException("Conexión no disponible");
         
@@ -262,12 +260,10 @@ public class HabitacionDAO {
         return idHabitacion;
     }
 
-    //metodo que inserta una nueva habitacion
-    public void insertarHabitacion(int numero, String tipo, int capacidad,
-                                    double precio_base, double precio_publico, String estado) {
-        if (conexion == null) {
-            System.out.println("Conexión no disponible");
-            return;
+    //s metodo que inserta una nueva habitacion
+    public boolean insertarHabitacion(int numero, String tipo, int capacidad, double precio_base, double precio_publico, String estado) {
+        if (numeroDuplicado(numero, null)) {
+            return false;
         }
         
         try {
@@ -283,8 +279,76 @@ public class HabitacionDAO {
             ps.setString(6, estado);
             ps.executeUpdate();
             ps.close();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(HabitacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
+    
+    //s Metodo para comprobar si el numero ya existe
+    private boolean numeroDuplicado(int numero, Integer excluirId) {
+        try {
+            String sql = "";
+            if (excluirId == null) {
+                sql = "SELECT 1 FROM habitacion WHERE numero = ?";
+            } else {
+                sql = "SELECT 1 FROM habitacion WHERE numero = ? AND idHabitacion != ?";
+            }
+
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, numero);
+            if (excluirId != null) {
+                ps.setInt(2, excluirId);
+            }
+            ResultSet rs = ps.executeQuery();
+            boolean existe = rs.next();
+
+            rs.close();
+            ps.close();
+            return existe;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HabitacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+    //s Metodo que elinina habitaciones
+    public boolean eliminarHabitacion(int idHabitacion) {
+        try {
+            PreparedStatement check = conexion.prepareStatement(
+                "SELECT 1 FROM reserva WHERE idHabitacion = ? AND estado != 'Cancelado' LIMIT 1"
+            );
+            check.setInt(1, idHabitacion);
+            ResultSet rs = check.executeQuery();
+
+            if (rs.next()) {
+                // Si tiene reservas activas no se puede borrar
+                rs.close();
+                check.close();
+                return false;
+            }
+            rs.close();
+            check.close();
+
+            PreparedStatement ps = conexion.prepareStatement(
+                "DELETE FROM habitacion WHERE idHabitacion = ?"
+            );
+            ps.setInt(1, idHabitacion);
+            int filas = ps.executeUpdate();
+            ps.close();
+
+            if (filas > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HabitacionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
 }

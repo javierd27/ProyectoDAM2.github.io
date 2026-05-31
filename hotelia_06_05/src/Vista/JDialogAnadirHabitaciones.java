@@ -52,7 +52,7 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
 
         String numStr = etNumHab.getText().trim();
         if (numStr.isEmpty()) {
-            errores.add("El numero de la habitacion no puede ser nulo");
+            errores.add("El número de la habitación no puede estar vacío");
         } else {
             try {
                 int num = Integer.parseInt(numStr);
@@ -85,15 +85,22 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
                 ? precioBase * (1 + MARGEN) * (1 + IVA)
                 : precioBase;
 
-            habitacionDAO.insertarHabitacion(numero, tipo, capacidad, precioBase, precioPublico, estado);
+            boolean insertado = habitacionDAO.insertarHabitacion(numero, tipo, capacidad, precioBase, precioPublico, estado);
 
-            JOptionPane.showMessageDialog(rootPane, 
-                "Habitacion añadida correctamente\n" +
-                "Precio publico calculado: " + String.format("%.2f", precioPublico) + " €");
-            dispose();
+            if (insertado) {
+                JOptionPane.showMessageDialog(rootPane, 
+                    "Habitacion añadida correctamente\n" +
+                    "Precio publico calculado: " + String.format("%.2f", precioPublico) + " €");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, 
+                    "Ese número de habitación ya existe",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
 
         } catch (Exception e) {
-            logger.log(java.util.logging.Level.SEVERE, "Error guardando habitacion", e);
+            logger.log(java.util.logging.Level.SEVERE, "Error guardando habitación", e);
             JOptionPane.showMessageDialog(rootPane, 
                 "Error al guardar: " + e.getMessage(),
                 "Error",
@@ -152,11 +159,17 @@ public class JDialogAnadirHabitaciones extends javax.swing.JDialog {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Capacidad");
         jPanel2.add(jLabel3);
+
+        sCapacidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
         jPanel2.add(sCapacidad);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
+
+        sPrecioB.setModel(new javax.swing.SpinnerNumberModel(150.0f, 0.0f, null, 1.0f));
+        sPrecioB.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        sPrecioB.setEditor(new javax.swing.JSpinner.NumberEditor(sPrecioB, "0.00"));
         jPanel2.add(sPrecioB);
         jPanel2.add(jLabel7);
 

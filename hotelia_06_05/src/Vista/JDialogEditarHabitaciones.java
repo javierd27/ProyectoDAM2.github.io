@@ -48,12 +48,12 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         habitacionActual = habitacionDAO.buscarHabitacionPorId(idHabitacion);
         if (habitacionActual == null) {
             JOptionPane.showMessageDialog(this,
-                "Habitacion no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
+                "Habitación no encontrada", "Error", JOptionPane.ERROR_MESSAGE);
             dispose();
             return;
         }
 
-        jLabelNombre.setText("Habitacion " + habitacionActual.getNumero());
+        jLabelNombre.setText("Habitación " + habitacionActual.getNumero());
         jetNumHab.setText(String.valueOf(habitacionActual.getNumero()));
         jcbTipo.setSelectedItem(habitacionActual.getTipo());
         jsCapacidad.setValue(habitacionActual.getCapacidad());
@@ -78,11 +78,11 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
 
         if (tieneReservasActivas) {
             jcbEstado.addItem("Ocupado");
-            jcbEstado.addItem("Reparacion");
-            if (!"Reparacion".equalsIgnoreCase(estadoActual)) {
+            jcbEstado.addItem("Reparación");
+            if (!"Reparación".equalsIgnoreCase(estadoActual)) {
                 jcbEstado.setSelectedItem("Ocupado");
             } else {
-                jcbEstado.setSelectedItem("Reparacion");
+                jcbEstado.setSelectedItem("Reparación");
             }
         } else {
             jcbEstado.addItem("Libre");
@@ -103,13 +103,13 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
 
         String numStr = jetNumHab.getText().trim();
         if (numStr.isEmpty()) {
-            errores.add("El numero de la habitacion no puede ser nulo");
+            errores.add("El número de la habitación no puede estar vacío");
         } else {
             try {
                 int num = Integer.parseInt(numStr);
-                if (num <= 0) errores.add("El numero debe ser mayor que 0");
+                if (num <= 0) errores.add("El número debe ser mayor que 0");
             } catch (NumberFormatException e) {
-                errores.add("El numero debe ser un valor numerico");
+                errores.add("El número debe ser un valor numerico");
             }
         }
 
@@ -138,12 +138,17 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
                 ? precioBase * (1 + MARGEN) * (1 + IVA)
                 : precioBase;
 
-            // ===== USAR HABITACIONDAO (DTO) con precio_publico =====
-            habitacionDAO.actualizarHabitacionPorId(idHabitacion, numero, tipo, 
-                capacidad, precioBase, precioPublico, estado);
+            boolean actualizado = habitacionDAO.actualizarHabitacionPorId(idHabitacion, numero, tipo, capacidad, precioBase, precioPublico, estado);
 
-            JOptionPane.showMessageDialog(rootPane, "Habitacion actualizada correctamente");
-            dispose();
+            if (actualizado) {
+                JOptionPane.showMessageDialog(rootPane, "Habitación actualizada correctamente");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, 
+                    "Ese número de habitación ya esta en uso por otra habitación",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            }
 
         } catch (Exception e) {
             logger.log(java.util.logging.Level.SEVERE, "Error actualizando", e);
@@ -152,9 +157,6 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         }
     }                                              
 
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                                
-        dispose();
-    }                                               
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,7 +223,8 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jLabel4.setText("Precio base");
         jPanel2.add(jLabel4);
 
-        jsPrecioB.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 10.0d));
+        jsPrecioB.setModel(new javax.swing.SpinnerNumberModel(150.0d, 0.0d, null, 10.0d));
+        jsPrecioB.setEditor(new javax.swing.JSpinner.NumberEditor(jsPrecioB, "0.00"));
         jPanel2.add(jsPrecioB);
         jPanel2.add(jLabel7);
 
@@ -240,6 +243,11 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButtonCancelar);
 
         jButtonAceptar.setText("Aceptar");
@@ -295,6 +303,10 @@ public class JDialogEditarHabitaciones extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     public static void main(String args[]) {
     try {
