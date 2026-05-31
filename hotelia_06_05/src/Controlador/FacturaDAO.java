@@ -80,7 +80,7 @@ public class FacturaDAO {
         String sql = "INSERT INTO factura(idCliente, fecha_emision, sub_total, iva, descuento, metodo_pago, estado, total, observacion)" +
                 " VALUES (?, NOW(), 0, 21, 0, 'Efectivo', 'Pendiente', 0, '')";
 
-        // ✅ CORREGIDO: Statement.RETURN_GENERATED_KEYS para obtener el ID generado
+        
         PreparedStatement ps = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
         ps.setString(1, dni);
@@ -176,7 +176,7 @@ public class FacturaDAO {
 
     public int eliminarFactura(DefaultTableModel dtm, int id) {
         if (conexion == null) {
-            System.out.println("❌ Conexión no disponible");
+            System.out.println("Conexión no disponible");
             return 0;
         }
         

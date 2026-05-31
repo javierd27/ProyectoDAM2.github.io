@@ -5,7 +5,7 @@
 package Controlador;
 
 /**
- * @author DAM2Alu4
+ * @author DAM2Alu4 , DAM2Alu3, DAM2Alu16
  */
 
 import java.sql.*;
@@ -167,9 +167,7 @@ public class ConexionBBDD {
         }
     }
     
-    // ============================================================
     // MÉTODO PARA CARGAR DATOS DE PRUEBA DESDE XML/JSON
-    // ============================================================
     
     /**
      * Abre un JFileChooser para seleccionar un archivo XML o JSON
@@ -188,7 +186,6 @@ public class ConexionBBDD {
      *   <habitaciones>...</habitaciones>
      *   <servicios>...</servicios>
      * </datos>
-     * 
      * @return true si la carga fue exitosa
      */
     public boolean cargarDatosDePrueba() {
@@ -245,7 +242,7 @@ public class ConexionBBDD {
         
         int totalInsertados = 0;
         
-        // ---- CARGAR CLIENTES ----
+        //CARGAR CLIENTES
         NodeList clientes = doc.getElementsByTagName("cliente");
         for (int i = 0; i < clientes.getLength(); i++) {
             Node nodo = clientes.item(i);
@@ -275,7 +272,7 @@ public class ConexionBBDD {
             }
         }
         
-        // ---- CARGAR EMPLEADOS ----
+        // CARGAR EMPLEADOS 
         NodeList empleados = doc.getElementsByTagName("empleado");
         for (int i = 0; i < empleados.getLength(); i++) {
             Node nodo = empleados.item(i);
@@ -291,7 +288,7 @@ public class ConexionBBDD {
                     ps.setString(4, getTagValue(e, "apellido2"));
                     ps.setDate(5, java.sql.Date.valueOf(getTagValue(e, "fecha_nac")));
                     ps.setString(6, getTagValue(e, "usuario"));
-                    // Hashear la contraseña con BCrypt al cargar
+                    
                     String passOriginal = getTagValue(e, "contrasenya");
                     String passHash = Seguridad.hashPassword(passOriginal);
                     ps.setString(7, passHash);
@@ -311,7 +308,7 @@ public class ConexionBBDD {
             }
         }
         
-        // ---- CARGAR HABITACIONES ----
+        //CARGAR HABITACIONES 
         NodeList habitaciones = doc.getElementsByTagName("habitacion");
         for (int i = 0; i < habitaciones.getLength(); i++) {
             Node nodo = habitaciones.item(i);
@@ -335,7 +332,7 @@ public class ConexionBBDD {
             }
         }
         
-        // ---- CARGAR SERVICIOS ----
+        //CARGAR SERVICIOS 
         NodeList servicios = doc.getElementsByTagName("servicio");
         for (int i = 0; i < servicios.getLength(); i++) {
             Node nodo = servicios.item(i);

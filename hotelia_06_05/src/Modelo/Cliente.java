@@ -32,7 +32,6 @@ public class Cliente {
     }
 
     
-        
         public String getDni_nie() {
             return dni_nie;
         }

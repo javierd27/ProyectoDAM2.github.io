@@ -7,9 +7,9 @@ import javax.help.*;
 import java.net.URL;
 import javax.swing.JComponent;
 /**
- *
- * @author javier
+ * @author DAM2Alu4
  */
+
 public class HoteliaHelp {
     private HelpSet helpSet;
     private HelpBroker helpBroker;
@@ -85,10 +85,11 @@ public class HoteliaHelp {
         }
     }
     
+    // 
     public HelpBroker getHelpBroker() {
         return helpBroker;
     }
-    
+    // saber si esta inicializado o no
     public boolean isInitialized() {
         return initialized;
     }
