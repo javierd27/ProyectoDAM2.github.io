@@ -224,8 +224,13 @@ public class JDialogGestionEmpleado extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCalendarioActionPerformed
 
     private void ReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservaActionPerformed
-      // JDialogReserva jdr = new JDialogReserva((java.awt.Frame) this.getParent(), true);
-      //jdr.setVisible(true);
+      JDialogReservaTable jdr;
+         try {
+             jdr = new JDialogReservaTable((java.awt.Frame) this.getParent(), true);
+             jdr.setVisible(true);
+         } catch (SQLException ex) {
+             System.getLogger(JDialogGestionAdmin.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+         }
     }//GEN-LAST:event_ReservaActionPerformed
 
     private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed

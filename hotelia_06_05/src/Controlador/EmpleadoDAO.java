@@ -71,17 +71,23 @@ public class EmpleadoDAO {
                 "SELECT dni_nie, nombre, apellido1, apellido2, fecha_nac, usuario, rol, correo, telefono, nacionalidad, pais, calle_numero, poblacion, piso FROM empleado"
             );
             ResultSet rs = ps.executeQuery();
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
             while (rs.next()) {
+                String tel = rs.getString(9);
+                if (tel != null) {
+                    tel = tel.replaceAll("\\s+", "");
+                    tel = tel.replaceAll("(\\d{3})(?=\\d)", "$1 ");
+                }
                 Object[] fila = new Object[]{
                     rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),
-                    rs.getString(5),
+                    rs.getDate(5) != null ? sdf.format(rs.getDate(5)) : "",
                     rs.getString(6),
                     rs.getString(7),
                     rs.getString(8),
-                    rs.getString(9),
+                    tel,
                     rs.getString(10),
                     rs.getString(11),
                     rs.getString(12),
