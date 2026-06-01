@@ -255,7 +255,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     private void jButtonEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEmpleadosActionPerformed
          try {
-             // TODO add your handling code here:
+             
              
              JDialogEmpleado jde = new JDialogEmpleado(null, true);
              jde.setVisible(true);
@@ -275,7 +275,7 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonClientesActionPerformed
 
     private void jButtonCalendarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalendarioActionPerformed
-        // TODO add your handling code here:
+        
         JDialogCalendarioHab jdch = new JDialogCalendarioHab((java.awt.Frame) this.getParent(), true);
         jdch.setVisible(true);
     }//GEN-LAST:event_jButtonCalendarioActionPerformed
@@ -291,7 +291,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonServiciosActionPerformed
 
     private void jButtonEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadisticasActionPerformed
-        // TODO add your handling code here:
         JDialogEstadisticas jde = new JDialogEstadisticas((java.awt.Frame) this.getParent(), true);
         
         jde.setVisible(true);
@@ -318,7 +317,6 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
 
     private void facturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_facturaActionPerformed
          try {
-             // TODO add your handling code here:
              JDialogFacturaTable jdf = new JDialogFacturaTable((java.awt.Frame) this.getParent(), true);
              jdf.setVisible(true);
          } catch (SQLException ex) {
@@ -328,16 +326,15 @@ public class JDialogGestionAdmin extends javax.swing.JDialog {
     }//GEN-LAST:event_facturaActionPerformed
 
     private void jButtonImportacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImportacionActionPerformed
-        // TODO add your handling code here:
         
         ConexionBBDD conexion = new ConexionBBDD();
 
         boolean cargado = conexion.cargarDatosDePrueba();
 
         if(cargado){
-            System.out.println("Datos cargados correctamente");
+            jLabelBienvenido.setText("Importación correcta");
         }else{
-            System.out.println("No se cargaron datos");
+            jLabelBienvenido.setText("No se cargaron datos");
         }
     }//GEN-LAST:event_jButtonImportacionActionPerformed
 

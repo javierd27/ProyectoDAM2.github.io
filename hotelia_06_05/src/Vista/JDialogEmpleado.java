@@ -65,6 +65,16 @@ public class JDialogEmpleado extends javax.swing.JDialog {
         jTableEmpleados.setRowSorter(order);
         configuraColumna(0, 5);
         configuraColumna(4, 30);
+        // Alineación a la derecha para DNI (col 0) y fecha (col 4)
+        javax.swing.table.DefaultTableCellRenderer derecha = new javax.swing.table.DefaultTableCellRenderer();
+        derecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jTableEmpleados.getColumnModel().getColumn(0).setCellRenderer(derecha);
+        jTableEmpleados.getColumnModel().getColumn(4).setCellRenderer(derecha);
+
+        // Renderer teléfono alineado a la derecha (col 8)
+        javax.swing.table.DefaultTableCellRenderer telRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        telRenderer.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jTableEmpleados.getColumnModel().getColumn(8).setCellRenderer(telRenderer);
     }
 
     /**

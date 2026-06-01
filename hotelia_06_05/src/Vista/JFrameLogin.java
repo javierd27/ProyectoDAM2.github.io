@@ -104,20 +104,21 @@ public class JFrameLogin extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(72, 72, 72)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelContraseña)
-                            .addComponent(jLabelUsuario)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextFieldUsuario)
-                            .addComponent(jTextFieldContraseña)
-                            .addComponent(jButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jTextFieldContraseña)
+                        .addComponent(jButtonAceptar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldUsuario)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabelUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabelContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelLogoG, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabelJavi, javax.swing.GroupLayout.Alignment.TRAILING))
@@ -144,13 +145,13 @@ public class JFrameLogin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
-                        .addComponent(jButtonAceptar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonAceptar)
+                            .addComponent(jLabelError, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addComponent(jLabelLogoG)
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelJavi)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -159,13 +160,15 @@ public class JFrameLogin extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 110, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,60 +176,93 @@ public class JFrameLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-         ConexionBBDD c = new ConexionBBDD();
-        
+        System.out.println("Entra en acction");  
+
+        ConexionBBDD c;
+        try {
+            c = new ConexionBBDD();
+            System.out.println("despues de conexion");
+        } catch (Exception ex) {
+            System.err.println("ERROR al crear ConexionBBDD: " + ex.getMessage());
+            ex.printStackTrace();
+            jLabelError.setText(" Error de conexión: " + ex.getMessage());
+            return;
+        }
+
+        System.out.println("antes de isConexionValida");
         if (!ConexionBBDD.isConexionValida()) {
             jLabelError.setText(" No se pudo conectar a la base de datos");
             return;
         }
-        
+        System.out.println("despues de isConexionValida");
+  
         EmpleadoDAO e = new EmpleadoDAO();
+        
         String usuario = jTextFieldUsuario.getText();
         String pass = jTextFieldContraseña.getText();
-        
+
+        System.out.println("Antes de is empty");
         // Validar campos vacíos
         if (usuario.isEmpty() || pass.isEmpty()) {
             jLabelError.setText(" El usuario o la contraseña están vacíos");
             return;
         }
-        
+        System.out.println("Despues de is empty");
+
+
         // Obtener contraseña de la BBDD
         String passBD = e.BuscarContraseñaEmpleado(usuario);
-        
+        System.out.println("Antes de pass is empty");
         if (passBD == null || passBD.isEmpty()) {
             jLabelError.setText(" Usuario o contraseña incorrectos");
             jTextFieldContraseña.setText("");
             jTextFieldUsuario.setText("");
             return;
         }
-        
-        // Comprobar contraseña usando BCrypt
-        if (checkPassword(pass, passBD)) {
-            jLabelError.setText(" Login correcto");
-            
-            // Obtener rol y abrir ventana correspondiente
-            String rol = c.comprobarRol(usuario);
-            
-            if (rol != null && rol.equals("administrador")) {
-                JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
-                jdg.setUsuario(usuario);
-                this.dispose();
-                jdg.setVisible(true);
-            } else if (rol != null && rol.equals("empleado")) {
-                JDialogGestionEmpleado jdge = new JDialogGestionEmpleado(this, true);
-                jdge.setUsuario(usuario);
-                this.dispose();
-                jdge.setVisible(true);
+        System.out.println("Despues de pass is emty");
+        System.out.println("pass: [" + pass + "]");
+        System.out.println("passBD: [" + passBD + "]");
+        System.out.println("longitud pass: " + pass.length());
+        System.out.println("longitud passBD: " + passBD.length());
+        try {
+            // Comprobar contraseña usando BCrypt
+            if (checkPassword(pass, passBD)) {
+                System.out.println("Dentro de checkPassword");
+                jLabelError.setText(" Login correcto");
+                System.out.println("Correcto");
+                // Obtener rol y abrir ventana correspondiente
+                String rol = c.comprobarRol(usuario);
+
+                if (rol != null && rol.equals("administrador")) {
+                    JDialogGestionAdmin jdg = new JDialogGestionAdmin(this, true);
+                    jdg.setUsuario(usuario);
+                    this.dispose();
+                    jdg.setVisible(true);
+                    System.out.println("admin");
+
+                } else if (rol != null && rol.equals("recepcionista")) {
+                    JDialogGestionEmpleado jdge = new JDialogGestionEmpleado(this, true);
+                    jdge.setUsuario(usuario);
+                    this.dispose();
+                    jdge.setVisible(true);
+                    System.out.println("empleado");
+
+                } else {
+                    jLabelError.setText(" Rol no logueable: " + rol);
+                }
+
             } else {
-                jLabelError.setText(" Rol no reconocido: " + rol);
+
+                jLabelError.setText("Usuario o contraseña incorrectos");
+                jTextFieldContraseña.setText("");
+                jTextFieldUsuario.setText("");
             }
-            
-        } else {
-            jLabelError.setText("Usuario o contraseña incorrectos");
-            jTextFieldContraseña.setText("");
-            jTextFieldUsuario.setText("");
+        } catch (Throwable t) {
+            System.err.println("EXCEPCION en checkPassword: " + t.getClass().getName() + " - " + t.getMessage());
+            t.printStackTrace();
+            jLabelError.setText(" Error interno: " + t.getMessage());
         }
-        
+
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
     /**
