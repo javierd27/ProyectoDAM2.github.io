@@ -253,7 +253,18 @@
             <Property name="text" type="java.lang.String" value="   Pa&#xed;s*"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldPoblacion">
+        <Component class="javax.swing.JComboBox" name="jComboBoxPais">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxPaisActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelCalle_numero">
           <Properties>
@@ -267,7 +278,7 @@
             <Property name="text" type="java.lang.String" value="   Poblaci&#xf3;n*"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldPais">
+        <Component class="javax.swing.JTextField" name="jTextFieldPoblacion">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPiso">
           <Properties>

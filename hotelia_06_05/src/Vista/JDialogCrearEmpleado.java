@@ -21,10 +21,20 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(JDialogCrearEmpleado.class.getName());
 
     EmpleadoDAO c = new EmpleadoDAO();
-
+    // carga Paises
+    private void cargarPaises() {
+        String[] paises = {"España","Francia","Italia","Alemania","Portugal","Reino Unido",
+            "Estados Unidos","Canadá","México","Argentina","Brasil","Colombia","Perú","Chile",
+            "Venezuela","China","Japón","Corea del Sur","India","Marruecos","Argelia","Egipto",
+            "Rusia","Ucrania","Polonia","Rumanía","Países Bajos","Suecia","Noruega","Australia","Otro"};
+        jComboBoxPais.removeAllItems();
+        for (String p : paises) jComboBoxPais.addItem(p);
+        jComboBoxPais.setSelectedItem("España");
+    }
     public JDialogCrearEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        cargarPaises();
         setTitle("Crear empleados");
     }
 
@@ -64,11 +74,11 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
         jLabelNacionalidad = new javax.swing.JLabel();
         jComboBoxNacionalidad = new javax.swing.JComboBox<>();
         jLabelPais = new javax.swing.JLabel();
-        jTextFieldPoblacion = new javax.swing.JTextField();
+        jComboBoxPais = new javax.swing.JComboBox<>();
         jLabelCalle_numero = new javax.swing.JLabel();
         jTextFieldCalle_Numero = new javax.swing.JTextField();
         jLabelPoblacion = new javax.swing.JLabel();
-        jTextFieldPais = new javax.swing.JTextField();
+        jTextFieldPoblacion = new javax.swing.JTextField();
         jLabelPiso = new javax.swing.JLabel();
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonAlta = new javax.swing.JButton();
@@ -147,7 +157,13 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
         jLabelPais.setText("   País*");
         jPanel1.add(jLabelPais);
-        jPanel1.add(jTextFieldPoblacion);
+
+        jComboBoxPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPaisActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxPais);
 
         jLabelCalle_numero.setText("   Numero de calle*");
         jPanel1.add(jLabelCalle_numero);
@@ -155,7 +171,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
 
         jLabelPoblacion.setText("   Población*");
         jPanel1.add(jLabelPoblacion);
-        jPanel1.add(jTextFieldPais);
+        jPanel1.add(jTextFieldPoblacion);
 
         jLabelPiso.setText("   Piso");
         jPanel1.add(jLabelPiso);
@@ -238,57 +254,61 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
      */
     private void jButtonAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaActionPerformed
 
-        // parsear para que no de error el Date
         Date fecha = (Date) jSpinnerFechaAlt.getValue();
-        // casteo a String el item de la combo box, asi me aseguro que no pongan mal el rol
         String rol = (String) jComboBoxROL.getSelectedItem();
-        // haseo la contraseña del usuario y se la paso al empleado
+        if (jTextDNI_NIE.getText().trim().isEmpty() || c.consultaIdEmpleado(jTextDNI_NIE.getText().trim())) {
+            jLabelPosibleError.setText("El DNI/NIE ya existe o está vacío");
+            return;
+        }
+        if (jTextFieldNombre.getText().trim().isEmpty()
+                || jTextFieldApellido1.getText().trim().isEmpty()
+                || jTextFieldUsuario.getText().trim().isEmpty()
+                || jTContraseña1.getText().trim().isEmpty()
+                || jTContraseña2.getText().trim().isEmpty()
+                || jTextFieldCorreo.getText().trim().isEmpty()
+                || jTextFieldTelefono.getText().trim().isEmpty()
+                || jTextFieldCalle_Numero.getText().trim().isEmpty()
+                || jTextFieldPoblacion.getText().trim().isEmpty()) {
+            jLabelPosibleError.setText("Rellena todos los datos obligatorios (*)");
+            return;
+        }
+        if (!jTContraseña1.getText().equals(jTContraseña2.getText())) {
+            jLabelPosibleError.setText("Las contraseñas no coinciden");
+            return;
+        }
+        String correo = jTextFieldCorreo.getText().trim();
+        if (!correo.matches("^[^@]+@[^@]+\\.[^@]+$")) {
+            jLabelPosibleError.setText("Correo electrónico no válido");
+            return;
+        }
+        String telefono = jTextFieldTelefono.getText().trim();
+        if (!telefono.matches("^\\+?[0-9]{7,15}$")) {
+            jLabelPosibleError.setText("Teléfono no válido (7-15 dígitos, puede empezar por +)");
+            return;
+        }
         String contraseniaHas = Seguridad.hashPassword(jTContraseña1.getText());
-        // consulto si el dni existe , si es true
-        if (jTextDNI_NIE.getText().isEmpty() || c.consultaIdEmpleado(jTextDNI_NIE.getText())) {
-            jLabelPosibleError.setText("El DNI_NIE ya existe o esta vacío ");
-            return; // si no ponia return me daba error todo elrato por que entraba
-        } else if (jTextFieldNombre.getText().isEmpty() || jTextFieldApellido1.getText().isEmpty() || fecha == null || jTextFieldUsuario.getText().isEmpty()
-                || jTContraseña1.getText().isEmpty() || jTContraseña2.getText().isEmpty() || rol.isEmpty() || jTextFieldCorreo.getText().isEmpty()
-                || jTextFieldTelefono.getText().isEmpty() || jTextFieldPais.getText().isEmpty()
-                || jTextFieldCalle_Numero.getText().isEmpty() || jTextFieldPoblacion.getText().isEmpty()) 
-        {
-            jLabelPosibleError.setText("Rellena todos los datos necesarios");
-            return;
-        } else if (!jTContraseña1.getText().equals(jTContraseña2.getText())) {
-            jLabelPosibleError.setText("La contraseña es distinta, compueba");
-            return;
-        }
-        // Creo el empleado en vacio
         Empleado empleado = new Empleado(
-                jTextDNI_NIE.getText(),
-                jTextFieldNombre.getText(),
-                jTextFieldApellido1.getText(),
-                jTextFieldApellido2.getText(),
+                jTextDNI_NIE.getText().trim(),
+                jTextFieldNombre.getText().trim(),
+                jTextFieldApellido1.getText().trim(),
+                jTextFieldApellido2.getText().trim(),
                 fecha,
-                jTextFieldUsuario.getText(),
-                contraseniaHas,
-                rol,
-                jTextFieldCorreo.getText(),
-                jTextFieldTelefono.getText(),
+                jTextFieldUsuario.getText().trim(),
+                contraseniaHas, rol, correo, telefono,
                 jComboBoxNacionalidad.getSelectedItem().toString(),
-                jTextFieldPais.getText(),
-                jTextFieldCalle_Numero.getText(),
-                jTextFieldPoblacion.getText(),
-                jTextFieldPiso.getText());
+                jComboBoxPais.getSelectedItem().toString(),
+                jTextFieldCalle_Numero.getText().trim(),
+                jTextFieldPoblacion.getText().trim(),
+                jTextFieldPiso.getText().trim());
         boolean prueba = c.insertEmpleado(empleado);
-        if (prueba == false) {
-            jLabelPosibleError.setText("Error al crear el empleado");
-        } else {
-            jLabelPosibleError.setText("Empleado creado");
-        }
-
-
+        jLabelPosibleError.setText(!prueba ? "Error al crear el empleado" : "Empleado creado con éxito");
     }//GEN-LAST:event_jButtonAltaActionPerformed
 
     private void jComboBoxROLItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxROLItemStateChanged
-        // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxROLItemStateChanged
+
+    private void jComboBoxPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPaisActionPerformed
+    }//GEN-LAST:event_jComboBoxPaisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -331,6 +351,7 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlta;
     private javax.swing.JComboBox<String> jComboBoxNacionalidad;
+    private javax.swing.JComboBox<String> jComboBoxPais;
     private javax.swing.JComboBox<String> jComboBoxROL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -363,7 +384,6 @@ public class JDialogCrearEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldCalle_Numero;
     private javax.swing.JTextField jTextFieldCorreo;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPiso;
     private javax.swing.JTextField jTextFieldPoblacion;
     private javax.swing.JTextField jTextFieldTelefono;

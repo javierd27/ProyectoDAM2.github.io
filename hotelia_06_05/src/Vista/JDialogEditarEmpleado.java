@@ -28,6 +28,16 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
             jComboBoxID.addItem(String.valueOf(empleado.getDni_nie()));
         }
     }
+    private void cargarPaises() {
+        String[] paises = {"España","Francia","Italia","Alemania","Portugal","Reino Unido",
+            "Estados Unidos","Canadá","México","Argentina","Brasil","Colombia","Perú","Chile",
+            "Venezuela","China","Japón","Corea del Sur","India","Marruecos","Argelia","Egipto",
+            "Rusia","Ucrania","Polonia","Rumanía","Países Bajos","Suecia","Noruega","Australia","Otro"};
+        jComboBoxPais.removeAllItems();
+        for (String p : paises) jComboBoxPais.addItem(p);
+        jComboBoxPais.setSelectedItem("España");
+    }
+    
 
     private void cargarDatosEmpleado(Empleado empleado) {
         if (empleado == null) {
@@ -42,8 +52,18 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jTextFieldCorreo.setText(empleado.getCorreo());
         jTextFieldTelefono.setText(empleado.getTelefono());
         jComboBoxNacionalidad.setSelectedItem(empleado.getNacionalidad());
-        jTextFieldPais.setText(empleado.getPais());
+        String paisEmpleado = empleado.getPais();
+        boolean encontrado = false;
+        for (int i = 0; i < jComboBoxPais.getItemCount(); i++) {
+            if (jComboBoxPais.getItemAt(i).equals(paisEmpleado)) {
+                jComboBoxPais.setSelectedItem(paisEmpleado);
+                encontrado = true;
+                break;
+            }
+        }
+        if (!encontrado) jComboBoxPais.setSelectedItem("Otro");
         jTextFieldPoblacion.setText(empleado.getPoblacion());
+        
         jTextFieldCalle_Numero.setText(empleado.getCalle_numero());
         jTextFieldPiso.setText(empleado.getPiso());
     }
@@ -51,8 +71,9 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     public JDialogEditarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        cargarPaises();
         setTitle("Editar empleados");
-
+        
         cargaID();
 
         if (idEmpleado != null) {
@@ -107,11 +128,11 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jLabelNacionalidad = new javax.swing.JLabel();
         jComboBoxNacionalidad = new javax.swing.JComboBox<>();
         jLabelPais = new javax.swing.JLabel();
-        jTextFieldPoblacion = new javax.swing.JTextField();
+        jComboBoxPais = new javax.swing.JComboBox<>();
         jLabelCalle_numero = new javax.swing.JLabel();
         jTextFieldCalle_Numero = new javax.swing.JTextField();
         jLabelPoblacion = new javax.swing.JLabel();
-        jTextFieldPais = new javax.swing.JTextField();
+        jTextFieldPoblacion = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextFieldPiso = new javax.swing.JTextField();
         jButtonEditar = new javax.swing.JButton();
@@ -181,7 +202,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
         jPanel1.add(jLabelCorreo);
         jPanel1.add(jTextFieldCorreo);
 
-        jLabelTelefono.setText("   Telefono");
+        jLabelTelefono.setText("   Telefono*");
         jPanel1.add(jLabelTelefono);
         jPanel1.add(jTextFieldTelefono);
 
@@ -193,7 +214,13 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
         jLabelPais.setText("   País");
         jPanel1.add(jLabelPais);
-        jPanel1.add(jTextFieldPoblacion);
+
+        jComboBoxPais.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPaisActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboBoxPais);
 
         jLabelCalle_numero.setText("   Numero de calle");
         jPanel1.add(jLabelCalle_numero);
@@ -201,7 +228,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
         jLabelPoblacion.setText("   Población");
         jPanel1.add(jLabelPoblacion);
-        jPanel1.add(jTextFieldPais);
+        jPanel1.add(jTextFieldPoblacion);
 
         jLabel13.setText("   Piso");
         jPanel1.add(jLabel13);
@@ -294,35 +321,46 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
         String id = (String) jComboBoxID.getSelectedItem();
-        if (id != null) {
-            // Consulto todos los datos del empleado
-            Empleado empleado = c.selectEmpleadoUnico(id);
-            // almaceno todos los cambios que ha hecho el usuario en el empleado
-            empleado.setNombre(jTextFieldNombre.getText());
-            empleado.setApellido1(jTextFieldApellido1.getText());
-            empleado.setApellido1(jTextFieldApellido2.getText());
-            // recojo el dato por fecha
-            Date fecha = (Date) jSpinnerFechaAlt.getValue();
-            empleado.setFecha_nac(fecha);
-            empleado.setUsuario(jTextFieldUsuario.getText());
-            String rol = (String) jComboBoxROL.getSelectedItem();
-            empleado.setRol(rol);
-            empleado.setCorreo(jTextFieldCorreo.getText());
-            empleado.setTelefono(jTextFieldTelefono.getText());
-            empleado.setNacionalidad(jComboBoxNacionalidad.getSelectedItem().toString());
-            empleado.setPais(jTextFieldPais.getText());
-            empleado.setCalle_numero(jTextFieldCalle_Numero.getText());
-            empleado.setPoblacion(jTextFieldPoblacion.getText());
-            empleado.setPiso(jTextFieldPiso.getText());
-            boolean prueba = c.updateEmpleado(empleado);
-            if(prueba == false){
-                jLabelPosibleError.setText("Error al actualizar el empleado");
-            }else{
-                jLabelPosibleError.setText("Empleado actualizado");
-            }
-            
-        }// end if id
+        if (id == null) return;
 
+        if (jTextFieldNombre.getText().trim().isEmpty()
+                || jTextFieldApellido1.getText().trim().isEmpty()
+                || jTextFieldUsuario.getText().trim().isEmpty()
+                || jTextFieldCorreo.getText().trim().isEmpty()
+                || jTextFieldTelefono.getText().trim().isEmpty()
+                || jTextFieldCalle_Numero.getText().trim().isEmpty()
+                || jTextFieldPoblacion.getText().trim().isEmpty()) {
+            jLabelPosibleError.setText("Rellena todos los datos obligatorios (*)");
+            return;
+        }
+        String correo = jTextFieldCorreo.getText().trim();
+        if (!correo.matches("^[^@]+@[^@]+\\.[^@]+$")) {
+            jLabelPosibleError.setText("Correo electrónico no válido");
+            return;
+        }
+        String telefono = jTextFieldTelefono.getText().trim();
+        if (!telefono.matches("^\\+?[0-9]{7,15}$")) {
+            jLabelPosibleError.setText("Teléfono no válido (7-15 dígitos, puede empezar por +)");
+            return;
+        }
+        Empleado empleado = c.selectEmpleadoUnico(id);
+        empleado.setNombre(jTextFieldNombre.getText().trim());
+        empleado.setApellido1(jTextFieldApellido1.getText().trim());
+        empleado.setApellido2(jTextFieldApellido2.getText().trim());
+        empleado.setFecha_nac((Date) jSpinnerFechaAlt.getValue());
+        empleado.setUsuario(jTextFieldUsuario.getText().trim());
+        empleado.setRol((String) jComboBoxROL.getSelectedItem());
+        empleado.setCorreo(correo);
+        empleado.setTelefono(telefono);
+        empleado.setNacionalidad(jComboBoxNacionalidad.getSelectedItem().toString());
+        empleado.setPais(jComboBoxPais.getSelectedItem().toString());
+        empleado.setCalle_numero(jTextFieldCalle_Numero.getText().trim());
+        empleado.setPoblacion(jTextFieldPoblacion.getText().trim());
+        empleado.setPiso(jTextFieldPiso.getText().trim());
+        boolean prueba = c.updateEmpleado(empleado);
+        // sida errorcon la prueba de hacer un update se marca como error si no , Empleado actualizado
+        jLabelPosibleError.setText(!prueba ? "Error al actualizar el empleado" : "Empleado actualizado con éxito");
+            
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jComboBoxROLItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxROLItemStateChanged
@@ -334,6 +372,10 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_jComboBoxIDActionPerformed
+
+    private void jComboBoxPaisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPaisActionPerformed
+ 
+    }//GEN-LAST:event_jComboBoxPaisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,6 +419,7 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JComboBox<String> jComboBoxID;
     private javax.swing.JComboBox<String> jComboBoxNacionalidad;
+    private javax.swing.JComboBox<String> jComboBoxPais;
     private javax.swing.JComboBox<String> jComboBoxROL;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
@@ -403,7 +446,6 @@ public class JDialogEditarEmpleado extends javax.swing.JDialog {
     private javax.swing.JTextField jTextFieldCalle_Numero;
     private javax.swing.JTextField jTextFieldCorreo;
     private javax.swing.JTextField jTextFieldNombre;
-    private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPiso;
     private javax.swing.JTextField jTextFieldPoblacion;
     private javax.swing.JTextField jTextFieldTelefono;
