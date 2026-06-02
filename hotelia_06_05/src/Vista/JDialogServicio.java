@@ -57,7 +57,7 @@ public class JDialogServicio extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jTextFieldDescripcion = new javax.swing.JTextField();
         jLabelPrecio = new javax.swing.JLabel();
-        jTextFieldPrecio = new javax.swing.JTextField();
+        jSpinnerPrecio = new javax.swing.JSpinner();
         jButtonCrear = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabelLogoP = new javax.swing.JLabel();
@@ -87,12 +87,8 @@ public class JDialogServicio extends javax.swing.JDialog {
         jLabelPrecio.setText("Precio*");
         jPanel1.add(jLabelPrecio);
 
-        jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPrecioActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldPrecio);
+        jSpinnerPrecio.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 1.0d));
+        jPanel1.add(jSpinnerPrecio);
 
         jButtonCrear.setText("Crear");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +155,7 @@ public class JDialogServicio extends javax.swing.JDialog {
             
              if (jTextFieldNombreServicio.getText().trim().isEmpty()
                 || jTextFieldDescripcion.getText().trim().isEmpty()
-                || jTextFieldPrecio.getText().trim().isEmpty()) {
+                || ((double) jSpinnerPrecio.getValue()) < 0) {
 
                 jLabel1.setText("Rellena todos los campos");
                 return;
@@ -168,7 +164,7 @@ public class JDialogServicio extends javax.swing.JDialog {
             double precio;
 
             try {
-                precio = Double.parseDouble(jTextFieldPrecio.getText());
+                precio = (double) jSpinnerPrecio.getValue();
             } catch (NumberFormatException e) {
                 jLabel1.setText("El precio debe ser numérico");
                 return;
@@ -176,9 +172,8 @@ public class JDialogServicio extends javax.swing.JDialog {
              
             Servicio nuevo = new Servicio(
                     jTextFieldNombreServicio.getText(),
-                    jTextFieldDescripcion.getText(),
-                    Double.valueOf(jTextFieldPrecio.getText())
-            );
+                    jTextFieldDescripcion.getText(), 
+                    (double) jSpinnerPrecio.getValue());
             
             int resultado; 
             
@@ -207,10 +202,6 @@ public class JDialogServicio extends javax.swing.JDialog {
             System.getLogger(JDialogServicio.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }//GEN-LAST:event_jButtonCrearActionPerformed
-
-    private void jTextFieldPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPrecioActionPerformed
 
     private void jTextFieldNombreServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreServicioActionPerformed
         // TODO add your handling code here:
@@ -248,8 +239,8 @@ public class JDialogServicio extends javax.swing.JDialog {
 
         jTextFieldNombreServicio.setText(servicio.getNombre());
 
-        jTextFieldPrecio.setText(
-                String.valueOf(servicio.getPrecio())
+        jSpinnerPrecio.setValue(
+              servicio.getPrecio()
         );
 
         jTextFieldDescripcion.setText(
@@ -269,8 +260,8 @@ public class JDialogServicio extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelLogoP;
     private javax.swing.JLabel jLabelPrecio;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JSpinner jSpinnerPrecio;
     private javax.swing.JTextField jTextFieldDescripcion;
     private javax.swing.JTextField jTextFieldNombreServicio;
-    private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables
 }

@@ -105,7 +105,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelNombre">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Fecha y hora emisi&#xf3;n de factura"/>
+            <Property name="text" type="java.lang.String" value="Fecha de emisi&#xf3;n de factura"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha_reserva">
@@ -113,8 +113,9 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="now" stepSize="5" type="date"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
-              <SpinnerEditor format="dd/MM/yyyy HH:mm:ss" type="1"/>
+              <SpinnerEditor format="dd/MM/yyyy " type="1"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>

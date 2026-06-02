@@ -397,24 +397,24 @@ public class JDialogServicioTable extends javax.swing.JDialog {
 /**
  * Metodo para gestionar y buscar por nombre y apellido
  */
-private void busqueda() {
-    try {
-        // Hago un array de objetos (de la fila)
-        List<RowFilter<Object,Object>> filtros = new ArrayList<>();
+    private void busqueda() {
+        try {
+            // Hago un array de objetos (de la fila)
+            List<RowFilter<Object,Object>> filtros = new ArrayList<>();
 
-        // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
-        if (!jTextFieldDNICliente.getText().trim().isEmpty()) {
-            filtros.add(RowFilter.regexFilter(jTextFieldDNICliente.getText().trim(), 1));
+            // Si el campo nombre no está vacío, creamos el filtro para la columna 1 
+            if (!jTextFieldDNICliente.getText().trim().isEmpty()) {
+                filtros.add(RowFilter.regexFilter("(?i)" + jTextFieldDNICliente.getText().trim(), 1));
+            }
+
+            RowFilter<Object,Object> rf = RowFilter.andFilter(filtros);
+
+            order.setRowFilter(rf);
+
+        } catch (PatternSyntaxException pse) {
+            System.out.println("Bad regex pattern");
         }
-           
-        RowFilter<Object,Object> rf = RowFilter.andFilter(filtros);
-
-        order.setRowFilter(rf);
-
-    } catch (PatternSyntaxException pse) {
-        System.out.println("Bad regex pattern");
     }
-}
     private void jTextFieldDNIClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDNIClienteKeyReleased
         busqueda();
     }//GEN-LAST:event_jTextFieldDNIClienteKeyReleased

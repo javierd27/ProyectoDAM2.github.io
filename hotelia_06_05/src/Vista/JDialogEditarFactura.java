@@ -92,11 +92,12 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
         jPanel1.add(jLabelDNI);
         jPanel1.add(jTextFieldDNI);
 
-        jLabelNombre.setText("Fecha y hora emisión de factura");
+        jLabelNombre.setText("Fecha de emisión de factura");
         jPanel1.add(jLabelNombre);
 
         jSpinnerFecha_reserva.setModel(new javax.swing.SpinnerDateModel());
-        jSpinnerFecha_reserva.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_reserva, "dd/MM/yyyy HH:mm:ss"));
+        jSpinnerFecha_reserva.setToolTipText("");
+        jSpinnerFecha_reserva.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFecha_reserva, "dd/MM/yyyy "));
         jSpinnerFecha_reserva.setEnabled(false);
         jPanel1.add(jSpinnerFecha_reserva);
 
@@ -225,6 +226,11 @@ public class JDialogEditarFactura extends javax.swing.JDialog {
                 desc = Integer.parseInt(jTextFieldDescuento.getText());
             } catch (NumberFormatException e) {
                 jLabel1.setText("El descuento debe ser numérico");
+                return;
+            }
+            
+            if( desc < -100 || desc > 100 ){
+                jLabel1.setText("El descuento debe ser entre 100 y -100");
                 return;
             }
             

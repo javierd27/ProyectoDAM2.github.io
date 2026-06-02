@@ -11,18 +11,9 @@ import Controlador.ServicioDAO;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import javax.swing.JComboBox;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.view.JasperViewer;
-import java.io.InputStream;
 
 /**
  *
