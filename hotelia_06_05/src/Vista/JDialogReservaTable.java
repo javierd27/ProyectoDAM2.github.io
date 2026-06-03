@@ -5,6 +5,7 @@
 package Vista;
 
 import Controlador.ConexionBBDD;
+import Controlador.FacturaDAO;
 import Controlador.ReservaDAO;
 import Modelo.Empleado;
 import Modelo.Reserva;
@@ -35,6 +36,7 @@ public class JDialogReservaTable extends javax.swing.JDialog {
     DefaultTableModel dtm;
     TableRowSorter<TableModel> order;
     ReservaDAO c = new ReservaDAO();
+    FacturaDAO f = new FacturaDAO();
 
     public void cargaInicial() throws SQLException {
         dtm.setRowCount(0);
@@ -333,19 +335,27 @@ public class JDialogReservaTable extends javax.swing.JDialog {
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         if (jTableReservas.getSelectedRowCount() == 1) {
 
-            // recojo el indice real de la tabla
-            int filaModelo = jTableReservas.convertRowIndexToModel(jTableReservas.getSelectedRow());
-
-            // id (columna 0)
-            int id = (int) jTableReservas.getModel().getValueAt(filaModelo, 0);
-
-            // Compruebo si se ha borrado 
-            if (c.eliminarReserva(dtm, id) < 1) {
-                jLabelError.setText("No se ha podido borrar ninguna reserva");
-            } else {
-                // Quitar del modelo de tabla
-                dtm.removeRow(filaModelo);
-            }// end if comprobacion
+            try {
+                // recojo el indice real de la tabla
+                int filaModelo = jTableReservas.convertRowIndexToModel(jTableReservas.getSelectedRow());
+                
+                // id (columna 0)
+                int id = (int) jTableReservas.getModel().getValueAt(filaModelo, 0);
+                
+                Reserva reserva = c.buscaReservaId(id);
+                int idFactura = reserva.getIdFactura();
+                
+                // Compruebo si se ha borrado
+                if (c.eliminarReserva(dtm, id) < 1) {
+                    jLabelError.setText("No se ha podido borrar ninguna reserva");
+                } else {
+                    // Quitar del modelo de tabla
+                    f.recalcularFactura(idFactura);
+                    dtm.removeRow(filaModelo);
+                }// end if comprobacion
+            } catch (SQLException ex) {
+                System.getLogger(JDialogReservaTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
         } else {
             jLabelError.setText("Selecciona exactamente una fila");
         }// end if

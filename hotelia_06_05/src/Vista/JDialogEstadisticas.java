@@ -9,6 +9,7 @@ import Controlador.ConexionBBDD;
 import Controlador.HabitacionDAO;
 import Controlador.ServicioDAO;
 import com.formdev.flatlaf.intellijthemes.FlatCobalt2IJTheme;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -368,12 +369,18 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
          try {
             ConexionBBDD nueva = new ConexionBBDD();
 
-            String fileJasper = "src/reports/prueba2.jasper";
-            JasperPrint print
-                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            InputStream fileJasper = getClass().getResourceAsStream("/reports/prueba2.jasper");
+
+            JasperPrint print = JasperFillManager.fillReport(
+                    fileJasper,
+                    null,
+                    nueva.getConnection()
+            );
+
             JasperViewer jviewer = new JasperViewer(print, false);
             jviewer.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jviewer.setVisible(true);
+        
          } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -384,10 +391,16 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
         try {
             ConexionBBDD nueva = new ConexionBBDD();
 
-            String fileJasper = "src/reports/infFacturas.jasper";
-            JasperPrint print
-                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            InputStream fileJasper = getClass().getResourceAsStream("/reports/infFacturas.jasper");
+
+            JasperPrint print = JasperFillManager.fillReport(
+                    fileJasper,
+                    null,
+                    nueva.getConnection()
+            );
+
             JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jviewer.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -396,13 +409,19 @@ public class JDialogEstadisticas extends javax.swing.JDialog {
 
     private void InformeEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InformeEmpleado1ActionPerformed
         // TODO add your handling code here:
-        try {
+        try {        
             ConexionBBDD nueva = new ConexionBBDD();
 
-            String fileJasper = "src/reports/Empleado.jasper";
-            JasperPrint print
-                    = JasperFillManager.fillReport(fileJasper, null, nueva.getConnection());
+            InputStream fileJasper = getClass().getResourceAsStream("/reports/Empleado.jasper");
+
+            JasperPrint print = JasperFillManager.fillReport(
+                    fileJasper,
+                    null,
+                    nueva.getConnection()
+            );
+
             JasperViewer jviewer = new JasperViewer(print, false);
+            jviewer.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jviewer.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();

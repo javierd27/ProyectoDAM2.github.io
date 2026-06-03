@@ -104,7 +104,6 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
         jLabelError = new javax.swing.JLabel();
         jLabelLogoM = new javax.swing.JLabel();
         jButtonVolver = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldDNICliente = new javax.swing.JTextField();
         jButtonEditar = new javax.swing.JButton();
@@ -180,14 +179,6 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
             }
         });
 
-        jButtonEliminar.setText("ELIMINAR");
-        jButtonEliminar.setPreferredSize(new java.awt.Dimension(90, 40));
-        jButtonEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEliminarActionPerformed(evt);
-            }
-        });
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("DNI cliente");
         jLabel1.setPreferredSize(new java.awt.Dimension(90, 40));
@@ -223,9 +214,7 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1507, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,9 +230,8 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,38 +300,6 @@ public class JDialogFacturaTable extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_jButtonEditarActionPerformed
-
-    /**
-     * Eliminamos de 1 en 1 las facturas
-     *
-     * @param evt
-     */
-    private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        if (jTableFacturas.getSelectedRowCount() == 0) {
-            jLabelError.setText("Selecciona una factura primero");
-        } else if (jTableFacturas.getSelectedRowCount() == 1) {
-            try {
-                int filaModelo = jTableFacturas.convertRowIndexToModel(jTableFacturas.getSelectedRow());
-                int id = (int) jTableFacturas.getModel().getValueAt(filaModelo, 0);
-
-                if (c.eliminarFactura(dtm, id) < 1) {
-                    jLabelError.setText("No se ha podido borrar la factura");
-                } else {
-                    dtm.removeRow(filaModelo);
-                }
-                dtm.setRowCount(0);
-                c.selectTodasFacturas(dtm);
-            } catch (SQLException ex) {
-                System.getLogger(JDialogFacturaTable.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-            }
-        } else {
-            jLabelError.setText("Selecciona exactamente una fila");
-        }
-
-
-    }//GEN-LAST:event_jButtonEliminarActionPerformed
-/*
-    */
 
 /**
  * Metodo para gestionar y buscar por nombre y apellido
@@ -423,7 +379,6 @@ private void busqueda() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;
-    private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

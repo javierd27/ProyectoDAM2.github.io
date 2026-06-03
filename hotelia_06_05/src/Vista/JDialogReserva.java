@@ -191,7 +191,7 @@ public class JDialogReserva extends javax.swing.JDialog {
         });
         jPanel1.add(jComboBoxEstado);
 
-        jButtonCrear.setText("Crear");
+        jButtonCrear.setText("Aceptar");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
