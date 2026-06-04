@@ -320,6 +320,12 @@ public class JDialogCliente extends javax.swing.JDialog {
             pais = jComboBoxPais.getSelectedItem().toString();
         }
 
+        String telefono = jTextFieldTelefono.getText().trim();
+        if (!telefono.matches("^\\+?[0-9]{7,15}$")) {
+            jLabel1.setText("Teléfono no válido (7-15 dígitos, puede empezar por +)");
+            return;
+        }
+        
         String correo = jTextFieldMail.getText().trim();
 
         if (!correo.matches("^[^@]+@[^@]+\\.[^@]+$")) {
@@ -335,7 +341,7 @@ public class JDialogCliente extends javax.swing.JDialog {
                 jTextFieldApellido2.getText(),
                 (Date) jSpinnerFecha_nac.getValue(),
                 jTextFieldMail.getText(),
-                jTextFieldTelefono.getText(),
+                telefono,
                 jComboBoxNacionalidad.getSelectedItem().toString(),
                 pais,
                 jTextFieldCalle_num.getText(),
